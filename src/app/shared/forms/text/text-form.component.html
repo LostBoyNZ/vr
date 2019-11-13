@@ -1,0 +1,10 @@
+<div class="booking-form__group booking-form__text">
+  <label>
+    {{ question.question }}
+  </label>
+  <input
+    [type]="question.type"
+    [formControl]="formElement"
+    (change)="emitAnswer({formFieldName: question.name, value: formElement.value})"
+  >
+</div>

@@ -1,0 +1,13 @@
+<div class="booking-form__group booking-form__number">
+  <label>
+    {{ question.question }}
+  </label>
+  <input
+    type="text"
+    inputmode="numeric"
+    pattern="[0-9]*"
+    [maxlength]="question.maxCharacters"
+    [formControl]="formElement"
+    (change)="emitAnswer({formFieldName: question.name, value: formElement.value})"
+  >
+</div>

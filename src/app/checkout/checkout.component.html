@@ -1,1 +1,17 @@
-<p>checkout works!</p>
+<form class="booking-form" action="" method="post">
+  <div *ngFor="let question of this.questions">
+    <div *ngIf="question.type == 'single-date'">
+      <app-form-element-single-date [question]="question" (answer)="updateUserFormData($event)"></app-form-element-single-date>
+    </div>
+    <div *ngIf="question.type == 'radio'">
+      <app-form-element-radio [question]="question" (answer)="updateUserFormData($event)"></app-form-element-radio>
+    </div>
+    <div *ngIf="question.type == 'number'">
+      <app-form-element-number [question]="question" (answer)="updateUserFormData($event)"></app-form-element-number>
+    </div>
+    <div *ngIf="shouldUseRegularInputBox(question.type)">
+      <app-form-element-text [question]="question" (answer)="updateUserFormData($event)"></app-form-element-text>
+    </div>
+  </div>
+  <input type="submit" value="Submit">
+</form>

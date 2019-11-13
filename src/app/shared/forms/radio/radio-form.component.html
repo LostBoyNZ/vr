@@ -1,0 +1,11 @@
+<div class="booking-form__group booking-form__radio">
+  <label>
+    {{ question.question }}
+  </label>
+  <div *ngFor="let choice of question.choices" class="booking-form__choices">
+    <label>
+      <input type="radio" [name]="question.name" [value]="choice" [formControl]="formElement" (change)="emitAnswer({formFieldName: question.name, value: formElement.value})">
+      {{ choice }}
+    </label>
+  </div>
+</div>
