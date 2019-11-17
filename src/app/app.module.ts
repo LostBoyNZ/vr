@@ -10,11 +10,14 @@ import {ProductGetComponent} from './product-get/product-get.component';
 import {ProductEditComponent} from './product-edit/product-edit.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
 import {ProductsService} from './products.service';
 import {RadioFormComponent} from './shared/forms/radio/radio-form.component';
 import {TextFormComponent} from './shared/forms/text/text-form.component';
 import {NumberFormComponent} from './shared/forms/number/number-form.component';
 import {SingleDateFormComponent} from './shared/forms/single-date/single-date-form.component';
+import {DatePickerFormComponent} from './shared/forms/date-range/date-picker-form.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import {SingleDateFormComponent} from './shared/forms/single-date/single-date-fo
     TextFormComponent,
     NumberFormComponent,
     SingleDateFormComponent,
+    DatePickerFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,9 +40,15 @@ import {SingleDateFormComponent} from './shared/forms/single-date/single-date-fo
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    SatDatepickerModule,
+    SatNativeDateModule,
+    MatMomentDateModule,
+  ],
+  entryComponents: [
   ],
   providers: [
     ProductsService,
+    {provide: MAT_DATE_LOCALE, useValue: 'en-NZ' }
   ],
   bootstrap: [AppComponent]
 })

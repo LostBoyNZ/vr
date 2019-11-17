@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IFormAnswer, IQuestion} from '../../checkout/checkout.component';
 import {FormControl, Validators} from '@angular/forms';
 

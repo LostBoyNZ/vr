@@ -1,0 +1,23 @@
+<div [formGroup]="datesFormGroup" class="booking-form__group booking-form__date-picker">
+  <label>
+    {{ question?.question }}
+  </label>
+  <mat-form-field>
+    <input matInput
+           placeholder=""
+           (dateInput)="addEvent('newDates', $event)"
+           [satDatepicker]="picker"
+           formControlName="date">
+    <sat-datepicker #picker [rangeMode]="true"
+                    panelClass="range-datepicker"
+                    orderPeriodLabel="month"
+                    [selectFirstDateOnClose]="true">
+    </sat-datepicker>
+    <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+  </mat-form-field>
+</div>
+<div class="example-events">
+  <div *ngFor="let e of events">{{e}}</div>
+</div>
+// [min]="minDate"
+// [matDatepickerFilter]="validDates"

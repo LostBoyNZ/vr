@@ -1,13 +1,14 @@
 <div class="booking-form__group booking-form__single-date">
   <label>
-    {{ question.question }}
+    {{ question?.question }}
   </label>
     <input
       matInput
       [matDatepicker]="picker"
       (change)="emitAnswer({formFieldName: question.name, value: formElement.value})"
       placeholder="Choose a date"
+      disabled
     >
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <mat-datepicker disabled="false" #picker></mat-datepicker>
 </div>

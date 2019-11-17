@@ -1,4 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, FormControl} from '@angular/forms';
+import {Order, OrderLine} from './orderLine.model';
+import {MatCalendarCellCssClasses} from '@angular/material';
 import * as _ from 'lodash';
 
 export interface IQuestion {
@@ -14,16 +17,26 @@ export interface IFormAnswer {
   value: string;
 }
 
-export interface BookingFormDetails {
+export interface IBookingFormDetails {
   rentalType: string;
   postcode: number;
   arrivalDate: string;
+  returnDate: string;
+  productChoice: string;
   name: string;
+}
+
+export interface IOrderLine {
+    item: string;
+    qty: string;
+    startDate: string;
+    endDate: string;
 }
 
 export enum FormTypes {
   SINGLE_DATE = 'single-date',
   NUMBER = 'number',
+  PRODUCT_CHOICE = 'product-choice',
   RADIO = 'radio',
   TEXT = 'text',
 }
@@ -35,10 +48,23 @@ export enum FormTypes {
 })
 
 export class CheckoutComponent implements OnInit {
-  public userFormData: BookingFormDetails = {
+  @Input() order: Order;
+
+  orderFormGroup: FormGroup;
+  datesFormGroup: FormGroup;
+
+  public formBuilder: FormBuilder = new FormBuilder();
+  public orderLinesGroup: FormGroup;
+  public validDates;
+  public minDate = new Date();
+  public calendarTip: string = null;
+
+  public userFormData: IBookingFormDetails = {
     rentalType: null,
     postcode: null,
     arrivalDate: null,
+    returnDate: null,
+    productChoice: null,
     name: null,
   };
 
@@ -56,9 +82,19 @@ export class CheckoutComponent implements OnInit {
       maxCharacters: 4,
     },
     {
-      question: 'When should it arrive?',
+      question: 'Which day should it arrive?',
       type: FormTypes.SINGLE_DATE,
       name: 'arrivalDate',
+    },
+    {
+      question: 'Which day will you send it back?',
+      type: FormTypes.SINGLE_DATE,
+      name: 'returnDate',
+    },
+    {
+      question: 'What would you like to rent?',
+      type: FormTypes.PRODUCT_CHOICE,
+      name: 'productChoice',
     },
     /*
     {
@@ -69,9 +105,63 @@ export class CheckoutComponent implements OnInit {
     */
   ];
 
-  constructor() { }
+  constructor() {
+    this.createForm();
+    this.validDates = (date: Date) => this.isWeekendDate(date) === false;
+  }
+
+  dateClass() {
+    return (date: Date): MatCalendarCellCssClasses => {
+      if (this.isWeekendDate(date)) {
+        return 'disabled-date';
+      } else {
+        return;
+      }
+    };
+  }
+
+  private isWeekendDate(date: Date): boolean {
+    const day = date.getDay();
+
+    return (day === 0 || day === 6);
+  }
 
   ngOnInit() { }
+
+  createForm() {
+    this.orderFormGroup = this.formBuilder.group({
+      orderLinesArray: this.formBuilder.array([])
+    });
+    this.datesFormGroup = this.formBuilder.group({
+      date: [{begin: '', end: ''}]
+    });
+  }
+
+  ngOnChanges() {
+    this.rebuildForm();
+  }
+
+  rebuildForm() {
+    this.setOrderLines(this.order.orderLines);
+  }
+
+  get orderLinesArray(): FormArray {
+    return this.orderFormGroup.get('orderLinesArray') as FormArray;
+  }
+
+  setOrderLines(orderLines: OrderLine[]) {
+    const orderLinesFA = this.formBuilder.group(orderLines);
+
+    this.orderFormGroup.setControl('orderLinesArray', orderLinesFA);
+  }
+
+  addOrderLine() {
+    this.orderLinesArray.push(this.formBuilder.group(new OrderLine('', '', '', '')));
+  }
+
+  test(message: string) {
+    console.log(message);
+  }
 
   updateUserFormData(answer: IFormAnswer) {
     this.userFormData[answer.formFieldName] = answer.value;

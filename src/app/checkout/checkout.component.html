@@ -1,17 +1,77 @@
 <form class="booking-form" action="" method="post">
+
   <div *ngFor="let question of this.questions">
+
     <div *ngIf="question.type == 'single-date'">
       <app-form-element-single-date [question]="question" (answer)="updateUserFormData($event)"></app-form-element-single-date>
     </div>
+
     <div *ngIf="question.type == 'radio'">
       <app-form-element-radio [question]="question" (answer)="updateUserFormData($event)"></app-form-element-radio>
     </div>
+
     <div *ngIf="question.type == 'number'">
       <app-form-element-number [question]="question" (answer)="updateUserFormData($event)"></app-form-element-number>
     </div>
+
     <div *ngIf="shouldUseRegularInputBox(question.type)">
       <app-form-element-text [question]="question" (answer)="updateUserFormData($event)"></app-form-element-text>
     </div>
+
   </div>
+
+  <app-form-element-date-picker></app-form-element-date-picker>
+<!--
+  <div [formGroup]="datesFormGroup">
+    <mat-form-field>
+      <input matInput
+             placeholder=""
+             (dateInput)="addEvent('input', $event)"
+             [min]="minDate"
+             [satDatepicker]="picker"
+             [matDatepickerFilter]="validDates"
+             formControlName="date">
+      <sat-datepicker #picker [rangeMode]="true"
+                      panelClass="range-datepicker"
+                      orderPeriodLabel="month"
+                      [selectFirstDateOnClose]="true">
+      </sat-datepicker>
+      <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+    </mat-form-field>
+  </div>
+-->
+  <div [formGroup]="orderFormGroup">
+    <button (click)="addOrderLine()">Add Order Line</button>
+    <div formArrayName="orderLinesArray">
+      <div *ngFor="let orderLine of orderLinesArray.controls; let i = index" [formGroupName]="i">
+        <input formControlName="item" placeholder="Item">
+        <input formControlName="qty" placeholder="Qty">
+        <!--<input
+          matInput
+          formControlName="startDate"
+          [matDatepicker]="startDatePicker"
+          [matDatepickerFilter]="validDates"
+          placeholder="Choose a date"
+        >
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker [dateClass]="dateClass()" #startDatePicker></mat-datepicker>
+        <input
+          matInput
+          formControlName="endDate"
+          [min]="minDate"
+          [matDatepicker]="endDatePicker"
+          [matDatepickerFilter]="validDates"
+          placeholder="Choose a date"
+        >
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+        -->
+      </div>
+    </div>
+  </div>
+
   <input type="submit" value="Submit">
+
 </form>
+
+{{orderFormGroup.value | json}}
