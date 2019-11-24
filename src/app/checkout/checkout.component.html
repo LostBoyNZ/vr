@@ -6,6 +6,16 @@
       <app-form-element-single-date [question]="question" (answer)="updateUserFormData($event)"></app-form-element-single-date>
     </div>
 
+    <div *ngIf="question.type == 'date-range'">
+      <app-form-element-date-picker [question]="question" (answer)="updateUserFormData($event)"></app-form-element-date-picker>
+      <p *ngIf="this.userFormData.rentalDates.begin">
+        The gear will arrive to you on {{ dateTools.formatDateDisplay(this.userFormData.rentalDates.begin, 'ddd, Do MMM YYYY') }} between 9am and 5pm
+      </p>
+      <p *ngIf="this.userFormData.rentalDates.end">
+        It can sent back on {{ dateTools.formatDateDisplay(this.userFormData.rentalDates.end, 'ddd, Do MMM YYYY') }} between 9am and 5pm
+      </p>
+    </div>
+
     <div *ngIf="question.type == 'radio'">
       <app-form-element-radio [question]="question" (answer)="updateUserFormData($event)"></app-form-element-radio>
     </div>
@@ -20,7 +30,6 @@
 
   </div>
 
-  <app-form-element-date-picker></app-form-element-date-picker>
 <!--
   <div [formGroup]="datesFormGroup">
     <mat-form-field>
@@ -29,7 +38,7 @@
              (dateInput)="addEvent('input', $event)"
              [min]="minDate"
              [satDatepicker]="picker"
-             [matDatepickerFilter]="validDates"
+             [matDatepickerFilter]="validDatesFilter"
              formControlName="date">
       <sat-datepicker #picker [rangeMode]="true"
                       panelClass="range-datepicker"
@@ -46,26 +55,6 @@
       <div *ngFor="let orderLine of orderLinesArray.controls; let i = index" [formGroupName]="i">
         <input formControlName="item" placeholder="Item">
         <input formControlName="qty" placeholder="Qty">
-        <!--<input
-          matInput
-          formControlName="startDate"
-          [matDatepicker]="startDatePicker"
-          [matDatepickerFilter]="validDates"
-          placeholder="Choose a date"
-        >
-        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker [dateClass]="dateClass()" #startDatePicker></mat-datepicker>
-        <input
-          matInput
-          formControlName="endDate"
-          [min]="minDate"
-          [matDatepicker]="endDatePicker"
-          [matDatepickerFilter]="validDates"
-          placeholder="Choose a date"
-        >
-        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #endDatePicker></mat-datepicker>
-        -->
       </div>
     </div>
   </div>

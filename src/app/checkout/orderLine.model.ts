@@ -8,7 +8,5 @@ export class OrderLine implements IOrderLine {
   constructor(
     public item: string,
     public qty: string,
-    public startDate: string,
-    public endDate: string,
   ) {}
 }

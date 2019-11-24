@@ -1,8 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, FormControl} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, FormControl, AbstractControl} from '@angular/forms';
 import {Order, OrderLine} from './orderLine.model';
-import {MatCalendarCellCssClasses} from '@angular/material';
+import {DateTools} from '../shared/tools/dateTools';
 import * as _ from 'lodash';
+import {PostcodeTools} from '../shared/tools/postcodeTools';
+import {ShippingTimeTools} from '../shared/tools/shippingTimeTools';
 
 export interface IQuestion {
   question: string;
@@ -10,18 +12,21 @@ export interface IQuestion {
   name: string;
   choices?: string[];
   maxCharacters?: number;
+  minDate?: Date;
+  validDatesFilter?: any;
+  defaultDates?: { begin: Date, end: Date };
 }
 
 export interface IFormAnswer {
   formFieldName: string;
-  value: string;
+  value: any;
 }
 
 export interface IBookingFormDetails {
   rentalType: string;
   postcode: number;
-  arrivalDate: string;
-  returnDate: string;
+  ruralDelivery: string;
+  rentalDates: { begin: Date, end: Date };
   productChoice: string;
   name: string;
 }
@@ -29,12 +34,11 @@ export interface IBookingFormDetails {
 export interface IOrderLine {
     item: string;
     qty: string;
-    startDate: string;
-    endDate: string;
 }
 
 export enum FormTypes {
   SINGLE_DATE = 'single-date',
+  DATE_RANGE = 'date-range',
   NUMBER = 'number',
   PRODUCT_CHOICE = 'product-choice',
   RADIO = 'radio',
@@ -53,80 +57,77 @@ export class CheckoutComponent implements OnInit {
   orderFormGroup: FormGroup;
   datesFormGroup: FormGroup;
 
+  public questions: IQuestion[];
   public formBuilder: FormBuilder = new FormBuilder();
   public orderLinesGroup: FormGroup;
-  public validDates;
-  public minDate = new Date();
+  public postcodeTools: PostcodeTools;
+  public shippingTimeTools: ShippingTimeTools;
+  public dateTools: DateTools;
+  public validDatesFilter;
+  public minDate;
   public calendarTip: string = null;
-
   public userFormData: IBookingFormDetails = {
     rentalType: null,
     postcode: null,
-    arrivalDate: null,
-    returnDate: null,
+    ruralDelivery: null,
+    rentalDates: { begin: null, end: null },
     productChoice: null,
     name: null,
   };
 
-  public questions: IQuestion[] = [
-    {
-      question: 'What type of rental is this?',
-      type: FormTypes.RADIO,
-      name: 'rentalType',
-      choices: ['individual', 'company'],
-    },
-    {
-      question: 'What is your postcode?',
-      type: FormTypes.NUMBER,
-      name: 'postcode',
-      maxCharacters: 4,
-    },
-    {
-      question: 'Which day should it arrive?',
-      type: FormTypes.SINGLE_DATE,
-      name: 'arrivalDate',
-    },
-    {
-      question: 'Which day will you send it back?',
-      type: FormTypes.SINGLE_DATE,
-      name: 'returnDate',
-    },
-    {
-      question: 'What would you like to rent?',
-      type: FormTypes.PRODUCT_CHOICE,
-      name: 'productChoice',
-    },
-    /*
-    {
-      question: 'What is your name?',
-      type: FormTypes.TEXT,
-      name: 'name',
-    }
-    */
-  ];
-
   constructor() {
     this.createForm();
-    this.validDates = (date: Date) => this.isWeekendDate(date) === false;
+    this.dateTools = new DateTools();
+    this.postcodeTools = new PostcodeTools();
+    this.shippingTimeTools = new ShippingTimeTools();
   }
 
-  dateClass() {
-    return (date: Date): MatCalendarCellCssClasses => {
-      if (this.isWeekendDate(date)) {
-        return 'disabled-date';
-      } else {
-        return;
+  ngOnInit() {
+    this.validDatesFilter = (date: Date) => this.dateTools.isExcludedDate(date) === false;
+    this.setMinDay();
+    // this.minDate = new Date(2019, 10, 20); // month count starts at 0 for some reason
+
+    this.questions = [
+      {
+        question: 'What type of rental is this?',
+        type: FormTypes.RADIO,
+        name: 'rentalType',
+        choices: ['individual', 'company'],
+      },
+      {
+        question: 'What is your postcode?',
+        type: FormTypes.NUMBER,
+        name: 'postcode',
+        maxCharacters: 4,
+      },
+      {
+        question: 'What type of postal address will you use?',
+        type: FormTypes.RADIO,
+        name: 'ruralDelivery',
+        choices: ['non rural', 'rural'],
+      },
+      {
+        question: 'What dates would you like?',
+        type: FormTypes.DATE_RANGE,
+        name: 'rentalDates',
+        minDate: this.minDate,
+        validDatesFilter: this.validDatesFilter,
+        defaultDates: {begin: null, end: null},
+      },
+      {
+        question: 'What would you like to rent?',
+        type: FormTypes.PRODUCT_CHOICE,
+        name: 'productChoice',
+      },
+      /*
+      {
+        question: 'What is your name?',
+        type: FormTypes.TEXT,
+        name: 'name',
       }
-    };
+      */
+    ];
   }
-
-  private isWeekendDate(date: Date): boolean {
-    const day = date.getDay();
-
-    return (day === 0 || day === 6);
-  }
-
-  ngOnInit() { }
 
   createForm() {
     this.orderFormGroup = this.formBuilder.group({
@@ -156,16 +157,34 @@ export class CheckoutComponent implements OnInit {
   }
 
   addOrderLine() {
-    this.orderLinesArray.push(this.formBuilder.group(new OrderLine('', '', '', '')));
+    // const defaultBeginDate: Date = (this.userFormData.rentalDates.begin) ?  this.userFormData.rentalDates.begin : null;
+    // const defaultEndDate: Date = (this.userFormData.rentalDates.end) ?  this.userFormData.rentalDates.end : null;
+    this.orderLinesArray.push(
+      this.formBuilder.group(
+        new OrderLine('', '')
+      )
+    );
   }
 
-  test(message: string) {
-    console.log(message);
+  private updateQuestionsByType(type: FormTypes, attribute: string, newValue: string) {
+    this.questions.map (question => {
+      if (question.type === FormTypes.DATE_RANGE) {
+        question[attribute] = newValue;
+      }
+    });
+  }
+
+  private updateDateRangePicker() {
+    this.setMinDay();
+    this.updateQuestionsByType(FormTypes.DATE_RANGE, 'minDate', this.minDate);
   }
 
   updateUserFormData(answer: IFormAnswer) {
     this.userFormData[answer.formFieldName] = answer.value;
     console.log(this.userFormData);
+    if (answer.formFieldName === 'postcode' || answer.formFieldName === 'ruralDelivery') {
+      this.updateDateRangePicker();
+    }
   }
 
   shouldUseRegularInputBox(formType: string) {
@@ -173,5 +192,37 @@ export class CheckoutComponent implements OnInit {
       FormTypes.TEXT,
     ];
     return _.includes(supportedInputTypes, formType);
+  }
+
+  public isExtraPostageCharge(): boolean {
+    const today = new Date();
+    const ruralDelivery = _.get(this.userFormData, 'ruralDelivery') === 'rural' ? true : false;
+    const minDaysInTransit: number = (ruralDelivery) ? 4 : 3;
+
+    const earliestRentalDateForEconomyShipping: Date = this.dateTools.getEarliestRentalDateFromDate(
+      today, minDaysInTransit
+    );
+
+    return this.dateTools.isDateSameOrAfter(earliestRentalDateForEconomyShipping, this.userFormData.rentalDates.begin);
+  }
+
+  public setMinDay() {
+    const minDaysInTransit = this.getMinDaysInTransit();
+    const today = new Date();
+    const minDate = this.dateTools.getEarliestRentalDateFromDate(today, minDaysInTransit);
+    this.minDate = this.dateTools.formatDateDisplay(minDate, 'YYYY-MM-DD');
+    const extraPostage = this.isExtraPostageCharge();
+    console.log('extraPostage: ', JSON.stringify(extraPostage));
+  }
+
+  private getMinDaysInTransit() {
+    const ruralDelivery = _.get(this.userFormData, 'ruralDelivery') === 'rural' ? true : false;
+
+    if (_.get(this.userFormData, 'postcode')) {
+      return this.postcodeTools.getMinDaysInTransit(this.userFormData.postcode, ruralDelivery);
+    } else {
+      // Default number of days to spend in transit
+      return 3;
+    }
   }
 }
