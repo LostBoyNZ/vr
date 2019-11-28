@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormComponentHandler} from '../formComponentHandler';
+import {IQuestion} from '../../../checkout/checkout.component';
 
 @Component({
   selector: 'app-form-element-number',

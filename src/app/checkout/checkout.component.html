@@ -1,13 +1,13 @@
 <form class="booking-form" action="" method="post">
 
-  <div *ngFor="let question of this.questions">
+  <div *ngFor="let oneQuestion of this.questions">
 
-    <div *ngIf="question.type == 'single-date'">
-      <app-form-element-single-date [question]="question" (answer)="updateUserFormData($event)"></app-form-element-single-date>
+    <div *ngIf="oneQuestion.type == 'single-date'">
+      <app-form-element-single-date [question]="oneQuestion" (answer)="updateUserFormData($event)"></app-form-element-single-date>
     </div>
 
-    <div *ngIf="question.type == 'date-range'">
-      <app-form-element-date-picker [question]="question" (answer)="updateUserFormData($event)"></app-form-element-date-picker>
+    <div *ngIf="oneQuestion.type == 'date-range'">
+      <app-form-element-date-picker [question]="oneQuestion" (answer)="updateUserFormData($event)"></app-form-element-date-picker>
       <p *ngIf="this.userFormData.rentalDates.begin">
         The gear will arrive to you on {{ dateTools.formatDateDisplay(this.userFormData.rentalDates.begin, 'ddd, Do MMM YYYY') }} between 9am and 5pm
       </p>
@@ -16,16 +16,16 @@
       </p>
     </div>
 
-    <div *ngIf="question.type == 'radio'">
-      <app-form-element-radio [question]="question" (answer)="updateUserFormData($event)"></app-form-element-radio>
+    <div *ngIf="oneQuestion.type == 'radio'">
+      <app-form-element-radio [question]="oneQuestion" (answer)="updateUserFormData($event)"></app-form-element-radio>
     </div>
 
-    <div *ngIf="question.type == 'number'">
-      <app-form-element-number [question]="question" (answer)="updateUserFormData($event)"></app-form-element-number>
+    <div *ngIf="oneQuestion.type == 'number'">
+      <app-form-element-number [question]="oneQuestion" (answer)="updateUserFormData($event)"></app-form-element-number>
     </div>
 
-    <div *ngIf="shouldUseRegularInputBox(question.type)">
-      <app-form-element-text [question]="question" (answer)="updateUserFormData($event)"></app-form-element-text>
+    <div *ngIf="shouldUseRegularInputBox(oneQuestion.type)">
+      <app-form-element-text [question]="oneQuestion" (answer)="updateUserFormData($event)"></app-form-element-text>
     </div>
 
   </div>

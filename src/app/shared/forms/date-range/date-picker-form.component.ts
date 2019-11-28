@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormComponentHandler} from '../formComponentHandler';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import * as _ from 'lodash';
+import {IQuestion} from '../../../checkout/checkout.component';
 
 @Component({
   selector: 'app-form-element-date-picker',
@@ -10,6 +11,8 @@ import * as _ from 'lodash';
 })
 
 export class DatePickerFormComponent extends FormComponentHandler implements OnInit {
+  @Input() question: IQuestion;
+
   public formBuilder: FormBuilder = new FormBuilder();
   datesFormGroup: FormGroup;
 

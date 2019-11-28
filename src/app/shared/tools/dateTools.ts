@@ -94,4 +94,8 @@ export class DateTools {
 
     return result;
   }
+
+  public returnTrue() {
+    return true;
+  }
 }

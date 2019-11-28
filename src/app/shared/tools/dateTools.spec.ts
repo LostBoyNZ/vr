@@ -1,9 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { DateTools} from './dateTools';
 
-import {CheckoutComponent, FormTypes} from './checkout.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
+/*
 describe('CheckoutComponent', () => {
   let component: CheckoutComponent;
   let fixture: ComponentFixture<CheckoutComponent>;
@@ -20,7 +19,7 @@ describe('CheckoutComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [ CheckoutComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -32,5 +31,20 @@ describe('CheckoutComponent', () => {
   it('should include a test but I have not written it yet', () => {
     component.questions = mockQuestions;
     expect(component).toBeTruthy();
+  });
+});
+*/
+
+describe('Date Tools', () => {
+  describe('date tools', () => {
+    it('should return true', () => {
+      // --- Arrange
+
+      // --- Act
+      const actual = DateTools.returnTrue();
+
+      // --- Assert
+      expect(actual).toEqual(true);
+    });
   });
 });
