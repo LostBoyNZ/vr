@@ -194,23 +194,23 @@ export class CheckoutComponent implements OnInit {
     return _.includes(supportedInputTypes, formType);
   }
 
-  public isExtraPostageCharge(): boolean {
-    const today = new Date();
+  public isExtraPostageCharge(today: Date = new Date()): boolean {
     const ruralDelivery = _.get(this.userFormData, 'ruralDelivery') === 'rural' ? true : false;
     const minDaysInTransit: number = (ruralDelivery) ? 4 : 3;
+    const startDate: string = this.userFormData.rentalDates.begin.toDateString();
 
-    const earliestRentalDateForEconomyShipping: Date = this.dateTools.getEarliestRentalDateFromDate(
-      today, minDaysInTransit
+    const earliestRentalDateForEconomyShippingToThatPostcode: string = this.dateTools.getEarliestRentalDateFromDate(
+      today.toDateString(), minDaysInTransit
     );
 
-    return this.dateTools.isDateSameOrAfter(earliestRentalDateForEconomyShipping, this.userFormData.rentalDates.begin);
+    return this.dateTools.isDateAfter(startDate, earliestRentalDateForEconomyShippingToThatPostcode);
   }
 
   public setMinDay() {
     const minDaysInTransit = this.getMinDaysInTransit();
     const today = new Date();
-    const minDate = this.dateTools.getEarliestRentalDateFromDate(today, minDaysInTransit);
-    this.minDate = this.dateTools.formatDateDisplay(minDate, 'YYYY-MM-DD');
+    const minDate: string = this.dateTools.getEarliestRentalDateFromDate(today.toDateString(), minDaysInTransit);
+    this.minDate = this.dateTools.formatDateDisplay(new Date(minDate), 'YYYY-MM-DD');
     const extraPostage = this.isExtraPostageCharge();
     console.log('extraPostage: ', JSON.stringify(extraPostage));
   }
@@ -219,7 +219,7 @@ export class CheckoutComponent implements OnInit {
     const ruralDelivery = _.get(this.userFormData, 'ruralDelivery') === 'rural' ? true : false;
 
     if (_.get(this.userFormData, 'postcode')) {
-      return this.postcodeTools.getMinDaysInTransit(this.userFormData.postcode, ruralDelivery);
+      return this.postcodeTools.getMinDaysInTransit(this.userFormData.postcode.toString(), ruralDelivery);
     } else {
       // Default number of days to spend in transit
       return 3;

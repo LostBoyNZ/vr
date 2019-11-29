@@ -12,7 +12,7 @@ export class PostcodeTools {
 
   constructor() {}
 
-  public getMinDaysInTransit(postcode: number, ruralDelivery: boolean): number {
+  public getMinDaysInTransit(postcode: string, ruralDelivery: boolean): number {
     let days = 0;
 
     if (ruralDelivery) {

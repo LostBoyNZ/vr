@@ -2,6 +2,8 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 
 export class DateTools {
+
+  constructor() {}
   private handlingTimeDays = 1;
 
   private publicHolidayDates = [
@@ -46,8 +48,6 @@ export class DateTools {
     westland: ['2020-11-30', '2021-11-30'],
   };
 
-  constructor() {}
-
   public isExcludedDate(date: Date): boolean {
     const dateToCheck: string = this.formatDateDisplay(date, 'YYYY-MM-DD');
 
@@ -67,22 +67,34 @@ export class DateTools {
     return moment(date).format(format);
   }
 
-  public isDateSameOrAfter(baseDate: Date, newDate: Date): boolean {
+  public isDateSameOrAfter(baseDate: string, newDate: string): boolean {
     if (baseDate && newDate) {
       const firstDate: string = baseDate.toLocaleString().split(',')[0];
       const secondDate: string = newDate.toLocaleString().split(',')[0];
-      console.log('firstDate: ', firstDate);
-      console.log('secondDate: ', secondDate);
-      return moment(firstDate).isSameOrAfter(secondDate);
+      return moment(secondDate).isSameOrAfter(firstDate);
     } else {
       return false;
     }
   }
 
-  public getEarliestRentalDateFromDate(date: Date, minDaysInTransit: number): Date {
+  public isDateAfter(baseDate: string, newDate: string): boolean {
+    if (baseDate && newDate) {
+      const firstDate: string = baseDate.toLocaleString().split(',')[0];
+      const secondDate: string = newDate.toLocaleString().split(',')[0];
+      return moment(secondDate).isAfter(firstDate);
+    } else {
+      return false;
+    }
+  }
+
+  public getEarliestRentalDateFromDate(
+    requestedDate: string,
+    minDaysInTransit: number,
+    overrideHandlingTimeDays = this.handlingTimeDays
+  ): string {
     // TODO: This will vary depending what time of day someone places the booking
-    minDaysInTransit += this.handlingTimeDays;
-    const result = new Date();
+    minDaysInTransit += overrideHandlingTimeDays;
+    const result = new Date(requestedDate);
 
     while (minDaysInTransit > 0) {
       result.setDate(result.getDate() + 1);
@@ -92,10 +104,6 @@ export class DateTools {
       }
     }
 
-    return result;
-  }
-
-  public returnTrue() {
-    return true;
+    return result.toDateString();
   }
 }
