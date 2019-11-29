@@ -195,15 +195,22 @@ export class CheckoutComponent implements OnInit {
   }
 
   public isExtraPostageCharge(today: Date = new Date()): boolean {
+    if (this.userFormData.rentalDates.begin) {
+      const startDate: string = this.userFormData.rentalDates.begin.toDateString();
+
+      return this.dateTools.isDateAfter(startDate, this.getEarliestRentalDateFromDate(today));
+    } else {
+      return false;
+    }
+  }
+
+  private getEarliestRentalDateFromDate(today: Date = new Date()): string {
+    return this.dateTools.getEarliestRentalDateFromDate(today.toDateString(), this.getMinDaysInTransitToDelete());
+  }
+
+  private getMinDaysInTransitToDelete(): number {
     const ruralDelivery = _.get(this.userFormData, 'ruralDelivery') === 'rural' ? true : false;
-    const minDaysInTransit: number = (ruralDelivery) ? 4 : 3;
-    const startDate: string = this.userFormData.rentalDates.begin.toDateString();
-
-    const earliestRentalDateForEconomyShippingToThatPostcode: string = this.dateTools.getEarliestRentalDateFromDate(
-      today.toDateString(), minDaysInTransit
-    );
-
-    return this.dateTools.isDateAfter(startDate, earliestRentalDateForEconomyShippingToThatPostcode);
+    return (ruralDelivery) ? 4 : 3;
   }
 
   public setMinDay() {
@@ -215,7 +222,7 @@ export class CheckoutComponent implements OnInit {
     console.log('extraPostage: ', JSON.stringify(extraPostage));
   }
 
-  private getMinDaysInTransit() {
+  private getMinDaysInTransit(): number {
     const ruralDelivery = _.get(this.userFormData, 'ruralDelivery') === 'rural' ? true : false;
 
     if (_.get(this.userFormData, 'postcode')) {
