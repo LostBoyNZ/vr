@@ -47,25 +47,25 @@ describe('Postcode Tools', () => {
 
   describe('The minimum days in transit calculator', () => {
     it('should return the right number of days when given a local post code', () => {
-      const result: number = postcodeTools.getMinDaysInTransit('7691', false);
+      const result: number = postcodeTools.getMinDaysInTransit('7691', false, false);
 
       expect(result).toEqual(1);
     });
 
     it('should return the right number of days when given a south island other post code', () => {
-      const result: number = postcodeTools.getMinDaysInTransit('9800', false);
+      const result: number = postcodeTools.getMinDaysInTransit('9800', false, false);
 
       expect(result).toEqual(1);
     });
 
     it('should return the right number of days when given a north island other post code', () => {
-      const result: number = postcodeTools.getMinDaysInTransit('1200', false);
+      const result: number = postcodeTools.getMinDaysInTransit('1200', false, false);
 
       expect(result).toEqual(1);
     });
 
     it('should add an extra day when an address is rural', () => {
-      const result: number = postcodeTools.getMinDaysInTransit('7691', true);
+      const result: number = postcodeTools.getMinDaysInTransit('7691', true, false);
 
       expect(result).toEqual(2);
     });

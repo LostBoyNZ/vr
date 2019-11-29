@@ -198,23 +198,23 @@ export class CheckoutComponent implements OnInit {
     if (this.userFormData.rentalDates.begin) {
       const startDate: string = this.userFormData.rentalDates.begin.toDateString();
 
-      return this.dateTools.isDateAfter(startDate, this.getEarliestRentalDateFromDate(today));
+      return this.dateTools.isDateAfter(startDate, this.getEarliestRentalDateFromDate(today, true));
     } else {
       return false;
     }
   }
 
-  private getEarliestRentalDateFromDate(today: Date = new Date()): string {
-    return this.dateTools.getEarliestRentalDateFromDate(today.toDateString(), this.getMinDaysInTransitToDelete());
+  private getEarliestRentalDateFromDate(today: Date = new Date(), forceEconomyShipping: boolean): string {
+    return this.dateTools.getEarliestRentalDateFromDate(today.toDateString(), this.getMinDaysInTransit(forceEconomyShipping));
   }
-
-  private getMinDaysInTransitToDelete(): number {
-    const ruralDelivery = _.get(this.userFormData, 'ruralDelivery') === 'rural' ? true : false;
-    return (ruralDelivery) ? 4 : 3;
-  }
+  //
+  // private getMinDaysInTransitToDelete(): number {
+  //   const ruralDelivery = _.get(this.userFormData, 'ruralDelivery') === 'rural' ? true : false;
+  //   return (ruralDelivery) ? 4 : 3;
+  // }
 
   public setMinDay() {
-    const minDaysInTransit = this.getMinDaysInTransit();
+    const minDaysInTransit = this.getMinDaysInTransit(false);
     const today = new Date();
     const minDate: string = this.dateTools.getEarliestRentalDateFromDate(today.toDateString(), minDaysInTransit);
     this.minDate = this.dateTools.formatDateDisplay(new Date(minDate), 'YYYY-MM-DD');
@@ -222,11 +222,10 @@ export class CheckoutComponent implements OnInit {
     console.log('extraPostage: ', JSON.stringify(extraPostage));
   }
 
-  private getMinDaysInTransit(): number {
+  private getMinDaysInTransit(forceEconomyShipping: boolean): number {
     const ruralDelivery = _.get(this.userFormData, 'ruralDelivery') === 'rural' ? true : false;
-
     if (_.get(this.userFormData, 'postcode')) {
-      return this.postcodeTools.getMinDaysInTransit(this.userFormData.postcode.toString(), ruralDelivery);
+      return this.postcodeTools.getMinDaysInTransit(this.userFormData.postcode.toString(), ruralDelivery, false);
     } else {
       // Default number of days to spend in transit
       return 3;

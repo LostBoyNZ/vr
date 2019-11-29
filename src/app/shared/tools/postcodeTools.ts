@@ -9,10 +9,11 @@ export class PostcodeTools {
     southIsland: 1,
   };
   private extraDaysInTransitForRural = 1;
+  private extraDaysForEconomyShipping = 2;
 
   constructor() {}
 
-  public getMinDaysInTransit(postcode: string, ruralDelivery: boolean): number {
+  public getMinDaysInTransit(postcode: string, ruralDelivery: boolean, forceEconomyShipping: boolean): number {
     let days = 0;
 
     if (ruralDelivery) {
@@ -25,7 +26,12 @@ export class PostcodeTools {
       days += this.minDaysInTransitByArea.southIsland;
     } else {
       days += this.minDaysInTransitByArea.northIsland;
+      if (forceEconomyShipping) {
+        days += this.extraDaysForEconomyShipping;
+      }
     }
+
+    console.log('getMinDaysInTransit days: ', days);
 
     return days;
   }
