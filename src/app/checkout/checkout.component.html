@@ -9,13 +9,16 @@
     <div *ngIf="oneQuestion.type == 'date-range'">
       <app-form-element-date-picker [question]="oneQuestion" (answer)="updateUserFormData($event)"></app-form-element-date-picker>
       <p *ngIf="this.userFormData.rentalDates.begin">
-        The gear will arrive to you on {{ dateTools.formatDateDisplay(this.userFormData.rentalDates.begin, 'ddd, Do MMM YYYY') }} between 9am and 5pm
+        The gear should arrive to you on {{ dateTools.formatDateDisplay(this.userFormData.rentalDates.begin, 'ddd, Do MMM YYYY') }} between 9am and 5pm
       </p>
       <p *ngIf="this.userFormData.rentalDates.end">
         It can sent back on {{ dateTools.formatDateDisplay(this.userFormData.rentalDates.end, 'ddd, Do MMM YYYY') }} between 9am and 5pm
       </p>
       <p *ngIf="this.isExtraPostageCharge()">
-        We just need to use faster shipping to make it in time
+        We just need to use faster shipping, or we could aim for {{ getEarliestRentalDateFromDate(true) }} to use economy shipping
+      </p>
+      <p *ngIf="!isBeginDateValid()">
+        Apologies we can't have it there in time, but we could aim to have it arrive on {{ getEarliestRentalDateFromDate(false) }}
       </p>
     </div>
 
@@ -32,26 +35,6 @@
     </div>
 
   </div>
-
-<!--
-  <div [formGroup]="datesFormGroup">
-    <mat-form-field>
-      <input matInput
-             placeholder=""
-             (dateInput)="addEvent('input', $event)"
-             [min]="minDate"
-             [satDatepicker]="picker"
-             [matDatepickerFilter]="validDatesFilter"
-             formControlName="date">
-      <sat-datepicker #picker [rangeMode]="true"
-                      panelClass="range-datepicker"
-                      orderPeriodLabel="month"
-                      [selectFirstDateOnClose]="true">
-      </sat-datepicker>
-      <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
-    </mat-form-field>
-  </div>
--->
   <div [formGroup]="orderFormGroup">
     <button (click)="addOrderLine()">Add Order Line</button>
     <div formArrayName="orderLinesArray">
@@ -65,5 +48,7 @@
   <input type="submit" value="Submit">
 
 </form>
+
+<app-checkout-carousel></app-checkout-carousel>
 
 {{orderFormGroup.value | json}}

@@ -9,6 +9,7 @@ import {TextFormComponent} from './shared/forms/text/text-form.component';
 import {NumberFormComponent} from './shared/forms/number/number-form.component';
 import {SingleDateFormComponent} from './shared/forms/single-date/single-date-form.component';
 import {DatePickerFormComponent} from './shared/forms/date-range/date-picker-form.component';
+import {CheckoutCarouselComponent} from './checkout-carousel/checkout-carousel.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'form/date-picker',
     component: DatePickerFormComponent,
+  },
+  {
+    path: 'checkout-carousel',
+    component: CheckoutCarouselComponent,
   },
 ];
 

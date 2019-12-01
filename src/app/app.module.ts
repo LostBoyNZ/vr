@@ -18,6 +18,8 @@ import {TextFormComponent} from './shared/forms/text/text-form.component';
 import {NumberFormComponent} from './shared/forms/number/number-form.component';
 import {SingleDateFormComponent} from './shared/forms/single-date/single-date-form.component';
 import {DatePickerFormComponent} from './shared/forms/date-range/date-picker-form.component';
+import {NguCarouselModule} from '@ngu/carousel';
+import {CheckoutCarouselComponent} from './checkout-carousel/checkout-carousel.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import {DatePickerFormComponent} from './shared/forms/date-range/date-picker-for
     NumberFormComponent,
     SingleDateFormComponent,
     DatePickerFormComponent,
+    CheckoutCarouselComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +46,7 @@ import {DatePickerFormComponent} from './shared/forms/date-range/date-picker-for
     SatDatepickerModule,
     SatNativeDateModule,
     MatMomentDateModule,
+    NguCarouselModule,
   ],
   entryComponents: [
   ],

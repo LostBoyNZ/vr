@@ -39,14 +39,14 @@ describe('CheckoutComponent', () => {
   });
 
   describe('The check for overnight postage being required', () => {
-    it('should return false when given a date four days away', () => {
+    it('should return false when given a date five days away', () => {
       const mockToday = new Date('2019-11-26');
       const result: boolean = component.isExtraPostageCharge(mockToday);
 
       expect(result).toBeFalsy();
     });
 
-    it('should return false when given a date three days away', () => {
+    it('should return false when given a date four days away', () => {
       const mockToday = new Date('2019-11-27');
       const result: boolean = component.isExtraPostageCharge(mockToday);
 
@@ -72,6 +72,30 @@ describe('CheckoutComponent', () => {
       const result: boolean = component.isExtraPostageCharge(mockToday);
 
       expect(result).toBeTruthy();
+    });
+  });
+
+  describe('The check that the begin date is valid', () => {
+    it('should return true when given a valid date', () => {
+      const mockToday = new Date('2019-11-26');
+      const result: boolean = component.isBeginDateValid(mockToday);
+
+      expect(result).toBeTruthy();
+    });
+
+    it('should return false when given a weekend date to begin the rental on', () => {
+      const mockToday = new Date('2019-11-30');
+      component.userFormData = {
+        rentalType: 'personal',
+        postcode: 1000,
+        ruralDelivery: 'non-rural',
+        rentalDates: { begin: new Date('2019-11-30'), end: new Date('2019-12-04') },
+        productChoice: '',
+        name: 'test user',
+      };
+      const result: boolean = component.isBeginDateValid(mockToday);
+
+      expect(result).toBeFalsy();
     });
   });
 });

@@ -54,6 +54,10 @@ export class DateTools {
     const isPublicHoliday = _.includes(this.publicHolidayDates, dateToCheck);
     const isWeekendDate = this.isWeekendDate(date);
 
+    console.log('date: ', date);
+    console.log(isPublicHoliday.toString());
+    console.log(isWeekendDate.toString());
+
     return (isPublicHoliday || isWeekendDate);
   }
 

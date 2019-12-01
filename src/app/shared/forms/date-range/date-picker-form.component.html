@@ -2,19 +2,22 @@
   <label>
     {{ question?.question }}
   </label>
-  <mat-form-field>
+  <mat-form-field style="max-width: 1px !important;">
     <input matInput
+           readonly
            placeholder=""
            (dateInput)="saveDates($event)"
            [satDatepicker]="picker"
            [min]="question?.minDate"
            [matDatepickerFilter]="question?.validDatesFilter"
            formControlName="date">
-    <sat-datepicker #picker [rangeMode]="true"
-                    panelClass="range-datepicker"
-                    orderPeriodLabel="month"
-                    [selectFirstDateOnClose]="true">
-    </sat-datepicker>
-    <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
   </mat-form-field>
+  <sat-datepicker #picker [rangeMode]="true"
+                  panelClass="range-datepicker"
+                  orderPeriodLabel="month"
+                  [selectFirstDateOnClose]="true">
+  </sat-datepicker>
+  <!--<sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>-->
+  <button mat-raised-button (click)="picker.open()">Choose Dates</button>
+  <!--<p *ngIf="picker.opened"></p>-->
 </div>
