@@ -9,6 +9,37 @@ import { NguCarouselConfig } from '@ngu/carousel';
 })
 
 export class CheckoutCarouselComponent implements OnInit {
+  products = [ {
+    brand: 'Zotac',
+    model: 'Desktop PC',
+    image: 'assets/products/desktop-pc/500x500.jpg',
+    qty: 0,
+  }, {
+    brand: 'HP',
+    model: 'Reverb',
+    image: 'assets/products/hp-reverb/500x500.jpg',
+    qty: 0,
+  }, {
+      brand: 'HTC',
+      model: 'Vive',
+      image: 'assets/products/htc-vive/500x500.jpg',
+      qty: 0,
+  }, {
+    brand: 'HTC',
+    model: 'Vive Cosmos',
+    image: 'assets/products/htc-vive-cosmos/500x500.jpg',
+    qty: 0,
+  }, {
+    brand: 'HTC',
+    model: 'Vive Pro',
+    image: 'assets/products/htc-vive-pro/500x500.jpg',
+    qty: 0,
+  }, {
+    brand: 'Lightstands',
+    model: '',
+    image: 'assets/products/lightstands/500x500.jpg',
+    qty: 0,
+  }]
   productImages = [
     'assets/products/desktop-pc/500x500.jpg',
     'assets/products/hp-reverb/500x500.jpg',
@@ -24,10 +55,10 @@ export class CheckoutCarouselComponent implements OnInit {
     2: [],
     3: [],
     4: [],
-    5: []
+    5: [],
   };
   public carouselTile: NguCarouselConfig = {
-    grid: { xs: 1, sm: 1, md: 3, lg: 3, all: 0 },
+    grid: { xs: 1, sm: 1, md: 3, lg: 4, all: 0 },
     slide: 3,
     speed: 250,
     point: {
@@ -59,5 +90,9 @@ export class CheckoutCarouselComponent implements OnInit {
         );
       }
     }
+  }
+
+  public updateQty(item, newQty) {
+    this.products[item].qty = newQty;
   }
 }
