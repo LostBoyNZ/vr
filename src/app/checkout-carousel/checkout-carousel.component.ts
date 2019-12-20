@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { NguCarouselConfig } from '@ngu/carousel';
 
 @Component({
@@ -9,6 +9,9 @@ import { NguCarouselConfig } from '@ngu/carousel';
 })
 
 export class CheckoutCarouselComponent implements OnInit {
+
+  @Output() orderChange = new EventEmitter();
+
   products = [ {
     brand: 'Zotac',
     model: 'Desktop PC',
@@ -92,7 +95,11 @@ export class CheckoutCarouselComponent implements OnInit {
     }
   }
 
-  public updateQty(item, newQty) {
+  public changeValue(item, newQty) {
+    this.orderChange.emit({productId: item, qty: newQty});
+
+    console.log('item: ', item);
+
     this.products[item].qty = newQty;
   }
 }

@@ -1,13 +1,13 @@
 <ngu-carousel #myCarousel [inputs]="carouselTile" [dataSource]="carouselTileItems">
   <ngu-tile *nguCarouselDef="let item; let i = index">
     <div>
-      <img [src]="products[item].image" style="max-width: 100%;">
-      <h1>{{products[item].brand}} {{products[item].model}}</h1>
+      <img [src]="products[item].image" style="max-width: 300px;">
+      <h2>{{products[item].brand}} {{products[item].model}}</h2>
     </div>
     <div>
       Qty: {{products[item].qty}}
     </div>
-    <input #qty type="number" name="qty" min="0" max="5" (change)="updateQty(item, qty.value)">
+    <input #qty type="number" name="qty" min="0" max="5" (change)="changeValue(item, qty.value)">
   </ngu-tile>
   <button NguCarouselPrev class="leftRs" [style.opacity]="myCarousel.isFirst ? 0.5:1">&lt;</button>
   <button NguCarouselNext class="rightRs" [style.opacity]="myCarousel.isLast ? 0.5:1">&gt;</button>

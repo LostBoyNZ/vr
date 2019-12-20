@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AngularMaterialModule} from './angular-material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatIconModule} from '@angular/material/icon';
 import {AppComponent} from './app.component';
 import {CheckoutComponent} from './checkout/checkout.component';
 import {ProductAddComponent} from './product-add/product-add.component';
@@ -20,6 +21,7 @@ import {SingleDateFormComponent} from './shared/forms/single-date/single-date-fo
 import {DatePickerFormComponent} from './shared/forms/date-range/date-picker-form.component';
 import {NguCarouselModule} from '@ngu/carousel';
 import {CheckoutCarouselComponent} from './checkout-carousel/checkout-carousel.component';
+import {CollapseComponent} from './shared/components/collapse/collapse.component';
 
 @NgModule({
   declarations: [
@@ -34,12 +36,14 @@ import {CheckoutCarouselComponent} from './checkout-carousel/checkout-carousel.c
     SingleDateFormComponent,
     DatePickerFormComponent,
     CheckoutCarouselComponent,
+    CollapseComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
+    MatIconModule,
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,

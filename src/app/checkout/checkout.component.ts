@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, FormControl, AbstractControl} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {Order, OrderLine} from './orderLine.model';
 import {DateTools} from '../shared/tools/dateTools';
 import * as _ from 'lodash';
@@ -239,5 +239,10 @@ export class CheckoutComponent implements OnInit {
       // Default number of days to spend in transit
       return 3;
     }
+  }
+
+  updateOrder({productId, qty}) {
+      console.log(productId);
+      console.log(qty);
   }
 }

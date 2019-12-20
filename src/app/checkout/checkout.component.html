@@ -49,6 +49,6 @@
 
 </form>
 
-<app-checkout-carousel></app-checkout-carousel>
+<app-checkout-carousel (orderChange)='updateOrder($event)'></app-checkout-carousel>
 
 {{orderFormGroup.value | json}}
