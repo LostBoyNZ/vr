@@ -1,0 +1,50 @@
+{
+  "1": {
+    "brand": "Zotac",
+    "model": "Desktop PC",
+    "imageUrl": "desktop-pc",
+    "stockQty": 8,
+    "pricingSchemeId": 1,
+    "requiresShipping": true
+  },
+  "2": {
+    "brand": "HP",
+    "model": "Reverb",
+    "imageUrl": "hp-reverb",
+    "stockQty": 2,
+    "pricingSchemeId": 1,
+    "requiresShipping": true
+  },
+  "3": {
+    "brand": "HTC",
+    "model": "Vive",
+    "imageUrl": "htc-vive",
+    "stockQty": 6,
+    "pricingSchemeId": 1,
+    "requiresShipping": true
+  },
+  "4": {
+    "brand": "HP",
+    "model": "Vive Cosmos",
+    "imageUrl": "htc-vive-cosmos",
+    "stockQty": 1,
+    "pricingSchemeId": 1,
+    "requiresShipping": true
+  },
+  "5": {
+    "brand": "HTC",
+    "model": "Vive Pro",
+    "imageUrl": "htc-vive-pro",
+    "stockQty": 6,
+    "pricingSchemeId": 1,
+    "requiresShipping": true
+  },
+  "6": {
+    "brand": "Lightstands",
+    "model": "",
+    "imageUrl": "lightstands",
+    "stockQty": 4,
+    "pricingSchemeId": 2,
+    "requiresShipping": true
+  }
+}

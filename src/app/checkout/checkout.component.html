@@ -35,20 +35,13 @@
     </div>
 
   </div>
-  <div [formGroup]="orderFormGroup">
-    <button (click)="addOrderLine()">Add Order Line</button>
-    <div formArrayName="orderLinesArray">
-      <div *ngFor="let orderLine of orderLinesArray.controls; let i = index" [formGroupName]="i">
-        <input formControlName="item" placeholder="Item">
-        <input formControlName="qty" placeholder="Qty">
-      </div>
-    </div>
+
+  <app-checkout-carousel (orderChange)='updateOrder($event)' [allOrderLines]='allOrderLines' [checkout]="this"></app-checkout-carousel>
+
+  <div>
+    Total Price: {{ pricingTools.formatPrice(getTotalPriceForOrder()) }}
   </div>
 
   <input type="submit" value="Submit">
 
 </form>
-
-<app-checkout-carousel (orderChange)='updateOrder($event)'></app-checkout-carousel>
-
-{{orderFormGroup.value | json}}

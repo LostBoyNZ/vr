@@ -1,0 +1,15 @@
+{
+  "1": {
+    "setPriceForAnyLength": 0,
+    "baseNights": 3,
+    "basePrice": 69,
+    "4": 77,
+    "5": 85,
+    "6": 93,
+    "7": 99,
+    "extraNight": 14
+  },
+  "2": {
+    "setPriceForAnyLength": 10
+  }
+}

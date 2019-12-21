@@ -6,7 +6,7 @@ export class Order {
 
 export class OrderLine implements IOrderLine {
   constructor(
-    public item: string,
-    public qty: string,
+    public id: number,
+    public qty: number,
   ) {}
 }

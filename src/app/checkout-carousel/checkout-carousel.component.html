@@ -1,13 +1,15 @@
-<ngu-carousel #myCarousel [inputs]="carouselTile" [dataSource]="carouselTileItems">
-  <ngu-tile *nguCarouselDef="let item; let i = index">
+<ngu-carousel #myCarousel [inputs]="carouselTile" [dataSource]="carouselTileItems" >
+  <ngu-tile *nguCarouselDef="let id; let i = index">
     <div>
-      <img [src]="products[item].image" style="max-width: 300px;">
-      <h2>{{products[item].brand}} {{products[item].model}}</h2>
+      <img [src]="createImageUrl(products[id].imageUrl)" style="max-width: 300px;">
+      <h2>{{products[id].brand}} {{products[id].model}}</h2>
     </div>
     <div>
-      Qty: {{products[item].qty}}
+      Price: {{pricingTools.formatPrice(getPrice(id))}}
+      Qty: {{this.getQty(id)}}
     </div>
-    <input #qty type="number" name="qty" min="0" max="5" (change)="changeValue(item, qty.value)">
+    <button (click)="changeQty(id, -1)" [disabled]="this.getQty(id) < 1">-</button>
+    <button (click)="changeQty(id, 1)" [disabled]="this.getQty(id) >= products[id].stockQty">+</button>
   </ngu-tile>
   <button NguCarouselPrev class="leftRs" [style.opacity]="myCarousel.isFirst ? 0.5:1">&lt;</button>
   <button NguCarouselNext class="rightRs" [style.opacity]="myCarousel.isLast ? 0.5:1">&gt;</button>
