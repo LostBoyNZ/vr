@@ -17,6 +17,7 @@ export interface IQuestion {
   minDate?: Date;
   validDatesFilter?: any;
   defaultDates?: { begin: Date; end: Date };
+  validators?: any[];
 }
 
 export interface IFormAnswer {
@@ -60,6 +61,7 @@ export class CheckoutComponent implements OnInit {
   orderFormGroup: FormGroup;
   datesFormGroup: FormGroup;
 
+  public maxQuestionReached: number;
   public questions: IQuestion[];
   public formBuilder: FormBuilder = new FormBuilder();
   public orderLinesGroup: FormGroup;
@@ -97,6 +99,7 @@ export class CheckoutComponent implements OnInit {
     this.setMinDay();
     // this.minDate = new Date(2019, 10, 20); // month count starts at 0 for some reason
 
+    this.maxQuestionReached = 0;
     this.questions = [
       {
         question: "What type of rental is this?",
@@ -189,7 +192,7 @@ export class CheckoutComponent implements OnInit {
     this.updateQuestionsByType(FormTypes.DATE_RANGE, "minDate", this.minDate);
   }
 
-  updateUserFormData(answer: IFormAnswer) {
+  updateUserFormData(question: IQuestion, answer: IFormAnswer) {
     this.userFormData[answer.formFieldName] = answer.value;
     console.log(this.userFormData);
     if (
@@ -199,6 +202,8 @@ export class CheckoutComponent implements OnInit {
       this.updateDateRangePicker();
     }
     this.shouldShowGst = (this.userFormData.rentalType !== 'company');
+
+    this.maxQuestionReached++;
   }
 
   shouldUseRegularInputBox(formType: string) {

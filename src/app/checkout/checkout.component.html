@@ -1,47 +1,53 @@
 <form class="booking-form" action="" method="post">
 
-  <div *ngFor="let oneQuestion of this.questions">
+  <div *ngFor="let oneQuestion of this.questions; let questionNumber = index">
 
-    <div *ngIf="oneQuestion.type == 'single-date'">
-      <app-form-element-single-date [question]="oneQuestion" (answer)="updateUserFormData($event)"></app-form-element-single-date>
+    <div *ngIf="questionNumber <= this.maxQuestionReached">
+      <div *ngIf="oneQuestion.type == 'single-date'">
+        <app-form-element-single-date [question]="oneQuestion" (answer)="updateUserFormData(oneQuestion, $event)"></app-form-element-single-date>
+      </div>
+
+      <div *ngIf="oneQuestion.type == 'date-range'">
+        <app-form-element-date-picker [question]="oneQuestion" (answer)="updateUserFormData(oneQuestion, $event)"></app-form-element-date-picker>
+        <p *ngIf="this.userFormData.rentalDates.begin">
+          The gear should arrive to you on {{ dateTools.formatDateDisplay(this.userFormData.rentalDates.begin, 'ddd, Do MMM YYYY') }} between 9am and 5pm
+        </p>
+        <p *ngIf="this.userFormData.rentalDates.end">
+          It can sent back on {{ dateTools.formatDateDisplay(this.userFormData.rentalDates.end, 'ddd, Do MMM YYYY') }} between 9am and 5pm
+        </p>
+        <p *ngIf="this.isExtraPostageCharge()">
+          We just need to use faster shipping, or we could aim for {{ getEarliestRentalDateFromDate(true) }} to use economy shipping
+        </p>
+        <p *ngIf="!isBeginDateValid()">
+          Apologies we can't have it there in time, but we could aim to have it arrive on {{ getEarliestRentalDateFromDate(false) }}
+        </p>
+      </div>
+
+      <div *ngIf="oneQuestion.type == 'radio'">
+        <app-form-element-radio [question]="oneQuestion" (answer)="updateUserFormData(oneQuestion, $event)"></app-form-element-radio>
+      </div>
+
+      <div *ngIf="oneQuestion.type == 'number'">
+        <app-form-element-number [question]="oneQuestion" (answer)="updateUserFormData(oneQuestion, $event)"></app-form-element-number>
+      </div>
+
+      <div *ngIf="shouldUseRegularInputBox(oneQuestion.type)">
+        <app-form-element-text [question]="oneQuestion" (answer)="updateUserFormData(oneQuestion, $event)"></app-form-element-text>
+      </div>
+
+      <div *ngIf="oneQuestion.type == 'product_choice'">
+        <app-checkout-carousel (orderChange)='updateOrder($event)' [allOrderLines]='allOrderLines' [checkout]="this"></app-checkout-carousel>
+
+        <div>
+          Total Price: {{ pricingTools.formatPrice(getTotalPriceForOrder()) }}
+        </div>
+      </div>
+
+      <div *ngIf="questionNumber === this.questions.length">
+        <input type="submit" value="Submit">
+      </div>
+
     </div>
-
-    <div *ngIf="oneQuestion.type == 'date-range'">
-      <app-form-element-date-picker [question]="oneQuestion" (answer)="updateUserFormData($event)"></app-form-element-date-picker>
-      <p *ngIf="this.userFormData.rentalDates.begin">
-        The gear should arrive to you on {{ dateTools.formatDateDisplay(this.userFormData.rentalDates.begin, 'ddd, Do MMM YYYY') }} between 9am and 5pm
-      </p>
-      <p *ngIf="this.userFormData.rentalDates.end">
-        It can sent back on {{ dateTools.formatDateDisplay(this.userFormData.rentalDates.end, 'ddd, Do MMM YYYY') }} between 9am and 5pm
-      </p>
-      <p *ngIf="this.isExtraPostageCharge()">
-        We just need to use faster shipping, or we could aim for {{ getEarliestRentalDateFromDate(true) }} to use economy shipping
-      </p>
-      <p *ngIf="!isBeginDateValid()">
-        Apologies we can't have it there in time, but we could aim to have it arrive on {{ getEarliestRentalDateFromDate(false) }}
-      </p>
-    </div>
-
-    <div *ngIf="oneQuestion.type == 'radio'">
-      <app-form-element-radio [question]="oneQuestion" (answer)="updateUserFormData($event)"></app-form-element-radio>
-    </div>
-
-    <div *ngIf="oneQuestion.type == 'number'">
-      <app-form-element-number [question]="oneQuestion" (answer)="updateUserFormData($event)"></app-form-element-number>
-    </div>
-
-    <div *ngIf="shouldUseRegularInputBox(oneQuestion.type)">
-      <app-form-element-text [question]="oneQuestion" (answer)="updateUserFormData($event)"></app-form-element-text>
-    </div>
-
   </div>
-
-  <app-checkout-carousel (orderChange)='updateOrder($event)' [allOrderLines]='allOrderLines' [checkout]="this"></app-checkout-carousel>
-
-  <div>
-    Total Price: {{ pricingTools.formatPrice(getTotalPriceForOrder()) }}
-  </div>
-
-  <input type="submit" value="Submit">
 
 </form>
