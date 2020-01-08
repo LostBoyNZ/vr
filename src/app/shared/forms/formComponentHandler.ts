@@ -1,6 +1,7 @@
 import {EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IFormAnswer, IQuestion} from '../../checkout/checkout.component';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl} from '@angular/forms';
+import {Validators} from './validators';
 
 export class FormComponentHandler implements OnInit {
   @Input() question: IQuestion;
@@ -9,9 +10,17 @@ export class FormComponentHandler implements OnInit {
 
   formElement = new FormControl('');
 
-  constructor() { }
+  public validators: Validators;
+
+  constructor() {
+    this.validators = new Validators();
+  }
 
   ngOnInit() { }
+
+  validate(value: any) { }
+
+  isValidAnswer(value: any) { }
 
   emitAnswer(answer: IFormAnswer) {
     this.answer.emit(answer);

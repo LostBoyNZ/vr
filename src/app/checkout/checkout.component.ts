@@ -14,6 +14,7 @@ export interface IQuestion {
   name: string;
   choices?: string[];
   maxCharacters?: number;
+  minCharacters?: number;
   minDate?: Date;
   validDatesFilter?: any;
   defaultDates?: { begin: Date; end: Date };
@@ -111,7 +112,8 @@ export class CheckoutComponent implements OnInit {
         question: "What is your postcode?",
         type: FormTypes.NUMBER,
         name: "postcode",
-        maxCharacters: 4
+        maxCharacters: 4,
+        minCharacters: 4
       },
       {
         question: "What type of postal address will you use?",

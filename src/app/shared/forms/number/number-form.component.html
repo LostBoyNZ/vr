@@ -9,6 +9,9 @@
     pattern="[0-9]*"
     [maxlength]="question.maxCharacters"
     [formControl]="formElement"
-    (change)="emitAnswer({formFieldName: question.name, value: formElement.value})"
+    (change)="validate(formElement.value)"
   >
+  <div *ngIf="!isValidAnswer(formElement.value)">
+    Tip: Please enter a 4 digit postcode
+  </div>
 </div>
