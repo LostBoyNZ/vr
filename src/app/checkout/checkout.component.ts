@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Order, OrderLine } from "./orderLine.model";
 import { DateTools } from "../shared/tools/dateTools";
 import { PricingTools } from "../shared/tools/pricingTools";
@@ -7,6 +7,8 @@ import { ProductTools } from "../shared/tools/productTools";
 import * as _ from "lodash";
 import { PostcodeTools } from "../shared/tools/postcodeTools";
 import { ShippingTimeTools } from "../shared/tools/shippingTimeTools";
+import {IDynamicFormConfig} from '../shared/forms/formComponentHandler';
+import {CreateDynamicForm} from '../shared/forms/create-dynamic-form';
 
 export interface IQuestion {
   question: string;
@@ -62,6 +64,8 @@ export class CheckoutComponent implements OnInit {
   orderFormGroup: FormGroup;
   datesFormGroup: FormGroup;
 
+  public orderFormConfig: IDynamicFormConfig;
+
   public maxQuestionReached: number;
   public questions: IQuestion[];
   public formBuilder: FormBuilder = new FormBuilder();
@@ -85,6 +89,14 @@ export class CheckoutComponent implements OnInit {
     name: null
   };
 
+  public testForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(30)
+    ])
+  });
+
   constructor() {
     this.createForm();
     this.dateTools = new DateTools();
@@ -92,6 +104,16 @@ export class CheckoutComponent implements OnInit {
     this.productTools = new ProductTools();
     this.postcodeTools = new PostcodeTools();
     this.shippingTimeTools = new ShippingTimeTools();
+
+    this.orderFormConfig = {
+      inputs: [
+        CreateDynamicForm.input(
+          'label',
+          'name',
+          'placeholder',
+        ),
+      ],
+    };
   }
 
   ngOnInit() {
@@ -338,6 +360,10 @@ export class CheckoutComponent implements OnInit {
 
     console.log("this.allOrderLines: ", JSON.stringify(this.allOrderLines));
     this.updateOrderQty.emit({ id, qtyChange });
+  }
+
+  public submitted(form: FormGroup, something: string) {
+    console.log(something);
   }
 
 

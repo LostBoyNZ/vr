@@ -1,3 +1,30 @@
+<ng-template #pppoeSetupModal let-close="close">
+  <app-dynamic-form [config]="orderFormConfig"
+                [close]="close"
+                (submitted)="submitted($event, 'toggleNext')">
+  </app-dynamic-form>
+</ng-template>
+
+<form [formGroup]="testForm">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name"
+           formControlName="name">
+    <div *ngIf="testForm.get('name').invalid && (testForm.get('name').dirty || testForm.get('name').touched)"
+         class="alert alert-danger">
+      <div *ngIf="testForm.get('name').errors.required">
+        Name is required.
+      </div>
+      <div *ngIf="testForm.get('name').errors.minlength">
+        Name cannot be more than 30 characters long.
+      </div>
+      <div *ngIf="testForm.get('name').errors.minlength">
+        Name must be at least 2 characters long.
+      </div>
+    </div>
+  </div>
+<form>
+
 <form class="booking-form" action="" method="post">
 
   <div *ngFor="let oneQuestion of this.questions; let questionNumber = index">

@@ -6,6 +6,21 @@
     matInput
     type="text"
     inputmode="numeric"
+    ngModel
+    id="name"
+    name="name"
+    #name="ngModel"
+    class="form-control"
+    required
+    pattern="[0-9]*]"
+    [maxlength]="question.maxCharacters"
+    [minlength]="question.minCharacters"
+    (change)="validate(formElement.value)"
+  >
+  <input
+    matInput
+    type="text"
+    inputmode="numeric"
     pattern="[0-9]*"
     [maxlength]="question.maxCharacters"
     [formControl]="formElement"
@@ -13,5 +28,22 @@
   >
   <div *ngIf="!isValidAnswer(formElement.value)">
     Tip: Please enter a 4 digit postcode
+  </div>
+  <div *ngIf="name.invalid && (name.dirty || name.touched)"
+       class="alert alert-danger">
+
+    <div *ngIf="name.errors.required">
+      Name is required.
+    </div>
+    <div *ngIf="name.errors.minlength">
+      Name must be at least 4 characters long.
+    </div>
+    <div *ngIf="name.errors.maxlength">
+      Name must be 4 characters long maximum.
+    </div>
+    <div *ngIf="name.errors.forbiddenName">
+      Name cannot be Bob.
+    </div>
+
   </div>
 </div>
