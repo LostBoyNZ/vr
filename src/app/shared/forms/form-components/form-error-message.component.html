@@ -1,0 +1,7 @@
+<span *ngIf="input?.dirty || input?.touched || input?.root?.submitted">
+    <span class="error-message"
+          *ngIf="input?.errors"
+          [attr.data-name] = "name | uppercase">
+    {{input?.errors?.response}}
+    </span>
+</span>

@@ -6,6 +6,8 @@ import { CreateDynamicForm } from './create-dynamic-form';
 import { FormInputComponent } from './form-components/form-input.component';
 import { CustomFormValidators } from './custom-form.validators';
 import {DynamicFormComponent} from './dynamic-form.component';
+import {FormWarningMessageComponent} from './form-components/form-warning-message.component';
+import {FormErrorMessageComponent} from './form-components/form-error-message.component';
 
 @NgModule({
     imports: [
@@ -17,13 +19,19 @@ import {DynamicFormComponent} from './dynamic-form.component';
         DynamicFieldDirective,
         DynamicFormComponent,
         FormInputComponent,
+        FormErrorMessageComponent,
+        FormWarningMessageComponent,
     ],
     exports: [
         DynamicFormComponent,
         FormInputComponent,
+        FormErrorMessageComponent,
+        FormWarningMessageComponent,
     ],
     entryComponents: [
         FormInputComponent,
+        FormErrorMessageComponent,
+        FormWarningMessageComponent,
     ],
     providers: [CustomFormValidators, CreateDynamicForm],
 })

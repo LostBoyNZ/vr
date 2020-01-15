@@ -6,10 +6,6 @@ import { isNil } from 'lodash';
 @Component({
     selector: 'app-dynamic-form',
     template: `
-        <div class="modal-header">
-            <button id="close" type="button" class="close" (click)="close('cancel')"><i class="material-icons">close</i></button>
-            <h3 [ngClass]="{'modal-title': true, 'text-capitalize': textCapitalize}" id="modal-title" translate>{{config.title || title}}</h3>
-        </div>
         <form
           class="dynamic-form modal-body"
           [formGroup]="form"

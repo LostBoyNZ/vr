@@ -3,8 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { IDynamicForm } from '../dynamic-field.directive';
 
 @Component({
-    selector: 'app-form-input',
-    templateUrl: ('./form-input.component.html'),
+  selector: "app-form-input",
+  templateUrl: "./form-input.component.html",
 })
 export class FormInputComponent {
     @Input()

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { get, includes, isEmpty, isInteger, isEqual } from 'lodash';
 
 export interface IErrorMessage {
-    key: string;
+    response: string;
     params?: Object;
 }
 
@@ -15,7 +15,7 @@ export class CustomFormValidators extends Validators {
                 control.value,
             )
                 ? null
-                : { key: 'ENTITY_NAME_ERROR' };
+                : { response: 'ENTITY_NAME_ERROR' };
         }
     }
 
@@ -25,7 +25,7 @@ export class CustomFormValidators extends Validators {
                 control.value,
             )
                 ? null
-                : { key: 'CONTAINERS.INSTANCE.NAME_ERROR' };
+                : { response: 'CONTAINERS.INSTANCE.NAME_ERROR' };
         }
     }
 
@@ -33,7 +33,7 @@ export class CustomFormValidators extends Validators {
         if (control.value) {
             return CustomFormValidators.numericCommaOnlyNoSpaces(control.value)
                 ? null
-                : { key: 'CONTAINERS.INSTANCE.CPU_LIMIT_ERROR' };
+                : { response: 'CONTAINERS.INSTANCE.CPU_LIMIT_ERROR' };
         }
     }
 
@@ -41,32 +41,32 @@ export class CustomFormValidators extends Validators {
         text: FormControl,
     ) => {
         if (text.value) {
-            const key = errorMessage || 'PATTERN_DOES_NOT_CONTAIN_THIS';
-            return includes(text.value, target) ? { key, params: { target } } : null;
+            const response = errorMessage || 'PATTERN_DOES_NOT_CONTAIN_THIS';
+            return includes(text.value, target) ? { response, params: { target } } : null;
         }
     }
 
     static isRequired(text: FormControl): IErrorMessage {
-        return text.value ? null : { key: 'REQUIRED_FIELD' };
+        return text.value ? null : { response: 'Oops, we require something here' };
     }
 
     static isNumeric(control: FormControl): IErrorMessage {
         if (!control.value) {
             return;
         }
-        return isNaN(control.value) ? { key: 'NUMBER_FIELD' } : null;
+        return isNaN(control.value) ? { response: 'NUMBER_FIELD' } : null;
     }
 
     static noDecimals(control: FormControl) {
         if (!control.value) {
             return;
         }
-        return control.value.indexOf('.') !== -1 ? { key: 'INTEGER_ONLY_ERROR' } : null;
+        return control.value.indexOf('.') !== -1 ? { response: 'INTEGER_ONLY_ERROR' } : null;
     }
 
     static arrayIsRequired(text: FormControl): IErrorMessage {
         if (text.value) {
-            return text.value.length ? null : { key: 'REQUIRED_FIELD' };
+            return text.value.length ? null : { response: 'REQUIRED_FIELD' };
         }
     }
 
@@ -76,15 +76,15 @@ export class CustomFormValidators extends Validators {
         }
         const value = Number(text.value);
         const valid = value >= min && value <= max;
-        return valid ? null : { key: 'VALUE_MUST_BE_IN_RANGE', params: { min, max } };
+        return valid ? null : { response: 'VALUE_MUST_BE_IN_RANGE', params: { min, max } };
     };
 
     static maxLength = (length: number, errorMessage?: string) => (text: FormControl) => {
         if (!text.value) {
             return;
         }
-        const key = errorMessage || 'VALUE_EXCEED_MAX_LENGTH';
-        return text.value.length > length ? { key, params: { length } } : null;
+        const response = errorMessage || 'VALUE_EXCEED_MAX_LENGTH';
+        return text.value.length > length ? { response, params: { length } } : null;
     };
 
     static isAlphaNumericDotDashUnderscoreHyphenSlashOnlyNoSpaces(
@@ -95,7 +95,7 @@ export class CustomFormValidators extends Validators {
                 control.value,
             )
                 ? null
-                : { key: 'PATTERN_ALPHANUMERIC_DASH_UNDERSCORE_DOT_SLASH' };
+                : { response: 'PATTERN_ALPHANUMERIC_DASH_UNDERSCORE_DOT_SLASH' };
         }
     }
 
@@ -103,7 +103,7 @@ export class CustomFormValidators extends Validators {
         if (control.value) {
             return CustomFormValidators.noQuotesForwardSlashQuestionMarkOrSpaces(control.value)
                 ? null
-                : { key: 'PATTERN_NO_QUOTES_BACKSLASH_QUESTION_MARK_SPACES' };
+                : { response: 'PATTERN_NO_QUOTES_BACKSLASH_QUESTION_MARK_SPACES' };
         }
     }
 
@@ -111,7 +111,7 @@ export class CustomFormValidators extends Validators {
         if (control.value) {
             return CustomFormValidators.asciiPrintable(control.value)
                 ? null
-                : { key: 'PATTERN_PRINTABLE' };
+                : { response: 'PATTERN_PRINTABLE' };
         }
     }
 

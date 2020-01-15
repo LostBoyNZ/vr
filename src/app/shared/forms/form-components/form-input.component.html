@@ -1,7 +1,7 @@
 <div *ngIf="config?.isDisplayed" class="edit-row" [attr.name]="config.name.toUpperCase()"
      [attr.data-name]="config.name.toUpperCase()">
     <div class="dynamic-field edit-item edit-item-full-width" [formGroup]="group">
-        <span class="edit-label" translate>{{config.label}}</span>
+        <span class="edit-label">{{config.label}}</span>
         <span class="edit-value">
             <input [type]="inputType"
                    class="form-control"

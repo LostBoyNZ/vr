@@ -22,6 +22,7 @@ import {DatePickerFormComponent} from './shared/forms/date-range/date-picker-for
 import {NguCarouselModule} from '@ngu/carousel';
 import {CheckoutCarouselComponent} from './checkout-carousel/checkout-carousel.component';
 import {CollapseComponent} from './shared/components/collapse/collapse.component';
+import {DynamicFormModule} from './shared/forms/dynamic-form.module';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {CollapseComponent} from './shared/components/collapse/collapse.component
     SatNativeDateModule,
     MatMomentDateModule,
     NguCarouselModule,
+    DynamicFormModule,
   ],
   entryComponents: [
   ],

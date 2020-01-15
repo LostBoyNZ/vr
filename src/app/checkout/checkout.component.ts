@@ -1,5 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from "@angular/forms";
 import { Order, OrderLine } from "./orderLine.model";
 import { DateTools } from "../shared/tools/dateTools";
 import { PricingTools } from "../shared/tools/pricingTools";
@@ -7,8 +13,9 @@ import { ProductTools } from "../shared/tools/productTools";
 import * as _ from "lodash";
 import { PostcodeTools } from "../shared/tools/postcodeTools";
 import { ShippingTimeTools } from "../shared/tools/shippingTimeTools";
-import {IDynamicFormConfig} from '../shared/forms/formComponentHandler';
-import {CreateDynamicForm} from '../shared/forms/create-dynamic-form';
+import { IDynamicFormConfig } from "../shared/forms/formComponentHandler";
+import { CreateDynamicForm } from "../shared/forms/create-dynamic-form";
+import { CustomFormValidators } from "../shared/forms/custom-form.validators";
 
 export interface IQuestion {
   question: string;
@@ -90,7 +97,7 @@ export class CheckoutComponent implements OnInit {
   };
 
   public testForm = new FormGroup({
-    name: new FormControl('', [
+    name: new FormControl("", [
       Validators.required,
       Validators.minLength(2),
       Validators.maxLength(30)
@@ -107,12 +114,10 @@ export class CheckoutComponent implements OnInit {
 
     this.orderFormConfig = {
       inputs: [
-        CreateDynamicForm.input(
-          'label',
-          'name',
-          'placeholder',
-        ),
-      ],
+        CreateDynamicForm.input("label", "name", "placeholder", "", [
+          CustomFormValidators.isRequired,
+        ])
+      ]
     };
   }
 
@@ -225,7 +230,7 @@ export class CheckoutComponent implements OnInit {
     ) {
       this.updateDateRangePicker();
     }
-    this.shouldShowGst = (this.userFormData.rentalType !== 'company');
+    this.shouldShowGst = this.userFormData.rentalType !== "company";
 
     this.maxQuestionReached++;
   }
@@ -317,17 +322,16 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  public getPriceByProductId(
-    id: number,
-    qty: number
-  ): number {
+  public getPriceByProductId(id: number, qty: number): number {
     const pricingSchemeId = this.productTools.getPricingSchemeId(id);
     const price = this.pricingTools.getPriceByPricingIdAndNights(
       pricingSchemeId,
       this.getNumberOfNightsInRental()
     );
 
-    return this.shouldShowGst ? price * qty : this.pricingTools.removeGst(price * qty);
+    return this.shouldShowGst
+      ? price * qty
+      : this.pricingTools.removeGst(price * qty);
   }
 
   public getTotalPriceForOrder(): number {
@@ -362,9 +366,11 @@ export class CheckoutComponent implements OnInit {
     this.updateOrderQty.emit({ id, qtyChange });
   }
 
-  public submitted(form: FormGroup, something: string) {
-    console.log(something);
-  }
-
-
+  public submitted(form: FormGroup) {
+    const {valid, value} = form;
+    if (valid && !_.isEmpty(value)) {
+      console.log('yay!!');
+      // form.value = { name: "Graham" }
+    }
+  };
 }

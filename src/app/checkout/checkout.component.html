@@ -1,9 +1,14 @@
-<ng-template #pppoeSetupModal let-close="close">
-  <app-dynamic-form [config]="orderFormConfig"
-                [close]="close"
-                (submitted)="submitted($event, 'toggleNext')">
-  </app-dynamic-form>
-</ng-template>
+<app-dynamic-form [config]="orderFormConfig" (submitted)="submitted($event)">
+</app-dynamic-form>
+
+<!--
+
+<app-dynamic-form [config]="orderFormConfig" (submitted)="submitted($event, 'toggleNext')">
+</app-dynamic-form>
+
+-->
+
+<!--
 
 <form [formGroup]="testForm">
   <div class="form-group">
@@ -78,3 +83,5 @@
   </div>
 
 </form>
+
+-->
