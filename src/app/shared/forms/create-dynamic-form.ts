@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { dynamicFormTypes } from './dynamic-field.directive';
 import { IInput } from './form-components/form-input.component';
+import {ISelect, ISelectData} from './form-components/form-select.component';
 
 @Injectable()
 export class CreateDynamicForm {
@@ -28,4 +29,29 @@ export class CreateDynamicForm {
             inputType,
         };
     }
+
+  static select(
+    label: string,
+    name: string,
+    data: ISelectData[],
+    defaultValue?: string,
+    validators?: Function[],
+    selectLabelAlign = 'right',
+    listMaxHeight?: number,
+    alwaysExpanded?: boolean,
+    placeholder?: string,
+  ): ISelect {
+    return {
+      type: dynamicFormTypes.select,
+      label,
+      name,
+      data,
+      defaultValue,
+      validators,
+      selectLabelAlign,
+      listMaxHeight,
+      alwaysExpanded,
+      placeholder,
+    };
+  }
 }

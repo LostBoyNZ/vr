@@ -1,0 +1,22 @@
+<div class="edit-row" id="{{config.name}}" [formGroup]="group" [attr.data-name]="config.name.toUpperCase()">
+    <div class="edit-select">
+        <span class="edit-select-label">{{config.label}}</span>
+        <span *ngIf="config.errorMessage" class="edit-select-error-message">{{config.errorMessage}}</span>
+        <span class="edit-select-value" [ngStyle]="getSelectValueStyle(config.selectLabelAlign)" >
+           {{config?.placeholder}} {{(model === '' ? 'all' : model)}}
+        </span>
+        <ul class="edit-select-slides">
+            <li class="edit-select-slide">
+                <ul class="edit-select-list" [ngStyle]="getSelectListStyle(config.listMaxHeight)">
+                    <li class="edit-select-option" [attr.data-name]="item.name" *ngFor="let item of config.data"
+                        [ngClass]="ngClassConfig(item.value)">
+                        <button type="button" class="btn-select-entity"
+                                (click)="itemSelected(item); toggleExpanded()">{{item.name}}
+                        </button>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div><input [hidden]="true" [ngModel]="model" [formControlName]="config.name" /></div>
+</div>

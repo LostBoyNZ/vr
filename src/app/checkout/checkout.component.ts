@@ -97,6 +97,7 @@ export class CheckoutComponent implements OnInit {
   };
 
   public testForm = new FormGroup({
+    // THIS ISN'T CURRENTLY USED
     name: new FormControl("", [
       Validators.required,
       Validators.minLength(2),
@@ -112,11 +113,25 @@ export class CheckoutComponent implements OnInit {
     this.postcodeTools = new PostcodeTools();
     this.shippingTimeTools = new ShippingTimeTools();
 
+    const datas = [
+      { name: "One", value: "One" },
+      { name: "Two", value: "Two" }
+    ];
+
     this.orderFormConfig = {
       inputs: [
         CreateDynamicForm.input("label", "name", "placeholder", "", [
-          CustomFormValidators.isRequired,
-        ])
+          CustomFormValidators.isRequired
+        ]),
+        CreateDynamicForm.select(
+          "select",
+          "select2",
+          datas.map(data => {
+            return { name: data.name, value: data.name };
+          }),
+          "",
+          [CustomFormValidators.isRequired]
+        )
       ]
     };
   }
@@ -367,10 +382,10 @@ export class CheckoutComponent implements OnInit {
   }
 
   public submitted(form: FormGroup) {
-    const {valid, value} = form;
+    const { valid, value } = form;
     if (valid && !_.isEmpty(value)) {
-      console.log('yay!!');
+      console.log("yay!!");
       // form.value = { name: "Graham" }
     }
-  };
+  }
 }

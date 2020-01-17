@@ -9,6 +9,7 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import {FormSelectComponent} from './form-components/form-select.component';
 
 export interface IDynamicForm {
     label?: string | string[]; // A label tag
@@ -21,10 +22,12 @@ export interface IDynamicForm {
 
 export const dynamicFormTypes = {
     input: 'input',
+    select: 'select',
 };
 
 const components = {
     input: FormInputComponent,
+    select: FormSelectComponent,
 };
 
 @Directive({

@@ -5,21 +5,7 @@ import { isNil } from 'lodash';
 
 @Component({
     selector: 'app-dynamic-form',
-    template: `
-        <form
-          class="dynamic-form modal-body"
-          [formGroup]="form"
-          (ngSubmit)="onSubmit(form)">
-            <ng-container *ngFor="let field of config.inputs;">
-                <ng-container *ngIf="!form.controls[field.name]?.disabled"
-                              [config]="field"
-                              [close]="close"
-                              [group]="form"
-                              (extraFunction)="extraFunction.emit($event)"
-                              dynamicField></ng-container>
-            </ng-container>
-        </form>
-  `,
+    templateUrl: './dynamic-form.component.html',
 })
 export class DynamicFormComponent implements OnInit, OnDestroy {
     @Input()
@@ -82,6 +68,10 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
             }
         });
         return group;
+    }
+
+    public async test(something: any) {
+      console.log(something);
     }
 
     public onSubmit(form: ICustomFormControl) {

@@ -1,0 +1,15 @@
+<form
+  class="dynamic-form modal-body"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit(form)">
+  <ng-container *ngFor="let field of config.inputs;">
+    <!--{{test(field)}}-->
+    <ng-container *ngIf="!form.controls[field.name]?.disabled"
+                  [config]="field"
+                  [close]="close"
+                  [group]="form"
+                  (extraFunction)="extraFunction.emit($event)"
+                  dynamicField>
+    </ng-container>
+  </ng-container>
+</form>
