@@ -1,0 +1,26 @@
+
+<div *ngIf="config?.isDisplayed" class="edit-row" [formGroup]="group" style="padding-top:10px; padding-bottom: 10px; display: flex;" [attr.data-name]="config.name.toUpperCase()">
+        <div class="col-sm-6 col-md-6" style="padding-left: 0;">
+                <span class="edit-select-label" style="width: 70%">
+                       {{config.label.toUpperCase()}}
+                </span>
+        </div>
+        <form-error-message [input]="this.group.get(this.config.name)" [name]="config?.name"></form-error-message>
+        <div class="col-sm-6 col-md-6" style="display: flex; justify-content: flex-end; align-items: center;">
+                <div class="btn-group btn-group-toggle pull-right" ngbRadioGroup name="radioBasic" [formControlName]="config.name">
+                        <label ngbButtonLabel
+                               class="btn-default"
+                               [attr.target-id]="false"
+                               ><input ngbButton type="radio" [value]="false">
+                                {{config.radioName['false']}}
+                        </label>
+                        <label ngbButtonLabel
+                               class="btn-default"
+                               [attr.target-id]="true"
+                               >
+                                <input ngbButton type="radio" [value]="true">
+                                {{config.radioName['true']}}
+                        </label>
+                </div>
+        </div>
+</div>

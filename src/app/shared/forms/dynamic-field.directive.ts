@@ -1,4 +1,3 @@
-import { FormInputComponent } from './form-components/form-input.component';
 import {
     ComponentFactoryResolver,
     Directive,
@@ -9,7 +8,11 @@ import {
     ViewContainerRef,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import {FormSelectComponent} from './form-components/form-select.component';
+import { FormInputComponent } from './form-components/form-input.component';
+import { FormInputNumberComponent } from './form-components/form-input-number.component';
+import { FormSelectComponent } from './form-components/form-select.component';
+import { FormMultiSelectComponent } from './form-components/form-multi-select.component';
+import { FormRadioToggleComponent } from './form-components/form-radio-toggle.component';
 
 export interface IDynamicForm {
     label?: string | string[]; // A label tag
@@ -22,12 +25,18 @@ export interface IDynamicForm {
 
 export const dynamicFormTypes = {
     input: 'input',
+    inputNumber: 'input-number',
     select: 'select',
+    multiSelect: 'multi-select',
+    radioToggle: 'radiotoggle',
 };
 
 const components = {
     input: FormInputComponent,
+    inputNumber: FormInputNumberComponent,
     select: FormSelectComponent,
+    multiSelect: FormMultiSelectComponent,
+    radiotoggle: FormRadioToggleComponent,
 };
 
 @Directive({

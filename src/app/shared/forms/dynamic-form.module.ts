@@ -2,13 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DynamicFieldDirective } from './dynamic-field.directive';
+import { DynamicFormComponent } from './dynamic-form.component';
 import { CreateDynamicForm } from './create-dynamic-form';
-import { FormInputComponent } from './form-components/form-input.component';
 import { CustomFormValidators } from './custom-form.validators';
-import {DynamicFormComponent} from './dynamic-form.component';
-import {FormWarningMessageComponent} from './form-components/form-warning-message.component';
-import {FormErrorMessageComponent} from './form-components/form-error-message.component';
-import {FormSelectComponent} from './form-components/form-select.component';
+import { FormInputComponent } from './form-components/form-input.component';
+import { FormInputNumberComponent } from './form-components/form-input-number.component';
+import { FormWarningMessageComponent } from './form-components/form-warning-message.component';
+import { FormErrorMessageComponent } from './form-components/form-error-message.component';
+import { FormSelectComponent } from './form-components/form-select.component';
+import { FormMultiSelectComponent } from './form-components/form-multi-select.component';
+import { FormRadioToggleComponent } from './form-components/form-radio-toggle.component';
 
 @NgModule({
     imports: [
@@ -20,22 +23,31 @@ import {FormSelectComponent} from './form-components/form-select.component';
         DynamicFieldDirective,
         DynamicFormComponent,
         FormInputComponent,
+        FormInputNumberComponent,
         FormErrorMessageComponent,
         FormSelectComponent,
         FormWarningMessageComponent,
+        FormMultiSelectComponent,
+        FormRadioToggleComponent,
     ],
     exports: [
         DynamicFormComponent,
         FormInputComponent,
+        FormInputNumberComponent,
         FormErrorMessageComponent,
         FormSelectComponent,
         FormWarningMessageComponent,
+        FormMultiSelectComponent,
+        FormRadioToggleComponent,
     ],
     entryComponents: [
         FormInputComponent,
+        FormInputNumberComponent,
         FormErrorMessageComponent,
         FormSelectComponent,
         FormWarningMessageComponent,
+        FormMultiSelectComponent,
+        FormRadioToggleComponent,
     ],
     providers: [CustomFormValidators, CreateDynamicForm],
 })

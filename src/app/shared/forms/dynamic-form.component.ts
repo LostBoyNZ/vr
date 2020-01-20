@@ -70,10 +70,6 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
         return group;
     }
 
-    public async test(something: any) {
-      console.log(something);
-    }
-
     public onSubmit(form: ICustomFormControl) {
         form.submitted = true;
         const { onSubmit } = this.config;

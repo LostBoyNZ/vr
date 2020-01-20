@@ -113,25 +113,25 @@ export class CheckoutComponent implements OnInit {
     this.postcodeTools = new PostcodeTools();
     this.shippingTimeTools = new ShippingTimeTools();
 
-    const datas = [
-      { name: "One", value: "One" },
-      { name: "Two", value: "Two" }
+    const rentalTypes = [
+      { name: "individual", value: "Individual" },
+      { name: "company", value: "Company" },
     ];
 
     this.orderFormConfig = {
       inputs: [
-        CreateDynamicForm.input("label", "name", "placeholder", "", [
-          CustomFormValidators.isRequired
-        ]),
         CreateDynamicForm.select(
-          "select",
-          "select2",
-          datas.map(data => {
+          "What type of rental is this?",
+          "rentalType",
+          rentalTypes.map(data => {
             return { name: data.name, value: data.name };
           }),
           "",
           [CustomFormValidators.isRequired]
-        )
+        ),
+        CreateDynamicForm.inputNumber("What is your postcode?", "postcode", "", "", [
+          CustomFormValidators.isRequired
+        ]),
       ]
     };
   }

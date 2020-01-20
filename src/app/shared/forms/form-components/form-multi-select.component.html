@@ -1,0 +1,24 @@
+<div class="edit-row" [id]="config.name" [formGroup]="group" [attr.data-name]="config.name.toUpperCase()">
+    <div class="edit-select">
+        <span class="edit-select-label">{{config.label}}</span>
+        <span class="edit-select-value" [ngStyle]="getSelectValueStyle(config.selectLabelAlign)">
+            {{(value==="" ? config?.placeholder  : value)}}
+            <form-error-message [input]="input" [name]="config?.name"></form-error-message>
+        </span>
+        <div class="edit-select-options">
+            <ul class="edit-select-slides">
+                <li class="edit-select-slide">
+                    <ul class="edit-select-list" [ngStyle]="getSelectListStyle(config.listMaxHeight)">
+                        <li class="edit-select-option" [attr.data-name]="item.name" *ngFor="let item of config.data"
+                            [ngClass]="isSelected(item.name) ? 'selected': ''">
+                            <button type="button" class="btn-select-entity"
+                                    (click)="itemSelected(item);">{{item.name}}
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div><input [hidden]="true" [ngModel]="model" [formControlName]="config.name" /></div>
+</div>
