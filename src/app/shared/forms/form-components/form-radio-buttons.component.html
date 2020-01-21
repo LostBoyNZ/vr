@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-center radio-button-underline radio-padding" [formGroup]="group">
+    <div class="col-md-6 radio-label" *ngIf="config.label">
+                <span class="edit-select-label radio-label">
+                       {{config.label}}
+                </span>
+        </div>
+    <div class="btn-group btn-group-toggle"
+         ngbRadioGroup
+         name="radioBasic">
+        <label ngbButtonLabel
+               class="btn-default"
+               [attr.data-name]="radio.value"
+               *ngFor="let radio of config?.radioButtons"
+               [attr.target-id]="false">
+            <input ngbButton type="radio" [value]="radio.value" [formControlName]="config.name">
+            {{radio.name}}
+        </label>
+    </div>
+</div>

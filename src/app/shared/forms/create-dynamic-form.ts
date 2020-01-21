@@ -11,6 +11,7 @@ import {
   IRadioToggle,
   IRadioToggleName
 } from "./form-components/form-radio-toggle.component";
+import {IFormRadioButtonOnly} from './form-components/form-radio-buttons.component';
 
 @Injectable()
 export class CreateDynamicForm {
@@ -48,7 +49,8 @@ export class CreateDynamicForm {
     isDisplayed = true,
     readOnly = false,
     getWarning?: Function,
-    inputType?: string
+    inputType?: string,
+    pattern?: string
   ): IInputNumber {
     return {
       type: dynamicFormTypes.inputNumber,
@@ -60,7 +62,8 @@ export class CreateDynamicForm {
       isDisplayed,
       readOnly,
       getWarning,
-      inputType
+      inputType,
+      pattern,
     };
   }
 
@@ -126,6 +129,23 @@ export class CreateDynamicForm {
       defaultValue,
       validators,
       isDisplayed
+    };
+  }
+
+  static radioButtons(
+    label: string,
+    name: string,
+    defaultValue: string,
+    radioButtons: Array<{ name: string; value: string }>,
+    validators?: Function[],
+  ): IFormRadioButtonOnly {
+    return {
+      type: dynamicFormTypes.radioButtons,
+      label,
+      name,
+      defaultValue,
+      radioButtons,
+      validators,
     };
   }
 }

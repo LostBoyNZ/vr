@@ -27,7 +27,7 @@ export class FormInputNumberComponent {
   }
 
   get inputType() {
-    return this.config.inputType ? this.config.inputType : 'text';
+    return this.config.inputType ? this.config.inputType : 'numeric';
   }
 }
 
@@ -38,4 +38,5 @@ export interface IInputNumber extends IDynamicForm {
   readOnly?: boolean;
   getWarning?: Function;
   inputType?: string;
+  pattern?: string;
 }

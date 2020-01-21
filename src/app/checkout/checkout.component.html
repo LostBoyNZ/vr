@@ -1,4 +1,10 @@
-<app-dynamic-form [config]="orderFormConfig" (submitted)="submitted($event)">
+<app-dynamic-form [config]="orderFormRentalType" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+</app-dynamic-form>
+
+<app-dynamic-form *ngIf="this.userFormData.rentalType" [config]="orderFormPostcode" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+</app-dynamic-form>
+
+<app-dynamic-form *ngIf="this.userFormData.postcode" [config]="orderFormRuralDelivery" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
 </app-dynamic-form>
 
 <!--
@@ -40,7 +46,7 @@
       </div>
 
       <div *ngIf="oneQuestion.type == 'date-range'">
-        <app-form-element-date-picker [question]="oneQuestion" (answer)="updateUserFormData(oneQuestion, $event)"></app-form-element-date-picker>
+        <app-form-date-picker [question]="oneQuestion" (answer)="updateUserFormData(oneQuestion, $event)"></app-form-date-picker>
         <p *ngIf="this.userFormData.rentalDates.begin">
           The gear should arrive to you on {{ dateTools.formatDateDisplay(this.userFormData.rentalDates.begin, 'ddd, Do MMM YYYY') }} between 9am and 5pm
         </p>

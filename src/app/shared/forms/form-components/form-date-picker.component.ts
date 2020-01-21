@@ -5,12 +5,12 @@ import * as _ from 'lodash';
 import {IQuestion} from '../../../checkout/checkout.component';
 
 @Component({
-  selector: 'app-form-element-date-picker',
-  templateUrl: './date-picker-form.component.html',
+  selector: 'app-form-date-picker',
+  templateUrl: './form-date-picker.component.html',
   styleUrls: ['../../../styles/forms.scss']
 })
 
-export class DatePickerFormComponent extends FormComponentHandler implements OnInit {
+export class FormDatePickerComponent extends FormComponentHandler implements OnInit {
   @Input() question: IQuestion;
 
   public formBuilder: FormBuilder = new FormBuilder();

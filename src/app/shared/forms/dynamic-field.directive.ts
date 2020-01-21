@@ -13,6 +13,7 @@ import { FormInputNumberComponent } from './form-components/form-input-number.co
 import { FormSelectComponent } from './form-components/form-select.component';
 import { FormMultiSelectComponent } from './form-components/form-multi-select.component';
 import { FormRadioToggleComponent } from './form-components/form-radio-toggle.component';
+import { FormRadioButtonsComponent } from './form-components/form-radio-buttons.component';
 
 export interface IDynamicForm {
     label?: string | string[]; // A label tag
@@ -25,10 +26,11 @@ export interface IDynamicForm {
 
 export const dynamicFormTypes = {
     input: 'input',
-    inputNumber: 'input-number',
+    inputNumber: 'inputNumber',
     select: 'select',
-    multiSelect: 'multi-select',
+    multiSelect: 'multiSelect',
     radioToggle: 'radiotoggle',
+    radioButtons: 'radioButtons',
 };
 
 const components = {
@@ -37,6 +39,7 @@ const components = {
     select: FormSelectComponent,
     multiSelect: FormMultiSelectComponent,
     radiotoggle: FormRadioToggleComponent,
+    radioButtons: FormRadioButtonsComponent,
 };
 
 @Directive({

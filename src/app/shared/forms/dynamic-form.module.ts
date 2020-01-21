@@ -12,6 +12,7 @@ import { FormErrorMessageComponent } from './form-components/form-error-message.
 import { FormSelectComponent } from './form-components/form-select.component';
 import { FormMultiSelectComponent } from './form-components/form-multi-select.component';
 import { FormRadioToggleComponent } from './form-components/form-radio-toggle.component';
+import { FormRadioButtonsComponent } from './form-components/form-radio-buttons.component';
 
 @NgModule({
     imports: [
@@ -26,6 +27,7 @@ import { FormRadioToggleComponent } from './form-components/form-radio-toggle.co
         FormInputNumberComponent,
         FormErrorMessageComponent,
         FormSelectComponent,
+        FormRadioButtonsComponent,
         FormWarningMessageComponent,
         FormMultiSelectComponent,
         FormRadioToggleComponent,
@@ -36,6 +38,7 @@ import { FormRadioToggleComponent } from './form-components/form-radio-toggle.co
         FormInputNumberComponent,
         FormErrorMessageComponent,
         FormSelectComponent,
+        FormRadioButtonsComponent,
         FormWarningMessageComponent,
         FormMultiSelectComponent,
         FormRadioToggleComponent,
@@ -45,6 +48,7 @@ import { FormRadioToggleComponent } from './form-components/form-radio-toggle.co
         FormInputNumberComponent,
         FormErrorMessageComponent,
         FormSelectComponent,
+        FormRadioButtonsComponent,
         FormWarningMessageComponent,
         FormMultiSelectComponent,
         FormRadioToggleComponent,

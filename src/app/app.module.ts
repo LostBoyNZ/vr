@@ -18,7 +18,7 @@ import {RadioFormComponent} from './shared/forms/radio/radio-form.component';
 import {TextFormComponent} from './shared/forms/text/text-form.component';
 import {NumberFormComponent} from './shared/forms/number/number-form.component';
 import {SingleDateFormComponent} from './shared/forms/single-date/single-date-form.component';
-import {DatePickerFormComponent} from './shared/forms/date-range/date-picker-form.component';
+import {FormDatePickerComponent} from './shared/forms/form-components/form-date-picker.component';
 import {NguCarouselModule} from '@ngu/carousel';
 import {CheckoutCarouselComponent} from './checkout-carousel/checkout-carousel.component';
 import {CollapseComponent} from './shared/components/collapse/collapse.component';
@@ -35,7 +35,7 @@ import {DynamicFormModule} from './shared/forms/dynamic-form.module';
     TextFormComponent,
     NumberFormComponent,
     SingleDateFormComponent,
-    DatePickerFormComponent,
+    FormDatePickerComponent,
     CheckoutCarouselComponent,
     CollapseComponent,
   ],

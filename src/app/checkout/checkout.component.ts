@@ -71,6 +71,10 @@ export class CheckoutComponent implements OnInit {
   orderFormGroup: FormGroup;
   datesFormGroup: FormGroup;
 
+  public orderFormRentalType: IDynamicFormConfig;
+  public orderFormPostcode: IDynamicFormConfig;
+  public orderFormRuralDelivery: IDynamicFormConfig;
+
   public orderFormConfig: IDynamicFormConfig;
 
   public maxQuestionReached: number;
@@ -113,25 +117,56 @@ export class CheckoutComponent implements OnInit {
     this.postcodeTools = new PostcodeTools();
     this.shippingTimeTools = new ShippingTimeTools();
 
-    const rentalTypes = [
-      { name: "individual", value: "Individual" },
-      { name: "company", value: "Company" },
-    ];
-
-    this.orderFormConfig = {
+    this.orderFormRentalType = {
       inputs: [
-        CreateDynamicForm.select(
+        CreateDynamicForm.radioButtons(
           "What type of rental is this?",
           "rentalType",
-          rentalTypes.map(data => {
+          'Individual',
+          [
+            { name: "Individual", value: "Individual" },
+            { name: "Company", value: "Company" }
+          ]
+        ),
+        ]
+    };
+
+    this.orderFormPostcode = {
+      inputs: [
+        CreateDynamicForm.inputNumber(
+          "What is your postcode?",
+          "postcode",
+          "",
+          "",
+          [
+            CustomFormValidators.isRequired,
+            CustomFormValidators.isNumeric,
+            CustomFormValidators.noDecimals,
+            CustomFormValidators.maxLength(4)
+          ],
+          true,
+          false,
+          null,
+          "numeric",
+          "[0-9]{4}"
+        ),
+      ]
+    };
+
+    this.orderFormRuralDelivery = {
+      inputs: [
+        CreateDynamicForm.select(
+          "What type of postal address will you use?",
+          "ruralDelivery",
+          [
+            { name: "Non-Rural", value: "non rural" },
+            { name: "Rural", value: "rural" }
+          ].map(data => {
             return { name: data.name, value: data.name };
           }),
           "",
           [CustomFormValidators.isRequired]
         ),
-        CreateDynamicForm.inputNumber("What is your postcode?", "postcode", "", "", [
-          CustomFormValidators.isRequired
-        ]),
       ]
     };
   }
@@ -382,10 +417,18 @@ export class CheckoutComponent implements OnInit {
   }
 
   public submitted(form: FormGroup) {
-    const { valid, value } = form;
-    if (valid && !_.isEmpty(value)) {
-      console.log("yay!!");
-      // form.value = { name: "Graham" }
+    if (form.valid && form.dirty && form.value) {
+      console.log('value: ', form.value);
+      console.log('!!!!!!!!!!!!!!! VALID !!!!!!!!!!!!!!');
+    }
+  }
+
+  public formChanged(form: FormGroup) {
+    if (form.valid && form.dirty && form.value) {
+      const name = Object.keys(form.value)[0];
+      const value = Object.values(form.value)[0];
+      this.userFormData[name] = value;
+      console.log('this.userFormData: ', this.userFormData);
     }
   }
 }
