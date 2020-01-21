@@ -13,16 +13,23 @@ import { FormSelectComponent } from './form-components/form-select.component';
 import { FormMultiSelectComponent } from './form-components/form-multi-select.component';
 import { FormRadioToggleComponent } from './form-components/form-radio-toggle.component';
 import { FormRadioButtonsComponent } from './form-components/form-radio-buttons.component';
+import {FormDateRangeComponent} from './form-components/form-date-range.component';
+import {MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
+        SatDatepickerModule,
+        SatNativeDateModule,
+        MatMomentDateModule,
     ],
     declarations: [
         DynamicFieldDirective,
         DynamicFormComponent,
+        FormDateRangeComponent,
         FormInputComponent,
         FormInputNumberComponent,
         FormErrorMessageComponent,
@@ -34,6 +41,7 @@ import { FormRadioButtonsComponent } from './form-components/form-radio-buttons.
     ],
     exports: [
         DynamicFormComponent,
+        FormDateRangeComponent,
         FormInputComponent,
         FormInputNumberComponent,
         FormErrorMessageComponent,
@@ -44,6 +52,7 @@ import { FormRadioButtonsComponent } from './form-components/form-radio-buttons.
         FormRadioToggleComponent,
     ],
     entryComponents: [
+        FormDateRangeComponent,
         FormInputComponent,
         FormInputNumberComponent,
         FormErrorMessageComponent,
@@ -53,6 +62,6 @@ import { FormRadioButtonsComponent } from './form-components/form-radio-buttons.
         FormMultiSelectComponent,
         FormRadioToggleComponent,
     ],
-    providers: [CustomFormValidators, CreateDynamicForm],
+    providers: [CustomFormValidators, CreateDynamicForm, {provide: MAT_DATE_LOCALE, useValue: 'en-NZ' }],
 })
 export class DynamicFormModule {}

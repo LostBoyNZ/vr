@@ -1,0 +1,28 @@
+<div *ngIf="config?.isDisplayed" class="edit-row" [attr.name]="config.name.toUpperCase()"
+     [attr.data-name]="config.name.toUpperCase()">
+  <div class="dynamic-field edit-item edit-item-full-width" [formGroup]="group">
+    <span class="edit-label">{{config.label}}</span>
+    <span class="edit-value">
+      <input matInput
+             readonly
+             placeholder=""
+             [satDatepicker]="picker"
+             [min]="config.minDate"
+             [matDatepickerFilter]="config.validDatesFilter"
+             [class.readonly]="config?.readOnly"
+             data-name="{{config.name.toUpperCase()}}"
+             [formControlName]="config.name"
+             class="form-control"/>
+      <sat-datepicker #picker [rangeMode]="true"
+                      panelClass="range-datepicker"
+                      orderPeriodLabel="month"
+                      [selectFirstDateOnClose]="true">
+      </sat-datepicker>
+      <!--<sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>-->
+      <button mat-raised-button (click)="picker.open()">Choose Dates</button>
+      <!--<p *ngIf="picker.opened"></p>-->
+    </span>
+    <form-warning-message [message]="warningMessage" [name]="config?.name"></form-warning-message>
+    <form-error-message [input]="input" [name]="config?.name"></form-error-message>
+  </div>
+</div>

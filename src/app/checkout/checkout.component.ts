@@ -71,9 +71,12 @@ export class CheckoutComponent implements OnInit {
   orderFormGroup: FormGroup;
   datesFormGroup: FormGroup;
 
+  public showAll: boolean = true;
+
   public orderFormRentalType: IDynamicFormConfig;
   public orderFormPostcode: IDynamicFormConfig;
   public orderFormRuralDelivery: IDynamicFormConfig;
+  public orderFormDateRange: IDynamicFormConfig;
 
   public orderFormConfig: IDynamicFormConfig;
 
@@ -116,59 +119,6 @@ export class CheckoutComponent implements OnInit {
     this.productTools = new ProductTools();
     this.postcodeTools = new PostcodeTools();
     this.shippingTimeTools = new ShippingTimeTools();
-
-    this.orderFormRentalType = {
-      inputs: [
-        CreateDynamicForm.radioButtons(
-          "What type of rental is this?",
-          "rentalType",
-          'Individual',
-          [
-            { name: "Individual", value: "Individual" },
-            { name: "Company", value: "Company" }
-          ]
-        ),
-        ]
-    };
-
-    this.orderFormPostcode = {
-      inputs: [
-        CreateDynamicForm.inputNumber(
-          "What is your postcode?",
-          "postcode",
-          "",
-          "",
-          [
-            CustomFormValidators.isRequired,
-            CustomFormValidators.isNumeric,
-            CustomFormValidators.noDecimals,
-            CustomFormValidators.maxLength(4)
-          ],
-          true,
-          false,
-          null,
-          "numeric",
-          "[0-9]{4}"
-        ),
-      ]
-    };
-
-    this.orderFormRuralDelivery = {
-      inputs: [
-        CreateDynamicForm.select(
-          "What type of postal address will you use?",
-          "ruralDelivery",
-          [
-            { name: "Non-Rural", value: "non rural" },
-            { name: "Rural", value: "rural" }
-          ].map(data => {
-            return { name: data.name, value: data.name };
-          }),
-          "",
-          [CustomFormValidators.isRequired]
-        ),
-      ]
-    };
   }
 
   ngOnInit() {
@@ -219,6 +169,69 @@ export class CheckoutComponent implements OnInit {
       }
       */
     ];
+
+    this.orderFormRentalType = {
+      inputs: [
+        CreateDynamicForm.radioButtons(
+          "What type of rental is this?",
+          "rentalType",
+          'Individual',
+          [
+            { name: "Individual", value: "Individual" },
+            { name: "Company", value: "Company" }
+          ]
+        ),
+      ]
+    };
+
+    this.orderFormPostcode = {
+      inputs: [
+        CreateDynamicForm.inputNumber(
+          "What is your postcode?",
+          "postcode",
+          "",
+          "",
+          [
+            CustomFormValidators.isRequired,
+            CustomFormValidators.isNumeric,
+            CustomFormValidators.noDecimals,
+            CustomFormValidators.maxLength(4)
+          ],
+          true,
+          false,
+          null,
+          "numeric",
+          "[0-9]{4}"
+        ),
+      ]
+    };
+
+    this.orderFormRuralDelivery = {
+      inputs: [
+        CreateDynamicForm.radioButtons(
+          "What type of postal address will you use?",
+          "ruralDelivery",
+          "non rural",
+          [
+            { name: "Non-Rural", value: "non rural" },
+            { name: "Rural", value: "rural" },
+          ],
+        ),
+      ]
+    };
+
+    this.orderFormDateRange = {
+      inputs: [
+        CreateDynamicForm.dateRange(
+          "What dates would you like?",
+          "rentalDates",
+          this.minDate,
+          null,
+          null,
+          this.validDatesFilter,
+        ),
+      ]
+    };
   }
 
   createForm() {

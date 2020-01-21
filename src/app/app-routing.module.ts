@@ -8,7 +8,7 @@ import {RadioFormComponent} from './shared/forms/radio/radio-form.component';
 import {TextFormComponent} from './shared/forms/text/text-form.component';
 import {NumberFormComponent} from './shared/forms/number/number-form.component';
 import {SingleDateFormComponent} from './shared/forms/single-date/single-date-form.component';
-import {FormDatePickerComponent} from './shared/forms/form-components/form-date-picker.component';
+import {FormDateRangeComponent} from './shared/forms/form-components/form-date-range.component';
 import {CheckoutCarouselComponent} from './checkout-carousel/checkout-carousel.component';
 
 const routes: Routes = [
@@ -46,7 +46,7 @@ const routes: Routes = [
   },
   {
     path: 'form/date-picker',
-    component: FormDatePickerComponent,
+    component: FormDateRangeComponent,
   },
   {
     path: 'checkout-carousel',

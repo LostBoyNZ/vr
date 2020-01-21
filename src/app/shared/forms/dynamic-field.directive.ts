@@ -14,6 +14,7 @@ import { FormSelectComponent } from './form-components/form-select.component';
 import { FormMultiSelectComponent } from './form-components/form-multi-select.component';
 import { FormRadioToggleComponent } from './form-components/form-radio-toggle.component';
 import { FormRadioButtonsComponent } from './form-components/form-radio-buttons.component';
+import {FormDateRangeComponent} from './form-components/form-date-range.component';
 
 export interface IDynamicForm {
     label?: string | string[]; // A label tag
@@ -25,6 +26,7 @@ export interface IDynamicForm {
 }
 
 export const dynamicFormTypes = {
+    dateRange: 'dateRange',
     input: 'input',
     inputNumber: 'inputNumber',
     select: 'select',
@@ -34,6 +36,7 @@ export const dynamicFormTypes = {
 };
 
 const components = {
+    dateRange: FormDateRangeComponent,
     input: FormInputComponent,
     inputNumber: FormInputNumberComponent,
     select: FormSelectComponent,

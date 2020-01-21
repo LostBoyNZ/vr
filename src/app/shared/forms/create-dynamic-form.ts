@@ -12,9 +12,37 @@ import {
   IRadioToggleName
 } from "./form-components/form-radio-toggle.component";
 import {IFormRadioButtonOnly} from './form-components/form-radio-buttons.component';
+import {IFormDateRange} from './form-components/form-date-range.component';
 
 @Injectable()
 export class CreateDynamicForm {
+  static dateRange(
+    label: string,
+    name: string,
+    minDate: Date,
+    defaultBeginDate: Date,
+    defaultEndDate: Date,
+    validDatesFilter?: any,
+    validators?: Function[],
+    isDisplayed = true,
+    readOnly = false,
+    getWarning?: Function,
+  ): IFormDateRange {
+    return {
+      type: dynamicFormTypes.dateRange,
+      label,
+      name,
+      minDate,
+      defaultBeginDate,
+      defaultEndDate,
+      validDatesFilter,
+      validators,
+      isDisplayed,
+      readOnly,
+      getWarning,
+    };
+  }
+
   static input(
     label: string,
     name: string,

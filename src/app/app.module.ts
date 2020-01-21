@@ -11,14 +11,11 @@ import {ProductGetComponent} from './product-get/product-get.component';
 import {ProductEditComponent} from './product-edit/product-edit.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {MatMomentDateModule} from '@angular/material-moment-adapter';
-import {MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
 import {ProductsService} from './products.service';
 import {RadioFormComponent} from './shared/forms/radio/radio-form.component';
 import {TextFormComponent} from './shared/forms/text/text-form.component';
 import {NumberFormComponent} from './shared/forms/number/number-form.component';
 import {SingleDateFormComponent} from './shared/forms/single-date/single-date-form.component';
-import {FormDatePickerComponent} from './shared/forms/form-components/form-date-picker.component';
 import {NguCarouselModule} from '@ngu/carousel';
 import {CheckoutCarouselComponent} from './checkout-carousel/checkout-carousel.component';
 import {CollapseComponent} from './shared/components/collapse/collapse.component';
@@ -35,7 +32,6 @@ import {DynamicFormModule} from './shared/forms/dynamic-form.module';
     TextFormComponent,
     NumberFormComponent,
     SingleDateFormComponent,
-    FormDatePickerComponent,
     CheckoutCarouselComponent,
     CollapseComponent,
   ],
@@ -48,9 +44,6 @@ import {DynamicFormModule} from './shared/forms/dynamic-form.module';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    SatDatepickerModule,
-    SatNativeDateModule,
-    MatMomentDateModule,
     NguCarouselModule,
     DynamicFormModule,
   ],
@@ -58,7 +51,6 @@ import {DynamicFormModule} from './shared/forms/dynamic-form.module';
   ],
   providers: [
     ProductsService,
-    {provide: MAT_DATE_LOCALE, useValue: 'en-NZ' }
   ],
   bootstrap: [AppComponent]
 })
