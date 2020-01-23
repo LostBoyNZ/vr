@@ -11,3 +11,40 @@
 ::ng-deep .mat-datepicker-toggle-active {
   color: #FBCC48;
 }
+
+main {
+  display:flex;
+  flex-direction: column;
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+}
+
+app-dynamic-form {
+  margin: auto;
+  animation: slide-in 1.5s ease;
+}
+
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(3em);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    opacity: 0.3;
+    transform: translateY(-2em);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

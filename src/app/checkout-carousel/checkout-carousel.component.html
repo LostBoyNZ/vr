@@ -1,7 +1,7 @@
 <ngu-carousel #myCarousel [inputs]="carouselTile" [dataSource]="carouselTileItems" >
   <ngu-tile *nguCarouselDef="let id; let i = index">
     <div>
-      <img [src]="createImageUrl(products[id].imageUrl)" style="max-width: 300px;">
+      <!--<img [src]="createImageUrl(products[id].imageUrl)" style="max-width: 300px;">-->
       <h2>{{products[id].brand}} {{products[id].model}}</h2>
     </div>
     <div>

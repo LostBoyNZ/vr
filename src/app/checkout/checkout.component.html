@@ -1,22 +1,26 @@
-<app-dynamic-form [config]="orderFormRentalType || showAll" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-</app-dynamic-form>
+<main>
 
-<app-dynamic-form *ngIf="this.userFormData.rentalType || showAll" [config]="orderFormPostcode" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-</app-dynamic-form>
+  <app-dynamic-form [config]="orderFormRentalType || showAll" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+  </app-dynamic-form>
 
-<app-dynamic-form *ngIf="this.userFormData.postcode || showAll" [config]="orderFormRuralDelivery" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-</app-dynamic-form>
+  <app-dynamic-form *ngIf="this.userFormData.rentalType || showAll" [config]="orderFormPostcode" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+  </app-dynamic-form>
 
-<app-dynamic-form *ngIf="this.userFormData.ruralDelivery || showAll" [config]="orderFormDateRange" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-</app-dynamic-form>
+  <app-dynamic-form *ngIf="this.userFormData.postcode || showAll" [config]="orderFormRuralDelivery" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+  </app-dynamic-form>
 
-<div *ngIf="this.userFormData.rentalDates || showAll">
-  <app-checkout-carousel (orderChange)='updateOrder($event)' [allOrderLines]='allOrderLines' [checkout]="this"></app-checkout-carousel>
+  <app-dynamic-form *ngIf="this.userFormData.ruralDelivery || showAll" [config]="orderFormDateRange" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+  </app-dynamic-form>
 
-  <div>
-    Total Price: {{ pricingTools.formatPrice(getTotalPriceForOrder()) }}
+  <div *ngIf="this.userFormData.rentalDates.begin || showAll">
+    <app-checkout-carousel (orderChange)='updateOrder($event)' [allOrderLines]='allOrderLines' [checkout]="this"></app-checkout-carousel>
+
+    <div>
+      Total Price: {{ pricingTools.formatPrice(getTotalPriceForOrder()) }}
+    </div>
   </div>
-</div>
+
+</main>
 
 <!--
 
