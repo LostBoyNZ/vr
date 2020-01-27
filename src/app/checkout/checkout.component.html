@@ -1,6 +1,6 @@
 <main>
 
-  <app-dynamic-form [config]="orderFormRentalType || showAll" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+  <app-dynamic-form [config]="orderFormRentalType || showAll" (submitted)="submitted($event)" (currentValue)="formChanged($event)" [class.animate-out]="this.userFormData.rentalType">
   </app-dynamic-form>
 
   <app-dynamic-form *ngIf="this.userFormData.rentalType || showAll" [config]="orderFormPostcode" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
