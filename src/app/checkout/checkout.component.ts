@@ -71,7 +71,7 @@ export class CheckoutComponent implements OnInit {
   orderFormGroup: FormGroup;
   datesFormGroup: FormGroup;
 
-  public showAll: boolean = false;
+  public showAll: boolean = true;
 
   public orderFormRentalType: IDynamicFormConfig;
   public orderFormPostcode: IDynamicFormConfig;

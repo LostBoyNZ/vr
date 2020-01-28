@@ -1,3 +1,7 @@
+<script>
+  AOS.init();
+</script>
+
 <main>
 
   <app-dynamic-form [config]="orderFormRentalType || showAll" (submitted)="submitted($event)" (currentValue)="formChanged($event)" [class.animate-out]="this.userFormData.rentalType">

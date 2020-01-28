@@ -22,13 +22,36 @@ main {
   left:0;
 }
 
-.animate-out {
-  animation: slide-out 1.5s ease;
-}
-
 app-dynamic-form {
   margin: auto;
   animation: slide-in 1.5s ease;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.animate-in {
+  animation: slide-in 1.5s ease;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.animate-out {
+  animation: slide-out 1.5s ease;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 @keyframes slide-in {
