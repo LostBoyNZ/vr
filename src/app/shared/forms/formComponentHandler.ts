@@ -1,4 +1,4 @@
-import {EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { EventEmitter, Input, OnInit, Output, Directive } from '@angular/core';
 import {IFormAnswer, IQuestion} from '../../checkout/checkout.component';
 import {FormControl} from '@angular/forms';
 import {Validators} from './validators';
@@ -21,6 +21,7 @@ interface ICustomFormControl extends FormControl {
   submitted: boolean;
 }
 
+@Directive()
 export class FormComponentHandler implements OnInit {
   @Input() question: IQuestion;
 
