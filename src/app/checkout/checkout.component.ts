@@ -16,6 +16,10 @@ import { ShippingTimeTools } from "../shared/tools/shippingTimeTools";
 import { IDynamicFormConfig } from "../shared/forms/formComponentHandler";
 import { CreateDynamicForm } from "../shared/forms/create-dynamic-form";
 import { CustomFormValidators } from "../shared/forms/custom-form.validators";
+import * as AOS from 'aos';
+import { Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { PageScrollService } from 'ngx-page-scroll-core';
 
 export interface IQuestion {
   question: string;
@@ -112,7 +116,7 @@ export class CheckoutComponent implements OnInit {
     ])
   });
 
-  constructor() {
+  constructor(private pageScrollService: PageScrollService, @Inject(DOCUMENT) private document: any) {
     this.createForm();
     this.dateTools = new DateTools();
     this.pricingTools = new PricingTools();
@@ -122,6 +126,15 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.pageScrollService.scroll({
+      document: this.document,
+      scrollTarget: '.theStart',
+    });
+    // AOS.init({
+    //   duration: 1400,
+    //   once: true,
+    //   easing: 'ease',
+    // });
     this.validDatesFilter = (date: Date) =>
       this.dateTools.isExcludedDate(date) === false;
     this.setMinDay();
@@ -442,6 +455,19 @@ export class CheckoutComponent implements OnInit {
       const value = Object.values(form.value)[0];
       this.userFormData[name] = value;
       console.log('this.userFormData: ', this.userFormData);
+
+      //console.log('window: ', window);
+      window.scrollBy({top: window.innerHeight / 4, behavior: 'smooth'});
+    }
+  }
+
+  public getClass(formAnswer: any) {
+    //const main = document.querySelector('.main');
+    //main.classList.remove("foo");
+    if (formAnswer || this.showAll) {
+      return 'visible, animate-in'
+    } else {
+      return 'hidden'
     }
   }
 }

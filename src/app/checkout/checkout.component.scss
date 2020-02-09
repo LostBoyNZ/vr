@@ -12,41 +12,111 @@
   color: #FBCC48;
 }
 
-main {
-  display:flex;
-  flex-direction: column;
-  position:absolute;
-  top:0;
-  bottom:0;
-  right:0;
-  left:0;
+#checkout-spacer {
+  min-height: 40vh;
 }
 
-app-dynamic-form {
-  margin: auto;
-  animation: slide-in 1.5s ease;
-  -webkit-animation-fill-mode: forwards;
-  -moz-animation-fill-mode: forwards;
-  -ms-animation-fill-mode: forwards;
-  -o-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
+main {
+  //display:flex;
+  //flex-direction: column;
+  //position:absolute;
+  //top:0;
+  //bottom:0;
+  //right:0;
+  //left:0;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+//.checkout-group {
+//  display: flex;
+//  flex-direction: column;
+//  flex-basis: 33.3%;
+//  justify-content: center;
+//  margin: 10vh 0 10vh 0;
+//  background-color: #FBCC48;
+//  min-height: 80vh;
+//}
+
+.item {
+  min-width: 100%;
+  margin-bottom: calc(100vh / 5);
+  //width: 200px;
+  //height: 200px;
+  //margin: 50px auto;
+  //padding-top: 75px;
+  //margin-bottom: 300px;
+  //background: #ccc;
+  //text-align: center;
+  //color: #FFF;
+  //font-size: 3em;
+  &--first {
+    //margin-top: 50vh;
+  }
+}
+
+[data-aos="new-animation"] {
+  opacity: 0;
+  transition-property: transform, opacity;
+
+  &.aos-animate {
+    opacity: 1;
+    transform: translateY(calc(100vh / 4));
+  }
+}
+
+.fade {
+  margin: 50px;
+  padding: 50px;
+  background-color: lightgreen;
+  opacity: 1;
+}
+
+section {
+  opacity: 0;
+  transform: translate(0, 20px);
+  transition: all 1s;
+}
+
+section.visible {
+  opacity: 1;
+  transform: translate(0, 0);
 }
 
 .hidden {
   visibility: hidden;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .animate-in {
-  animation: slide-in 1.5s ease;
+  animation: fade-in 1.5s ease;
   -webkit-animation-fill-mode: forwards;
   -moz-animation-fill-mode: forwards;
   -ms-animation-fill-mode: forwards;
   -o-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    //transform: translateY(3em);
+    //transform: translateY(calc(100vh / 12));
+  }
+  100% {
+    opacity: 1;
+    //transform: translateY(0);
+  }
 }
 
 .animate-out {
-  animation: slide-out 1.5s ease;
+  animation: fade-out 1.5s ease;
   -webkit-animation-fill-mode: forwards;
   -moz-animation-fill-mode: forwards;
   -ms-animation-fill-mode: forwards;
@@ -54,24 +124,65 @@ app-dynamic-form {
   animation-fill-mode: forwards;
 }
 
-@keyframes slide-in {
-  0% {
-    opacity: 0;
-    transform: translateY(3em);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slide-out {
+@keyframes fade-out {
   0% {
     opacity: 1;
-    transform: translateY(0);
   }
   100% {
     opacity: 0.3;
-    transform: translateY(-3em);
   }
 }
+
+//app-dynamic-form {
+//  margin: auto;
+//  animation: slide-in 1.5s ease;
+//  -webkit-animation-fill-mode: forwards;
+//  -moz-animation-fill-mode: forwards;
+//  -ms-animation-fill-mode: forwards;
+//  -o-animation-fill-mode: forwards;
+//  animation-fill-mode: forwards;
+//}
+//
+//.hidden {
+//  visibility: hidden;
+//}
+//
+//.animate-in {
+//  animation: slide-in 1.5s ease;
+//  -webkit-animation-fill-mode: forwards;
+//  -moz-animation-fill-mode: forwards;
+//  -ms-animation-fill-mode: forwards;
+//  -o-animation-fill-mode: forwards;
+//  animation-fill-mode: forwards;
+//}
+//
+//.animate-out {
+//  animation: slide-out 1.5s ease;
+//  -webkit-animation-fill-mode: forwards;
+//  -moz-animation-fill-mode: forwards;
+//  -ms-animation-fill-mode: forwards;
+//  -o-animation-fill-mode: forwards;
+//  animation-fill-mode: forwards;
+//}
+//
+//@keyframes slide-in {
+//  0% {
+//    opacity: 0;
+//    transform: translateY(3em);
+//  }
+//  100% {
+//    opacity: 1;
+//    transform: translateY(0);
+//  }
+//}
+//
+//@keyframes slide-out {
+//  0% {
+//    opacity: 1;
+//    transform: translateY(0);
+//  }
+//  100% {
+//    opacity: 0.3;
+//    transform: translateY(-3em);
+//  }
+//}

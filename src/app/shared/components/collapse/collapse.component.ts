@@ -12,16 +12,14 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
                     {{ this.isExpanded? collapseCaption : expandCaption }}
                 </span>
                 <span class="collapse--mat-icon">
-                    <mat-icon>
-                        {{ this.isExpanded? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}
-                    </mat-icon>
+                      {{ this.isExpanded? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}
                 </span>
             </div>
         </div>
         <div *ngIf="this.isExpanded">
           <ng-content select="[collapse-body]"></ng-content>
         </div>
-      <div>
+      </div>
       `,
 })
 

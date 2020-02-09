@@ -29,9 +29,12 @@
             ],
             "styles": [
               "src/styles.scss",
+              "node_modules/aos/dist/aos.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/aos/dist/aos.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -124,6 +127,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "vr"
+    }
+  },
+  "defaultProject": "vr",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -7,7 +7,7 @@ import {
   OnInit,
   Output
 } from "@angular/core";
-import { NguCarouselConfig } from "@ngu/carousel";
+import { NguCarouselConfig } from "@stockopedia/carousel";
 import {CheckoutComponent, IOrderLine} from '../checkout/checkout.component';
 import products from "../../data/products.json";
 import {PricingTools} from '../shared/tools/pricingTools';
@@ -39,7 +39,7 @@ export class CheckoutCarouselComponent implements OnInit {
     easing: "cubic-bezier(0, 0, 0.2, 1)"
   };
   public pricingTools = new PricingTools();
-  private products = products;
+  public products = products;
 
   constructor(private _cdr: ChangeDetectorRef) {}
 

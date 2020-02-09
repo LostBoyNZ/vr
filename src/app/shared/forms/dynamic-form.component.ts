@@ -19,7 +19,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     textCapitalize: boolean;
 
     @Output()
-    submitted: EventEmitter<ICustomFormControl> = new EventEmitter<ICustomFormControl>();
+    submitted: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
     @Output()
     currentValue: EventEmitter<any> = new EventEmitter();
     @Output()
@@ -71,8 +71,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
         return group;
     }
 
-    public onSubmit(form: ICustomFormControl) {
-        form.submitted = true;
+    public onSubmit(form: FormGroup) {
         const { onSubmit } = this.config;
         if (onSubmit) {
             onSubmit(form);
@@ -114,10 +113,6 @@ export interface DynamicFormInput {
 export interface DynamicFormConfig {
     inputs: DynamicFormInput[];
     validators?: any[];
-    onSubmit?: (formControl: ICustomFormControl) => any;
+    onSubmit?: (formControl: FormGroup) => any;
     title?: string;
-}
-
-interface ICustomFormControl extends FormControl {
-    submitted: boolean;
 }

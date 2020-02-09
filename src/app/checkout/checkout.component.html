@@ -1,21 +1,52 @@
-<script>
-  AOS.init();
-</script>
+<div id="checkout-spacer" class="theStart"></div>
 
-<main>
+<!--
+<div class="item item--first" data-aos="fade-up">1</div>
+<div class="item" data-aos="fade-up">2</div>
+<div class="item" data-aos="fade-up">3</div>
+<div class="item" data-aos="fade-up">4</div>
 
-  <app-dynamic-form [config]="orderFormRentalType || showAll" (submitted)="submitted($event)" (currentValue)="formChanged($event)" [class.animate-out]="this.userFormData.rentalType">
-  </app-dynamic-form>
+<div class="item" data-aos="fade-up">5</div>
+<div class="item" data-aos="fade-up">6</div>
 
-  <app-dynamic-form *ngIf="this.userFormData.rentalType || showAll" [config]="orderFormPostcode" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-  </app-dynamic-form>
+<div class="item" data-aos="fade-up">7</div>
 
-  <app-dynamic-form *ngIf="this.userFormData.postcode || showAll" [config]="orderFormRuralDelivery" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-  </app-dynamic-form>
+<div class="item" data-aos="fade-up">8</div>
+<div class="item" data-aos="fade-up">9</div>
+<div class="item" data-aos="fade-up">10</div>
+<div class="item" data-aos="fade-up">11</div>
+-->
+<main class="main">
+  <div class="item animate-in">
+    <app-dynamic-form [config]="orderFormRentalType || showAll" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+    </app-dynamic-form>
+  </div>
 
-  <app-dynamic-form *ngIf="this.userFormData.ruralDelivery || showAll" [config]="orderFormDateRange" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-  </app-dynamic-form>
+  <!-- *ngIf="this.userFormData.rentalType || showAll" -->
+  <div class="item" [ngClass]="getClass(this.userFormData.rentalType)">
+    <app-dynamic-form [config]="orderFormPostcode" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+    </app-dynamic-form>
+  </div>
 
+  <!-- *ngIf="this.userFormData.postcode || showAll" -->
+  <div class="item" [ngClass]="getClass(this.userFormData.postcode)">
+    <app-dynamic-form [config]="orderFormRuralDelivery" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+    </app-dynamic-form>
+  </div>
+
+  <!-- *ngIf="this.userFormData.ruralDelivery || showAll" -->
+  <div class="item" [ngClass]="getClass(this.userFormData.ruralDelivery)">
+    <app-dynamic-form [config]="orderFormDateRange" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+    </app-dynamic-form>
+  </div>
+
+  <!-- *ngIf="this.userFormData.rentalDates.begin || showAll" -->
+  <div class="item" [ngClass]="getClass(this.userFormData.rentalDates.begin)">
+    <app-dynamic-form [config]="orderFormPostcode" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+    </app-dynamic-form>
+  </div>
+
+  <!--
   <div *ngIf="this.userFormData.rentalDates.begin || showAll">
     <app-checkout-carousel (orderChange)='updateOrder($event)' [allOrderLines]='allOrderLines' [checkout]="this"></app-checkout-carousel>
 
@@ -23,6 +54,7 @@
       Total Price: {{ pricingTools.formatPrice(getTotalPriceForOrder()) }}
     </div>
   </div>
+  -->
 
 </main>
 

@@ -2,7 +2,7 @@
 <div *ngIf="config?.isDisplayed" class="edit-row" [formGroup]="group" style="padding-top:10px; padding-bottom: 10px; display: flex;" [attr.data-name]="config.name.toUpperCase()">
         <div class="col-sm-6 col-md-6" style="padding-left: 0;">
                 <span class="edit-select-label" style="width: 70%">
-                       {{config.label.toUpperCase()}}
+                       {{config.label}}
                 </span>
         </div>
         <form-error-message [input]="this.group.get(this.config.name)" [name]="config?.name"></form-error-message>
