@@ -1,50 +1,50 @@
-<div id="checkout-spacer" class="theStart"></div>
+<p *ngIf="this.userFormData.rentalType">A {{this.userFormData.rentalType}} rental (Change)</p>
+<p *ngIf="this.userFormData.shippingAddress">Sent to {{this.userFormData.shippingAddress}} (Change)</p>
+<p *ngIf="this.userFormData.rentalDates.end">{{startDateSummaryText}}</p>
+<p *ngIf="this.userFormData.rentalDates.end">{{endDateSummaryText}} (Change)</p>
 
 <!--
-<div class="item item--first" data-aos="fade-up">1</div>
-<div class="item" data-aos="fade-up">2</div>
-<div class="item" data-aos="fade-up">3</div>
-<div class="item" data-aos="fade-up">4</div>
-
-<div class="item" data-aos="fade-up">5</div>
-<div class="item" data-aos="fade-up">6</div>
-
-<div class="item" data-aos="fade-up">7</div>
-
-<div class="item" data-aos="fade-up">8</div>
-<div class="item" data-aos="fade-up">9</div>
-<div class="item" data-aos="fade-up">10</div>
-<div class="item" data-aos="fade-up">11</div>
+Home address
+|__ Delivered to home
+|__ Delivered to work
+    |__ Company name and address
+|__ Delivered to a collection point
+    |__ Choose a collection point
 -->
+
+<div class="center-horizontal">
+  <div class="center-vertical">
+    <div class="flex-row question">
+
+      <div class="item" id="rentalTypeQuestion" *ngIf="!this.userFormData.rentalType">
+        <app-dynamic-form [config]="orderFormRentalType || showAll" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+        </app-dynamic-form>
+      </div>
+
+      <div class="item insert-remove-container" id="shippingAddressQuestion" *ngIf="this.userFormData.rentalType && !this.userFormData.shippingAddress">
+        <app-dynamic-form [config]="orderFormShippingAddress" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+        </app-dynamic-form>
+      </div>
+
+      <div class="item" id="rentalDatesQuestion" *ngIf="this.userFormData.shippingAddress && !this.userFormData.rentalDates.end">
+        <app-dynamic-form [config]="orderFormDateRange" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+        </app-dynamic-form>
+      </div>
+
+      <div class="item"  id="productsQuestion" *ngIf="this.userFormData.rentalDates.end">
+        <p>Howdy!</p>
+        <app-checkout-carousel (orderChange)='updateOrder($event)' [allOrderLines]='allOrderLines' [checkout]="this"></app-checkout-carousel>
+        <div>
+          <p>Total Price: {{ pricingTools.formatPrice(getTotalPriceForOrder()) }}</p>
+          <p>Shipping: {{ pricingTools.formatPrice(getShippingPriceForOrder()) }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <main class="main">
-  <div class="item animate-in">
-    <app-dynamic-form [config]="orderFormRentalType || showAll" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-    </app-dynamic-form>
-  </div>
-
-  <!-- *ngIf="this.userFormData.rentalType || showAll" -->
-  <div class="item" [ngClass]="getClass(this.userFormData.rentalType)">
-    <app-dynamic-form [config]="orderFormPostcode" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-    </app-dynamic-form>
-  </div>
-
-  <!-- *ngIf="this.userFormData.postcode || showAll" -->
-  <div class="item" [ngClass]="getClass(this.userFormData.postcode)">
-    <app-dynamic-form [config]="orderFormRuralDelivery" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-    </app-dynamic-form>
-  </div>
-
-  <!-- *ngIf="this.userFormData.ruralDelivery || showAll" -->
-  <div class="item" [ngClass]="getClass(this.userFormData.ruralDelivery)">
-    <app-dynamic-form [config]="orderFormDateRange" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-    </app-dynamic-form>
-  </div>
-
-  <!-- *ngIf="this.userFormData.rentalDates.begin || showAll" -->
-  <div class="item" [ngClass]="getClass(this.userFormData.rentalDates.begin)">
-    <app-dynamic-form [config]="orderFormPostcode" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
-    </app-dynamic-form>
-  </div>
 
   <!--
   <div *ngIf="this.userFormData.rentalDates.begin || showAll">

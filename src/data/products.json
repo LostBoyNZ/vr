@@ -5,7 +5,8 @@
     "imageUrl": "desktop-pc",
     "stockQty": 8,
     "pricingSchemeId": 1,
-    "requiresShipping": true
+    "requiresShipping": true,
+    "contents": ["testies", "balls", "bums", "willy"]
   },
   "2": {
     "brand": "HP",
@@ -13,7 +14,8 @@
     "imageUrl": "hp-reverb",
     "stockQty": 2,
     "pricingSchemeId": 1,
-    "requiresShipping": true
+    "requiresShipping": true,
+    "contents": ["testies", "balls"]
   },
   "3": {
     "brand": "HTC",
@@ -21,7 +23,8 @@
     "imageUrl": "htc-vive",
     "stockQty": 6,
     "pricingSchemeId": 1,
-    "requiresShipping": true
+    "requiresShipping": true,
+    "contents": ["testies", "balls"]
   },
   "4": {
     "brand": "HP",
@@ -29,7 +32,8 @@
     "imageUrl": "htc-vive-cosmos",
     "stockQty": 1,
     "pricingSchemeId": 1,
-    "requiresShipping": true
+    "requiresShipping": true,
+    "contents": ["testies", "balls"]
   },
   "5": {
     "brand": "HTC",
@@ -37,7 +41,8 @@
     "imageUrl": "htc-vive-pro",
     "stockQty": 6,
     "pricingSchemeId": 1,
-    "requiresShipping": true
+    "requiresShipping": true,
+    "contents": ["testies", "balls"]
   },
   "6": {
     "brand": "Lightstands",
@@ -45,6 +50,7 @@
     "imageUrl": "lightstands",
     "stockQty": 4,
     "pricingSchemeId": 2,
-    "requiresShipping": true
+    "requiresShipping": true,
+    "contents": ["testies", "balls"]
   }
 }

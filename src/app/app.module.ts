@@ -20,6 +20,8 @@ import {CheckoutCarouselComponent} from './checkout-carousel/checkout-carousel.c
 import {CollapseComponent} from './shared/components/collapse/collapse.component';
 import {DynamicFormModule} from './shared/forms/dynamic-form.module';
 import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
+import {TestComponent} from './test/test.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -34,19 +36,21 @@ import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
     SingleDateFormComponent,
     CheckoutCarouselComponent,
     CollapseComponent,
+    TestComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    AngularMaterialModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    FormsModule,
-    NguCarouselModule,
-    DynamicFormModule,
-    NgxPageScrollCoreModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        AngularMaterialModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        FormsModule,
+        NguCarouselModule,
+        DynamicFormModule,
+        NgxPageScrollCoreModule,
+        MatAutocompleteModule,
+    ],
   entryComponents: [
   ],
   providers: [

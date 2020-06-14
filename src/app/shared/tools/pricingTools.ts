@@ -1,4 +1,5 @@
 import pricing from "../../../data/pricing.json";
+import {ShippingTypes} from '../../checkout/checkout.component';
 
 export class PricingTools {
   private pricing = pricing;
@@ -15,7 +16,7 @@ export class PricingTools {
     return `$${price.toFixed(2)}`;
   }
 
-  private doesIdExist(id: number): boolean {
+  private doesIdExist(id: number | string): boolean {
     return this.pricing[id] ? true : false;
   }
 
@@ -54,6 +55,23 @@ export class PricingTools {
       }
     } else {
       console.error(`Error: Pricing scheme ID of ${pricingId} does not exist`);
+      return 0;
+    }
+  }
+
+  public getShippingPriceForType(
+    shippingType: ShippingTypes,
+  ): number {
+    if (this.doesIdExist('shipping')) {
+      const shippingOptionsWithPrice = this.pricing['shipping'];
+      if (shippingOptionsWithPrice[shippingType]) {
+        return shippingOptionsWithPrice[shippingType];
+      } else {
+          console.error(`Error: Pricing scheme ID of shipping does not exist`);
+          return 0;
+        }
+    } else {
+      console.error(`Error: Pricing scheme ID of shipping does not exist`);
       return 0;
     }
   }

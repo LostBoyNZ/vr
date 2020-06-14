@@ -11,5 +11,14 @@
   },
   "2": {
     "setPriceForAnyLength": 10
+  },
+  "shipping": {
+    "overnight": 28.90,
+    "overnight-rural": 32.90,
+    "economy": 14.90,
+    "economy-rural": 18.90,
+    "local": 4.95,
+    "local-rural": 8.95,
+    "free": 0
   }
 }

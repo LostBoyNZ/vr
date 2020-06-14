@@ -16,16 +16,21 @@ import { FormRadioButtonsComponent } from './form-components/form-radio-buttons.
 import {FormDateRangeComponent} from './form-components/form-date-range.component';
 import {MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {FormAddressAutoCompleteComponent} from './form-components/form-address-auto-complete.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SatDatepickerModule,
-        SatNativeDateModule,
-        MatMomentDateModule,
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SatDatepickerModule,
+    SatNativeDateModule,
+    MatMomentDateModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+  ],
     declarations: [
         DynamicFieldDirective,
         DynamicFormComponent,
@@ -38,6 +43,7 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
         FormWarningMessageComponent,
         FormMultiSelectComponent,
         FormRadioToggleComponent,
+        FormAddressAutoCompleteComponent,
     ],
     exports: [
         DynamicFormComponent,
@@ -50,6 +56,7 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
         FormWarningMessageComponent,
         FormMultiSelectComponent,
         FormRadioToggleComponent,
+        FormAddressAutoCompleteComponent,
     ],
     entryComponents: [
         FormDateRangeComponent,
@@ -61,6 +68,7 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
         FormWarningMessageComponent,
         FormMultiSelectComponent,
         FormRadioToggleComponent,
+        FormAddressAutoCompleteComponent,
     ],
     providers: [CustomFormValidators, CreateDynamicForm, {provide: MAT_DATE_LOCALE, useValue: 'en-NZ' }],
 })

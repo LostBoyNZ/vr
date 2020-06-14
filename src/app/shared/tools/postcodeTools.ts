@@ -54,6 +54,11 @@ export class PostcodeTools {
   }
 
   private getAreaCode(postcode): string {
-    return postcode.substring(0, 2);
+    if (postcode) {
+      return postcode.substring(0, 2);
+    } else {
+      console.error(`Error: No postcode provided`);
+      return '00';
+    }
   }
 }

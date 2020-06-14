@@ -15,6 +15,7 @@ import { FormMultiSelectComponent } from './form-components/form-multi-select.co
 import { FormRadioToggleComponent } from './form-components/form-radio-toggle.component';
 import { FormRadioButtonsComponent } from './form-components/form-radio-buttons.component';
 import {FormDateRangeComponent} from './form-components/form-date-range.component';
+import {FormAddressAutoCompleteComponent} from './form-components/form-address-auto-complete.component';
 
 export interface IDynamicForm {
     label?: string | string[]; // A label tag
@@ -33,6 +34,7 @@ export const dynamicFormTypes = {
     multiSelect: 'multiSelect',
     radioToggle: 'radiotoggle',
     radioButtons: 'radioButtons',
+    addressAutoComplete: 'addressAutoComplete',
 };
 
 const components = {
@@ -43,6 +45,7 @@ const components = {
     multiSelect: FormMultiSelectComponent,
     radiotoggle: FormRadioToggleComponent,
     radioButtons: FormRadioButtonsComponent,
+    addressAutoComplete: FormAddressAutoCompleteComponent,
 };
 
 @Directive({

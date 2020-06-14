@@ -1,12 +1,26 @@
-<ngu-carousel #myCarousel [inputs]="carouselTile" [dataSource]="carouselTileItems" >
+<p>What would you like to hire?</p>
+
+<ngu-carousel #myCarousel [inputs]="carouselTile" [dataSource]="carouselTileItems">
   <ngu-tile *nguCarouselDef="let id; let i = index">
+    <div class="container">
+      <img [src]="createImageUrl(products[id].imageUrl)" style="max-width: 100%"
+           [ngClass]="{'productImage': carouselTileDisplay[id] === 'image', 'productText': carouselTileDisplay[id] === 'contents'}"
+      >
+      <div *ngIf="carouselTileDisplay[id] != 'image'">
+        <div *ngIf="carouselTileDisplay[id] === 'contents'" class="topLeft">
+          <div *ngFor="let contents of products[id].contents">
+            {{contents}}
+          </div>
+        </div>
+      </div>
+    </div>
     <div>
-      <!--<img [src]="createImageUrl(products[id].imageUrl)" style="max-width: 300px;">-->
       <h2>{{products[id].brand}} {{products[id].model}}</h2>
     </div>
     <div>
       Price: {{pricingTools.formatPrice(getPrice(id))}}
       Qty: {{this.getQty(id)}}
+      <a (click)="changeCarouselTileDisplay(id)">Click to see what's included</a>
     </div>
     <button (click)="changeQty(id, -1)" [disabled]="this.getQty(id) < 1">-</button>
     <button (click)="changeQty(id, 1)" [disabled]="this.getQty(id) >= products[id].stockQty">+</button>

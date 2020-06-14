@@ -68,6 +68,31 @@ export class CreateDynamicForm {
     };
   }
 
+  static addressAutoComplete(
+    label: string,
+    name: string,
+    placeholder?: string,
+    defaultValue?: string,
+    validators?: Function[],
+    isDisplayed = true,
+    readOnly = false,
+    getWarning?: Function,
+    inputType?: string
+  ): IInput {
+    return {
+      type: dynamicFormTypes.addressAutoComplete,
+      label,
+      name,
+      placeholder,
+      defaultValue,
+      validators,
+      isDisplayed,
+      readOnly,
+      getWarning,
+      inputType
+    };
+  }
+
   static inputNumber(
     label: string,
     name: string,

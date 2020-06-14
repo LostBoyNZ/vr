@@ -8,6 +8,9 @@ export class ProductTools {
   }
 
   private doesIdExist(id: number): boolean {
+    if (!this.products[id]) {
+      console.error(`Error: Product ID of ${id} does not exist`);
+    }
     return this.products[id] ? true : false;
   }
 
@@ -19,8 +22,17 @@ export class ProductTools {
         return 0;
       }
     } else {
-      console.error(`Error: Product ID of ${productId} does not exist`);
       return 0;
+    }
+  }
+
+  public doesRequireShipping(productId: number): boolean {
+    if (this.doesIdExist(productId)) {
+      if (this.products[productId]) {
+        return this.products[productId][`requiresShipping`];
+      }
+    } else {
+      return true;
     }
   }
 }

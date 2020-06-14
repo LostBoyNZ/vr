@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -20,6 +20,9 @@ import * as AOS from 'aos';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { PageScrollService } from 'ngx-page-scroll-core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import moment from 'moment';
+import {ApiCaller} from '../shared/tools/apiCaller';
 
 export interface IQuestion {
   question: string;
@@ -41,6 +44,7 @@ export interface IFormAnswer {
 
 export interface IBookingFormDetails {
   rentalType: string;
+  shippingAddress: string;
   postcode: number;
   ruralDelivery: string;
   rentalDates: { begin: Date; end: Date };
@@ -62,10 +66,21 @@ export enum FormTypes {
   TEXT = "text"
 }
 
+export enum ShippingTypes {
+  OVERNIGHT = "overnight",
+  OVERNIGHT_RURAL = "overnight-rural",
+  ECONOMY = "economy",
+  ECONOMY_RURAL = "economy-rural",
+  LOCAL = "local",
+  LOCAL_RURAL = "local-rural",
+  FREE = "free"
+}
+
 @Component({
   selector: "app-checkout",
   templateUrl: "./checkout.component.html",
-  styleUrls: ["./checkout.component.scss", "../styles/forms.scss"]
+  styleUrls: ["./checkout.component.scss", "../styles/forms.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CheckoutComponent implements OnInit {
   @Input() order: Order;
@@ -78,6 +93,7 @@ export class CheckoutComponent implements OnInit {
   public showAll: boolean = false;
 
   public orderFormRentalType: IDynamicFormConfig;
+  public orderFormShippingAddress: IDynamicFormConfig;
   public orderFormPostcode: IDynamicFormConfig;
   public orderFormRuralDelivery: IDynamicFormConfig;
   public orderFormDateRange: IDynamicFormConfig;
@@ -100,11 +116,38 @@ export class CheckoutComponent implements OnInit {
   public shouldShowGst = true;
   public userFormData: IBookingFormDetails = {
     rentalType: null,
+    shippingAddress: null,
     postcode: null,
     ruralDelivery: null,
     rentalDates: { begin: null, end: null },
     productChoice: null,
     name: null
+  };
+  public startDateSummaryText: string;
+  public endDateSummaryText: string;
+
+  public myControl = new FormControl();
+  public options: string[] = ['One', 'Two', 'Three'];
+
+  public demoShippingAddressApiResponse = {
+    "success": true,
+    "address": {
+      "street_number": 60,
+      "street": "Topito",
+      "street_type": "Road",
+      "suburb": "Tuahiwi",
+      "city": "Kaiapoi",
+      "is_rural_delivery": true,
+      "postcode": "7691",
+      "longitude": 172.639,
+      "latitude": -43.3288,
+      "run_number": "D5079   ",
+      "depot_name": "Rangiora Area Depot",
+      "country": "New Zealand",
+      "dpid": 2112428,
+      "pcd_locations": []
+    },
+    "message_id": "5bac69e1-3345-4426-a3f3-9785da950e77"
   };
 
   public testForm = new FormGroup({
@@ -125,7 +168,8 @@ export class CheckoutComponent implements OnInit {
     this.shippingTimeTools = new ShippingTimeTools();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    ApiCaller.setupBearerTokenIfNotAlreadySet();
     this.pageScrollService.scroll({
       document: this.document,
       scrollTarget: '.theStart',
@@ -147,6 +191,11 @@ export class CheckoutComponent implements OnInit {
         type: FormTypes.RADIO,
         name: "rentalType",
         choices: ["individual", "company"]
+      },
+      {
+        question: "What address should we ship to?",
+        type: FormTypes.TEXT,
+        name: "shippingAddress",
       },
       {
         question: "What is your postcode?",
@@ -193,6 +242,24 @@ export class CheckoutComponent implements OnInit {
             { name: "Individual", value: "Individual" },
             { name: "Company", value: "Company" }
           ]
+        ),
+      ]
+    };
+
+    this.orderFormShippingAddress = {
+      inputs: [
+        CreateDynamicForm.addressAutoComplete(
+          "What is your home address?",
+          "homeAddress",
+          "",
+          "",
+          [
+            CustomFormValidators.isRequired,
+          ],
+          true,
+          false,
+          null,
+          "text",
         ),
       ]
     };
@@ -245,6 +312,13 @@ export class CheckoutComponent implements OnInit {
         ),
       ]
     };
+
+    // const query = '60 Topito';
+    // const addressSuggestions = await ApiCaller.getAddressSuggestions(query);
+    //
+    // const postalAddresses = addressSuggestions.filter(address => address['SourceDesc'] === 'Postal');
+    // console.log('addressSuggestions: ', addressSuggestions);
+    // console.log('postalAddresses: ', postalAddresses);
   }
 
   createForm() {
@@ -398,6 +472,16 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  public setStartDateSummaryText() {
+    const arrivalDate = moment(this.userFormData.rentalDates.begin).format("ddd, MMM D");
+    this.startDateSummaryText = `Aim to arrive to you ${arrivalDate} before 5:30pm`;
+  }
+
+  public setEndDateSummaryText() {
+    const returnDate = moment(this.userFormData.rentalDates.end).format("ddd, MMM D");
+    this.endDateSummaryText = `To send back during ${returnDate} (extended if it arrives late)`;
+  }
+
   public getPriceByProductId(id: number, qty: number): number {
     const pricingSchemeId = this.productTools.getPricingSchemeId(id);
     const price = this.pricingTools.getPriceByPricingIdAndNights(
@@ -408,6 +492,50 @@ export class CheckoutComponent implements OnInit {
     return this.shouldShowGst
       ? price * qty
       : this.pricingTools.removeGst(price * qty);
+  }
+
+  public getShippingTypeForCustomer(): ShippingTypes {
+    const isLocal = this.postcodeTools.isPostcodeLocal(this.userFormData.postcode);
+    const isRural = this.userFormData.ruralDelivery;
+
+    let shippingType: ShippingTypes;
+
+    if (isLocal) {
+      shippingType = isRural? ShippingTypes.LOCAL_RURAL : ShippingTypes.LOCAL;
+    } else {
+      if (this.isExtraPostageCharge()) {
+        shippingType = isRural ? ShippingTypes.OVERNIGHT_RURAL : ShippingTypes.OVERNIGHT;
+      } else {
+        shippingType = isRural ? ShippingTypes.ECONOMY_RURAL : ShippingTypes.ECONOMY;
+      }
+    }
+
+    return shippingType;
+  }
+
+  public getShippingPriceForOrder(): number {
+    const shippingType = this.getShippingTypeForCustomer();
+    if (this.allOrderLines && this.allOrderLines.length > 0) {
+      return this.allOrderLines.reduce(
+        (acc, orderLine) =>
+          acc + this.getShippingPriceForProduct(orderLine.id, orderLine.qty, shippingType),
+        0
+      );
+    } else {
+      return 0;
+    }
+  }
+
+  public getShippingPriceForProduct(id: number, qty: number, shippingType: ShippingTypes): number {
+    if (this.productTools.doesRequireShipping(id)) {
+      const price = this.pricingTools.getShippingPriceForType(shippingType);
+
+      return this.shouldShowGst
+        ? price * qty
+        : this.pricingTools.removeGst(price * qty);
+    } else {
+      return 0;
+    }
   }
 
   public getTotalPriceForOrder(): number {
@@ -456,12 +584,15 @@ export class CheckoutComponent implements OnInit {
       this.userFormData[name] = value;
       console.log('this.userFormData: ', this.userFormData);
 
+      this.setStartDateSummaryText();
+      this.setEndDateSummaryText();
+
       //console.log('window: ', window);
       window.scrollBy({top: window.innerHeight / 4, behavior: 'smooth'});
     }
   }
 
-  public getClass(formAnswer: any) {
+  public showIfThisIsAnswered(formAnswer: any) {
     //const main = document.querySelector('.main');
     //main.classList.remove("foo");
     if (formAnswer || this.showAll) {

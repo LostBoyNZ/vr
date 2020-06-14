@@ -12,11 +12,18 @@ import {CheckoutComponent, IOrderLine} from '../checkout/checkout.component';
 import products from "../../data/products.json";
 import {PricingTools} from '../shared/tools/pricingTools';
 
+export enum CarouselTileDisplayType {
+  IMAGE = "image",
+  CONTENTS = "contents",
+  SPECS = "specs",
+}
+
 @Component({
   selector: "app-checkout-carousel",
   templateUrl: "./checkout-carousel.component.html",
   styleUrls: ["./checkout-carousel.component.scss"],
 })
+
 export class CheckoutCarouselComponent implements OnInit {
   @Input() checkout: CheckoutComponent;
 
@@ -25,6 +32,7 @@ export class CheckoutCarouselComponent implements OnInit {
   @Output() orderChange = new EventEmitter();
 
   public carouselTileItems: Array<any> = [];
+  public carouselTileDisplay: Array<CarouselTileDisplayType>;
   public carouselTile: NguCarouselConfig = {
     grid: { xs: 1, sm: 1, md: 3, lg: 4, all: 0 },
     slide: 2,
@@ -56,6 +64,11 @@ export class CheckoutCarouselComponent implements OnInit {
     this.carouselTileItems = Array.from(
       (this.carouselTileItems = Object.keys(this.products))
     );
+
+    // Start each carousel tile as showing the product image
+    const numberOfProducts = Object.keys(this.products).length;
+    this.carouselTileDisplay = new Array<CarouselTileDisplayType>(numberOfProducts);
+    this.carouselTileDisplay.fill(CarouselTileDisplayType.IMAGE);
   }
 
   public getPrice(productId: number): number {
@@ -77,6 +90,14 @@ export class CheckoutCarouselComponent implements OnInit {
 
   public changeQty(id, qtyChange) {
     this.orderChange.emit({ id, qtyChange });
+  }
+
+  public changeCarouselTileDisplay(id) {
+    if (this.carouselTileDisplay[id] === CarouselTileDisplayType.CONTENTS) {
+      this.carouselTileDisplay[id] = CarouselTileDisplayType.IMAGE;
+    } else {
+      this.carouselTileDisplay[id] = CarouselTileDisplayType.CONTENTS;
+    }
   }
 
   createImageUrl(url: string): string {

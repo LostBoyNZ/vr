@@ -15,6 +15,7 @@ describe('CheckoutComponent', () => {
   }];
   const mockUserFormData: IBookingFormDetails = {
     rentalType: 'personal',
+    shippingAddress: null,
     postcode: 1000,
     ruralDelivery: 'non-rural',
     rentalDates: { begin: new Date('2019-12-03'), end: new Date('2019-12-04') },
@@ -87,6 +88,7 @@ describe('CheckoutComponent', () => {
       const mockToday = new Date('2019-11-30');
       component.userFormData = {
         rentalType: 'personal',
+        shippingAddress: null,
         postcode: 1000,
         ruralDelivery: 'non-rural',
         rentalDates: { begin: new Date('2019-11-30'), end: new Date('2019-12-04') },

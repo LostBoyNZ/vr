@@ -1,3 +1,32 @@
+.productImage {
+  opacity: 1;
+}
+
+.productText {
+  opacity: 0.2;
+}
+
+.container {
+  position: relative;
+  color: #000;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Product text */
+.topLeft {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  text-align: left;
+}
+
 .bannerStyle div {
   background-color: #ccc;
   background-size: cover !important;
@@ -90,7 +119,7 @@ nav h1 {
   height: 50px;
   box-shadow: 1px 2px 10px -1px rgba(0, 0, 0, 0.3);
   border-radius: 999px;
-  left: 0;
+  left: 0px;
 }
 
 .rightRs {
