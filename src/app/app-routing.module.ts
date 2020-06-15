@@ -10,7 +10,6 @@ import {NumberFormComponent} from './shared/forms/number/number-form.component';
 import {SingleDateFormComponent} from './shared/forms/single-date/single-date-form.component';
 import {FormDateRangeComponent} from './shared/forms/form-components/form-date-range.component';
 import {CheckoutCarouselComponent} from './checkout-carousel/checkout-carousel.component';
-import {TestComponent} from './test/test.component';
 
 const routes: Routes = [
   {
@@ -53,10 +52,6 @@ const routes: Routes = [
     path: 'checkout-carousel',
     component: CheckoutCarouselComponent,
   },
-  {
-    path: 'test',
-    component: TestComponent,
-  }
 ];
 
 @NgModule({

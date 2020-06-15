@@ -1,0 +1,20 @@
+<div class="edit-row">
+    <div class="dynamic-field form-button modal-footer" [formGroup]="group">
+        <span class="pull-left footer-text error-message"
+              *ngIf="group.errors?.key">{{group.errors?.key}}</span>
+        <!--<span class="pull-left footer-text error-message"
+              *ngIf="config.customErrorMessage && config.customErrorMessage()"
+              [innerHTML]="config.customErrorMessage && config.customErrorMessage()">
+        </span>-->
+        <button *ngFor="let button of config.buttons"
+                [id]="button.type"
+                [ngClass]="buttonStyle(button.type)"
+                [disabled]="button.isButtonDisabled && button.isButtonDisabled(group)"
+                (click)="onClick(button)"
+                [type]="button.type != 'submit' ? 'button' : 'submit'">
+            <i class="material-icons" [ngClass]="{isRefreshing: button.isRefreshing && button.isRefreshing(group)}"
+               *ngIf="button.isRefreshing && button.isRefreshing(group)">autorenew</i>
+            {{ button.label.toUpperCase() }}
+        </button>
+    </div>
+</div>

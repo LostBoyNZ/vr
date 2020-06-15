@@ -19,6 +19,8 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {FormAddressAutoCompleteComponent} from './form-components/form-address-auto-complete.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {FormButtonComponent} from './form-components/form-button.component';
+import {FormFooterButtonsComponent} from './form-components/form-footer-buttons.component';
 
 @NgModule({
   imports: [
@@ -44,6 +46,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         FormMultiSelectComponent,
         FormRadioToggleComponent,
         FormAddressAutoCompleteComponent,
+        FormButtonComponent,
+        FormFooterButtonsComponent,
     ],
     exports: [
         DynamicFormComponent,
@@ -69,6 +73,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         FormMultiSelectComponent,
         FormRadioToggleComponent,
         FormAddressAutoCompleteComponent,
+        FormButtonComponent,
+        FormFooterButtonsComponent,
     ],
     providers: [CustomFormValidators, CreateDynamicForm, {provide: MAT_DATE_LOCALE, useValue: 'en-NZ' }],
 })

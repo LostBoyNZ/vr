@@ -1,10 +1,14 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { IDynamicForm } from '../dynamic-field.directive';
-import {fromEvent, Observable, Observer} from 'rxjs';
+import { fromEvent, Observable, Observer } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { ApiCaller } from '../../tools/apiCaller';
+import { AddressTypes, ApiCaller } from '../../tools/apiCaller';
 import * as _ from "lodash";
+
+export interface IInputAddress extends IInput {
+  acceptedAddressTypes?: AddressTypes[],
+}
 
 @Component({
   selector: "app-form-address-auto-complete",
@@ -16,7 +20,7 @@ export class FormAddressAutoCompleteComponent implements OnInit {
   @ViewChild('autoCompleteInput', { static: true }) autoCompleteInput: ElementRef;
 
   @Input()
-  config: IInput;
+  config: IInputAddress;
   @Input()
   group: FormGroup;
 
@@ -27,6 +31,8 @@ export class FormAddressAutoCompleteComponent implements OnInit {
   allAddresses: string[];
 
   ngOnInit() {
+    const addressTypesToFilterBy = this.config.acceptedAddressTypes;
+
     fromEvent(this.autoCompleteInput.nativeElement, 'keyup').pipe(
       map((event: any) => {
         return event.target.value;
@@ -37,12 +43,16 @@ export class FormAddressAutoCompleteComponent implements OnInit {
     ).subscribe(async (text: string) => {
       const addressSuggestions = await ApiCaller.getAddressSuggestions(text);
 
-      this.addresses = new Observable<string[]>((observer: Observer<string[]>) => {
-        observer.next(this.allAddresses = addressSuggestions.map(address => address.FullAddress));
-        // observer.next(addressSuggestions.filter(
-        //   address => address['SourceDesc'] != 'Physical'
-        // ).map(address => address.FullAddress));
-      });
+      if (addressSuggestions) {
+        this.addresses = new Observable<string[]>((observer: Observer<string[]>) => {
+          observer.next(this.allAddresses = addressSuggestions.map(address => address.FullAddress));
+          if (addressTypesToFilterBy) {
+            observer.next(addressSuggestions.filter(
+              address => _.includes(address['SourceDesc'], addressTypesToFilterBy)
+            ).map(address => address.FullAddress));
+          }
+        });
+      }
     });
   }
 

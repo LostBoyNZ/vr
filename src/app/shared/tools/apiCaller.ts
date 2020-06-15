@@ -1,6 +1,11 @@
 import * as moment from "moment";
 import {Moment} from 'moment';
 
+export enum AddressTypes {
+  PHYSICAL = "Physical",
+  POSTAL = "Postal",
+}
+
 export class ApiCaller {
   private static urlAddressChecker = 'https://api.nzpost.co.nz/addresschecker/1.0/';
   private static clientId = '8ab77698b7934e2e9ff661b69846f08b';

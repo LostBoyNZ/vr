@@ -13,6 +13,10 @@ import {
 } from "./form-components/form-radio-toggle.component";
 import {IFormRadioButtonOnly} from './form-components/form-radio-buttons.component';
 import {IFormDateRange} from './form-components/form-date-range.component';
+import {AddressTypes} from '../tools/apiCaller';
+import {IInputAddress} from './form-components/form-address-auto-complete.component';
+import {FormGroup} from '@angular/forms';
+import {IFooterButton, IFooterButtons} from './form-components/form-footer-buttons.component';
 
 @Injectable()
 export class CreateDynamicForm {
@@ -77,8 +81,9 @@ export class CreateDynamicForm {
     isDisplayed = true,
     readOnly = false,
     getWarning?: Function,
-    inputType?: string
-  ): IInput {
+    inputType?: string,
+    acceptedAddressTypes?: AddressTypes[],
+  ): IInputAddress {
     return {
       type: dynamicFormTypes.addressAutoComplete,
       label,
@@ -89,7 +94,8 @@ export class CreateDynamicForm {
       isDisplayed,
       readOnly,
       getWarning,
-      inputType
+      inputType,
+      acceptedAddressTypes
     };
   }
 
@@ -199,6 +205,20 @@ export class CreateDynamicForm {
       defaultValue,
       radioButtons,
       validators,
+    };
+  }
+
+  static footerButtons({
+    buttons,
+    customErrorMessage,
+  }: {
+    buttons: IFooterButton[];
+    customErrorMessage?: (form: FormGroup) => string;
+  }): IFooterButtons {
+    return {
+      type: 'footerButtons',
+      buttons,
+      customErrorMessage,
     };
   }
 }

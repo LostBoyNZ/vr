@@ -16,6 +16,7 @@ import { FormRadioToggleComponent } from './form-components/form-radio-toggle.co
 import { FormRadioButtonsComponent } from './form-components/form-radio-buttons.component';
 import {FormDateRangeComponent} from './form-components/form-date-range.component';
 import {FormAddressAutoCompleteComponent} from './form-components/form-address-auto-complete.component';
+import {FormFooterButtonsComponent} from './form-components/form-footer-buttons.component';
 
 export interface IDynamicForm {
     label?: string | string[]; // A label tag
@@ -35,6 +36,7 @@ export const dynamicFormTypes = {
     radioToggle: 'radiotoggle',
     radioButtons: 'radioButtons',
     addressAutoComplete: 'addressAutoComplete',
+    footerButtons: 'footerButtons',
 };
 
 const components = {
@@ -46,6 +48,7 @@ const components = {
     radiotoggle: FormRadioToggleComponent,
     radioButtons: FormRadioButtonsComponent,
     addressAutoComplete: FormAddressAutoCompleteComponent,
+    footerButtons: FormFooterButtonsComponent,
 };
 
 @Directive({

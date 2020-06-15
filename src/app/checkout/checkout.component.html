@@ -12,26 +12,44 @@ Home address
     |__ Choose a collection point
 -->
 
-<div class="center-horizontal">
+<app-checkout-address></app-checkout-address>
+
+<div class="center-horizontal" *ngIf="false">
   <div class="center-vertical">
     <div class="flex-row question">
 
-      <div class="item" id="rentalTypeQuestion" *ngIf="!this.userFormData.rentalType">
-        <app-dynamic-form [config]="orderFormRentalType || showAll" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+      <!-- Rental Type -->
+      <div class="item" *ngIf="!this.userFormData.rentalType">
+        <app-dynamic-form [config]="orderFormRentalType || showAll" (currentValue)="formChanged($event)">
         </app-dynamic-form>
       </div>
 
-      <div class="item insert-remove-container" id="shippingAddressQuestion" *ngIf="this.userFormData.rentalType && !this.userFormData.shippingAddress">
-        <app-dynamic-form [config]="orderFormShippingAddress" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
+      <!-- Shipping Address Type -->
+      <div class="item" *ngIf="this.userFormData.rentalType && !this.userFormData.shippingAddressType">
+        <app-dynamic-form [config]="orderFormShippingAddressType || showAll" (currentValue)="updateDeliverToBusiness($event)">
         </app-dynamic-form>
       </div>
 
-      <div class="item" id="rentalDatesQuestion" *ngIf="this.userFormData.shippingAddress && !this.userFormData.rentalDates.end">
+      <!-- Company Name -->
+      <div class="item insert-remove-container" *ngIf="this.userFormData.shippingAddressType && this.deliverToBusiness">
+        <app-dynamic-form [config]="orderFormCompanyName" (currentValue)="formChanged($event)">
+        </app-dynamic-form>
+      </div>
+
+      <!-- Shipping Address -->
+      <div class="item insert-remove-container" *ngIf="this.userFormData.shippingAddressType">
+        <app-dynamic-form [config]="orderFormShippingAddress" (submitted)="submittedShippingAddress($event)">
+        </app-dynamic-form>
+      </div>
+
+      <!-- Rental Dates -->
+      <div class="item" *ngIf="this.userFormData.shippingAddress && !this.userFormData.rentalDates.end">
         <app-dynamic-form [config]="orderFormDateRange" (submitted)="submitted($event)" (currentValue)="formChanged($event)">
         </app-dynamic-form>
       </div>
 
-      <div class="item"  id="productsQuestion" *ngIf="this.userFormData.rentalDates.end">
+      <!-- Products Carousel -->
+      <div class="item" *ngIf="this.userFormData.rentalDates.end">
         <p>Howdy!</p>
         <app-checkout-carousel (orderChange)='updateOrder($event)' [allOrderLines]='allOrderLines' [checkout]="this"></app-checkout-carousel>
         <div>

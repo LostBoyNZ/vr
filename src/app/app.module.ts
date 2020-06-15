@@ -20,13 +20,14 @@ import {CheckoutCarouselComponent} from './checkout-carousel/checkout-carousel.c
 import {CollapseComponent} from './shared/components/collapse/collapse.component';
 import {DynamicFormModule} from './shared/forms/dynamic-form.module';
 import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
-import {TestComponent} from './test/test.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {CheckoutAddressComponent} from './checkout/checkout-address/checkout-address.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CheckoutComponent,
+    CheckoutAddressComponent,
     ProductAddComponent,
     ProductGetComponent,
     ProductEditComponent,
@@ -36,7 +37,6 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     SingleDateFormComponent,
     CheckoutCarouselComponent,
     CollapseComponent,
-    TestComponent
   ],
     imports: [
         BrowserModule,

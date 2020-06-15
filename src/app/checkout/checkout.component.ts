@@ -22,7 +22,7 @@ import { DOCUMENT } from '@angular/common';
 import { PageScrollService } from 'ngx-page-scroll-core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import moment from 'moment';
-import {ApiCaller} from '../shared/tools/apiCaller';
+import {AddressTypes, ApiCaller} from '../shared/tools/apiCaller';
 
 export interface IQuestion {
   question: string;
@@ -44,7 +44,10 @@ export interface IFormAnswer {
 
 export interface IBookingFormDetails {
   rentalType: string;
+  shippingAddressType: string;
+  companyName: string;
   shippingAddress: string;
+  homeAddress: string;
   postcode: number;
   ruralDelivery: string;
   rentalDates: { begin: Date; end: Date };
@@ -55,6 +58,17 @@ export interface IBookingFormDetails {
 export interface IOrderLine {
   id: number;
   qty: number;
+}
+
+export enum RentalTypes {
+  INDIVIDUAL = "individual",
+  COMPANY = "company",
+}
+
+export enum ShippingAddressTypes {
+  HOME = "home",
+  BUSINESS = "business",
+  COLLECTION_POINT = "collection point",
 }
 
 export enum FormTypes {
@@ -93,6 +107,9 @@ export class CheckoutComponent implements OnInit {
   public showAll: boolean = false;
 
   public orderFormRentalType: IDynamicFormConfig;
+  public orderFormShippingAddressType: IDynamicFormConfig;
+  public orderFormCompanyName: IDynamicFormConfig;
+  public orderFormHomeAddress: IDynamicFormConfig;
   public orderFormShippingAddress: IDynamicFormConfig;
   public orderFormPostcode: IDynamicFormConfig;
   public orderFormRuralDelivery: IDynamicFormConfig;
@@ -114,9 +131,13 @@ export class CheckoutComponent implements OnInit {
   public minDate;
   public calendarTip: string = null;
   public shouldShowGst = true;
+  public deliverToBusiness = false;
   public userFormData: IBookingFormDetails = {
     rentalType: null,
+    shippingAddressType: null,
+    companyName: null,
     shippingAddress: null,
+    homeAddress: null,
     postcode: null,
     ruralDelivery: null,
     rentalDates: { begin: null, end: null },
@@ -184,64 +205,48 @@ export class CheckoutComponent implements OnInit {
     this.setMinDay();
     // this.minDate = new Date(2019, 10, 20); // month count starts at 0 for some reason
 
-    this.maxQuestionReached = 0;
-    this.questions = [
-      {
-        question: "What type of rental is this?",
-        type: FormTypes.RADIO,
-        name: "rentalType",
-        choices: ["individual", "company"]
-      },
-      {
-        question: "What address should we ship to?",
-        type: FormTypes.TEXT,
-        name: "shippingAddress",
-      },
-      {
-        question: "What is your postcode?",
-        type: FormTypes.NUMBER,
-        name: "postcode",
-        maxCharacters: 4,
-        minCharacters: 4
-      },
-      {
-        question: "What type of postal address will you use?",
-        type: FormTypes.RADIO,
-        name: "ruralDelivery",
-        choices: ["non rural", "rural"]
-      },
-      {
-        question: "What dates would you like?",
-        type: FormTypes.DATE_RANGE,
-        name: "rentalDates",
-        minDate: this.minDate,
-        validDatesFilter: this.validDatesFilter,
-        defaultDates: { begin: null, end: null }
-      },
-      {
-        question: "What would you like to rent?",
-        type: FormTypes.PRODUCT_CHOICE,
-        name: "productChoice"
-      }
-      /*
-      {
-        question: 'What is your name?',
-        type: FormTypes.TEXT,
-        name: 'name',
-      }
-      */
-    ];
-
     this.orderFormRentalType = {
       inputs: [
         CreateDynamicForm.radioButtons(
           "What type of rental is this?",
           "rentalType",
-          'Individual',
+          null,
           [
-            { name: "Individual", value: "Individual" },
-            { name: "Company", value: "Company" }
+            { name: RentalTypes.INDIVIDUAL, value: RentalTypes.INDIVIDUAL.valueOf() },
+            { name: RentalTypes.COMPANY, value: RentalTypes.COMPANY.valueOf() }
           ]
+        ),
+      ]
+    };
+
+    this.orderFormShippingAddressType = {
+      inputs: [
+        CreateDynamicForm.radioButtons(
+          "Where would you like it delivered to?",
+          "shippingAddressType",
+          null,
+          [
+            { name: ShippingAddressTypes.HOME, value: ShippingAddressTypes.HOME.valueOf() },
+            { name: ShippingAddressTypes.BUSINESS, value: ShippingAddressTypes.BUSINESS.valueOf() },
+            { name: ShippingAddressTypes.COLLECTION_POINT, value: ShippingAddressTypes.COLLECTION_POINT.valueOf() },
+          ]
+        ),
+      ]
+    };
+
+    this.orderFormCompanyName = {
+      inputs: [
+        CreateDynamicForm.input(
+          "What is the business name?",
+          "companyName",
+          "",
+          "",
+          [
+            CustomFormValidators.isRequired,
+          ],
+          true,
+          false,
+          null,
         ),
       ]
     };
@@ -249,8 +254,8 @@ export class CheckoutComponent implements OnInit {
     this.orderFormShippingAddress = {
       inputs: [
         CreateDynamicForm.addressAutoComplete(
-          "What is your home address?",
-          "homeAddress",
+          "What address would you like it delivered to?",
+          "shippingAddress",
           "",
           "",
           [
@@ -260,6 +265,7 @@ export class CheckoutComponent implements OnInit {
           false,
           null,
           "text",
+          [AddressTypes.POSTAL],
         ),
       ]
     };
@@ -312,13 +318,6 @@ export class CheckoutComponent implements OnInit {
         ),
       ]
     };
-
-    // const query = '60 Topito';
-    // const addressSuggestions = await ApiCaller.getAddressSuggestions(query);
-    //
-    // const postalAddresses = addressSuggestions.filter(address => address['SourceDesc'] === 'Postal');
-    // console.log('addressSuggestions: ', addressSuggestions);
-    // console.log('postalAddresses: ', postalAddresses);
   }
 
   createForm() {
@@ -352,42 +351,6 @@ export class CheckoutComponent implements OnInit {
     // const defaultBeginDate: Date = (this.userFormData.rentalDates.begin) ?  this.userFormData.rentalDates.begin : null;
     // const defaultEndDate: Date = (this.userFormData.rentalDates.end) ?  this.userFormData.rentalDates.end : null;
     this.orderLinesArray.push(this.formBuilder.group(new OrderLine(0, 0)));
-  }
-
-  private updateQuestionsByType(
-    type: FormTypes,
-    attribute: string,
-    newValue: string
-  ) {
-    this.questions.map(question => {
-      if (question.type === FormTypes.DATE_RANGE) {
-        question[attribute] = newValue;
-      }
-    });
-  }
-
-  private updateDateRangePicker() {
-    this.setMinDay();
-    this.updateQuestionsByType(FormTypes.DATE_RANGE, "minDate", this.minDate);
-  }
-
-  updateUserFormData(question: IQuestion, answer: IFormAnswer) {
-    this.userFormData[answer.formFieldName] = answer.value;
-    console.log(this.userFormData);
-    if (
-      answer.formFieldName === "postcode" ||
-      answer.formFieldName === "ruralDelivery"
-    ) {
-      this.updateDateRangePicker();
-    }
-    this.shouldShowGst = this.userFormData.rentalType !== "company";
-
-    this.maxQuestionReached++;
-  }
-
-  shouldUseRegularInputBox(formType: string) {
-    const supportedInputTypes: string[] = [FormTypes.TEXT];
-    return _.includes(supportedInputTypes, formType);
   }
 
   public isBeginDateValid(today: Date = new Date()): boolean {
@@ -577,6 +540,14 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  public submittedShippingAddress(form: FormGroup) {
+    if (form.valid && form.dirty && form.value) {
+      this.userFormData.homeAddress = form.value;
+      console.log('value: ', form.value);
+      console.log('!!!!!!!!!!!!!!! VALID SHIPPING ADDRESS !!!!!!!!!!!!!!');
+    }
+  }
+
   public formChanged(form: FormGroup) {
     if (form.valid && form.dirty && form.value) {
       const name = Object.keys(form.value)[0];
@@ -590,6 +561,11 @@ export class CheckoutComponent implements OnInit {
       //console.log('window: ', window);
       window.scrollBy({top: window.innerHeight / 4, behavior: 'smooth'});
     }
+  }
+
+  public updateDeliverToBusiness(form: FormGroup) {
+    this.formChanged(form);
+    this.deliverToBusiness = this.userFormData.shippingAddressType !== ShippingAddressTypes.HOME;
   }
 
   public showIfThisIsAnswered(formAnswer: any) {

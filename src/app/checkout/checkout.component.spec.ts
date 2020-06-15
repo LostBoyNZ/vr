@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {CheckoutComponent, FormTypes, IBookingFormDetails, IQuestion} from './checkout.component';
+import {CheckoutComponent, FormTypes, IBookingFormDetails, IQuestion, RentalTypes, ShippingAddressTypes} from './checkout.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
@@ -14,8 +14,11 @@ describe('CheckoutComponent', () => {
     choices: ['individual', 'company'],
   }];
   const mockUserFormData: IBookingFormDetails = {
-    rentalType: 'personal',
+    rentalType: RentalTypes.INDIVIDUAL,
+    shippingAddressType: null,
+    companyName: null,
     shippingAddress: null,
+    homeAddress: null,
     postcode: 1000,
     ruralDelivery: 'non-rural',
     rentalDates: { begin: new Date('2019-12-03'), end: new Date('2019-12-04') },
@@ -87,8 +90,11 @@ describe('CheckoutComponent', () => {
     it('should return false when given a weekend date to begin the rental on', () => {
       const mockToday = new Date('2019-11-30');
       component.userFormData = {
-        rentalType: 'personal',
+        rentalType: RentalTypes.INDIVIDUAL,
+        shippingAddressType: ShippingAddressTypes.HOME,
+        companyName: null,
         shippingAddress: null,
+        homeAddress: null,
         postcode: 1000,
         ruralDelivery: 'non-rural',
         rentalDates: { begin: new Date('2019-11-30'), end: new Date('2019-12-04') },
