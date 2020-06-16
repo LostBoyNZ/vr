@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { CreateDynamicForm } from '../../shared/forms/create-dynamic-form';
 import { RentalTypes, ShippingAddressTypes } from '../checkout.component';
 import { CustomFormValidators } from '../../shared/forms/custom-form.validators';
-import { AddressTypes } from '../../shared/tools/apiCaller';
+import {AddressSuggestionTools, AddressTypes} from '../../shared/tools/addressSuggestionTools';
 import {DynamicFormConfig} from '../../shared/forms/dynamic-form.component';
 import {FormGroup} from '@angular/forms';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {DialogSimpleComponent} from '../../shared/components/dialog-simple/dialog-simple.component';
 
 @Component({
   selector: 'app-checkout-address',
@@ -12,6 +14,7 @@ import {FormGroup} from '@angular/forms';
   styleUrls: ['./checkout-address.component.scss'],
 })
 export class CheckoutAddressComponent {
+  private dialog: MatDialog;
   public customErrorMessage = 'Custom error message';
   public isSubmitting = false;
   public formQuestions = [
@@ -63,17 +66,11 @@ export class CheckoutAddressComponent {
     CreateDynamicForm.footerButtons({
       buttons: [
         {
-          label: 'CANCEL',
-          type: 'cancel',
-          callbackFn: null,
-          closeAfterCallback: true,
-        },
-        {
-          label: 'APPLY',
+          label: 'NEXT',
           type: 'submit',
-          callbackFn: this.test,
+          callbackFn: this.next,
           closeAfterCallback: false,
-          isButtonDisabled: this.isFormInvalid,
+          isButtonHidden: this.isFormInvalid,
           isRefreshing: () => this.isSubmitting,
         },
       ],
@@ -87,20 +84,50 @@ export class CheckoutAddressComponent {
 
   constructor() { }
 
-  ngOnInit() {
-    console.log('this.formQuestions: ', this.formQuestions);
-  }
+  ngOnInit() { }
 
   submitted(event) {
     console.log('event: ', event);
   }
 
-  private static isFormInvalid(formGroup: FormGroup): boolean {
+  isFormInvalid(formGroup: FormGroup): boolean {
     return formGroup && !formGroup.valid;
   }
 
-  test() {
-    console.log('TEST');
+  async next(event) {
+    console.log('event: ', event);
+    const address = event.value.shippingAddress;
+    const addressIsValid = await AddressSuggestionTools.addressMatchesOneOrMoreSuggestions(address, []);
+    console.log('addressIsValid: ', addressIsValid);
+
+    // https://github.com/angular-university/angular-material-course/tree/3-dialog-finished/src/app
+    // https://blog.angular-university.io/angular-material-dialog/
+
+    let description = 'description';
+    let longDescription = 'longDescription';
+    let category = 'category';
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      description, longDescription, category
+    };
+
+    const dialogRef = this.dialog.open(DialogSimpleComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      val => console.log("Dialog output:", val)
+    );
+
+
+    if (addressIsValid) {
+      console.log('Show next form page');
+    } else {
+      console.log('Invalid address, check');
+    }
   }
 }
 

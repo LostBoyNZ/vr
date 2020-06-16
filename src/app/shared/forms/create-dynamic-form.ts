@@ -13,7 +13,7 @@ import {
 } from "./form-components/form-radio-toggle.component";
 import {IFormRadioButtonOnly} from './form-components/form-radio-buttons.component';
 import {IFormDateRange} from './form-components/form-date-range.component';
-import {AddressTypes} from '../tools/apiCaller';
+import {AddressTypes} from '../tools/addressSuggestionTools';
 import {IInputAddress} from './form-components/form-address-auto-complete.component';
 import {FormGroup} from '@angular/forms';
 import {IFooterButton, IFooterButtons} from './form-components/form-footer-buttons.component';

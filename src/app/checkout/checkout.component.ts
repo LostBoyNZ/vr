@@ -22,7 +22,7 @@ import { DOCUMENT } from '@angular/common';
 import { PageScrollService } from 'ngx-page-scroll-core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import moment from 'moment';
-import {AddressTypes, ApiCaller} from '../shared/tools/apiCaller';
+import {AddressTypes, AddressSuggestionTools} from '../shared/tools/addressSuggestionTools';
 
 export interface IQuestion {
   question: string;
@@ -190,7 +190,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   async ngOnInit() {
-    ApiCaller.setupBearerTokenIfNotAlreadySet();
+    AddressSuggestionTools.setupBearerTokenIfNotAlreadySet();
     this.pageScrollService.scroll({
       document: this.document,
       scrollTarget: '.theStart',

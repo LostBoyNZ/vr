@@ -22,6 +22,8 @@ import {DynamicFormModule} from './shared/forms/dynamic-form.module';
 import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {CheckoutAddressComponent} from './checkout/checkout-address/checkout-address.component';
+import {DialogSimpleComponent} from './shared/components/dialog-simple/dialog-simple.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -37,20 +39,22 @@ import {CheckoutAddressComponent} from './checkout/checkout-address/checkout-add
     SingleDateFormComponent,
     CheckoutCarouselComponent,
     CollapseComponent,
+    DialogSimpleComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        AngularMaterialModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        FormsModule,
-        NguCarouselModule,
-        DynamicFormModule,
-        NgxPageScrollCoreModule,
-        MatAutocompleteModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    AngularMaterialModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
+    NguCarouselModule,
+    DynamicFormModule,
+    NgxPageScrollCoreModule,
+    MatAutocompleteModule,
+    MatDialogModule,
+  ],
   entryComponents: [
   ],
   providers: [

@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { IDynamicForm } from '../dynamic-field.directive';
 import { fromEvent, Observable, Observer } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { AddressTypes, ApiCaller } from '../../tools/apiCaller';
+import { AddressTypes, AddressSuggestionTools } from '../../tools/addressSuggestionTools';
 import * as _ from "lodash";
 
 export interface IInputAddress extends IInput {
@@ -40,8 +40,8 @@ export class FormAddressAutoCompleteComponent implements OnInit {
       filter(res => /[A-Za-z]/.test(res.toString())),
       debounceTime(50),
       distinctUntilChanged(),
-    ).subscribe(async (text: string) => {
-      const addressSuggestions = await ApiCaller.getAddressSuggestions(text);
+    ).subscribe(async (address: string) => {
+      const addressSuggestions = await AddressSuggestionTools.getApiAddressSuggestions(address);
 
       if (addressSuggestions) {
         this.addresses = new Observable<string[]>((observer: Observer<string[]>) => {

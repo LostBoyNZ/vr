@@ -10,6 +10,7 @@
                 [id]="button.type"
                 [ngClass]="buttonStyle(button.type)"
                 [disabled]="button.isButtonDisabled && button.isButtonDisabled(group)"
+                [hidden]="button.isButtonHidden && button.isButtonHidden(group)"
                 (click)="onClick(button)"
                 [type]="button.type != 'submit' ? 'button' : 'submit'">
             <i class="material-icons" [ngClass]="{isRefreshing: button.isRefreshing && button.isRefreshing(group)}"

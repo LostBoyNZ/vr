@@ -55,4 +55,5 @@ export interface IFooterButton {
     closeAfterCallback?: boolean;
     isRefreshing?: (form: FormGroup) => boolean;
     isButtonDisabled?: (form: FormGroup) => boolean;
+    isButtonHidden?: (form: FormGroup) => boolean;
 }

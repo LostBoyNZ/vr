@@ -4,11 +4,6 @@
     <span class="edit-label">{{config.label}}</span>
     <span class="edit-value">
       <!--<div *ngIf="(addresses| async)?.length === 1">-->
-      <div *ngIf="inputMatchesAutoCompleteSuggestion()">
-        <button type="submit">
-          Next
-        </button>
-      </div>
       <input [type]="inputType"
              #autoCompleteInput
              [matAutocomplete]="auto"
