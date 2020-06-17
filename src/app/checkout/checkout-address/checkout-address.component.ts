@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import { CreateDynamicForm } from '../../shared/forms/create-dynamic-form';
 import { RentalTypes, ShippingAddressTypes } from '../checkout.component';
 import { CustomFormValidators } from '../../shared/forms/custom-form.validators';
 import {AddressSuggestionTools, AddressTypes} from '../../shared/tools/addressSuggestionTools';
 import {DynamicFormConfig} from '../../shared/forms/dynamic-form.component';
 import {FormGroup} from '@angular/forms';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {DialogSimpleComponent} from '../../shared/components/dialog-simple/dialog-simple.component';
 
 @Component({
@@ -14,7 +14,6 @@ import {DialogSimpleComponent} from '../../shared/components/dialog-simple/dialo
   styleUrls: ['./checkout-address.component.scss'],
 })
 export class CheckoutAddressComponent {
-  private dialog: MatDialog;
   public customErrorMessage = 'Custom error message';
   public isSubmitting = false;
   public formQuestions = [
@@ -78,11 +77,15 @@ export class CheckoutAddressComponent {
     }),
   ];
 
+  animal: string;
+  name: string;
+
   public addressFormConfig: DynamicFormConfig = {
     inputs: this.formQuestions,
   };
 
-  constructor() { }
+  // constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() { }
 
@@ -94,34 +97,27 @@ export class CheckoutAddressComponent {
     return formGroup && !formGroup.valid;
   }
 
-  async next(event) {
+  public openDialog(): void {
+    const dialogRef = this.dialog.open(DialogSimpleComponent, {
+      width: '250px',
+      data: {title: 'Yo yo', address: '60 Topito Road'}
+    });
+
+    dialogRef.disableClose = true;
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with the result: ', result);
+      this.animal = result;
+    });
+  }
+
+  public async next(event) {
     console.log('event: ', event);
     const address = event.value.shippingAddress;
     const addressIsValid = await AddressSuggestionTools.addressMatchesOneOrMoreSuggestions(address, []);
     console.log('addressIsValid: ', addressIsValid);
 
-    // https://github.com/angular-university/angular-material-course/tree/3-dialog-finished/src/app
-    // https://blog.angular-university.io/angular-material-dialog/
-
-    let description = 'description';
-    let longDescription = 'longDescription';
-    let category = 'category';
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-
-    dialogConfig.data = {
-      description, longDescription, category
-    };
-
-    const dialogRef = this.dialog.open(DialogSimpleComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-      val => console.log("Dialog output:", val)
-    );
-
+    this.openDialog();
 
     if (addressIsValid) {
       console.log('Show next form page');

@@ -23,7 +23,7 @@ import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {CheckoutAddressComponent} from './checkout/checkout-address/checkout-address.component';
 import {DialogSimpleComponent} from './shared/components/dialog-simple/dialog-simple.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -58,7 +58,7 @@ import {MatDialogModule} from '@angular/material/dialog';
   entryComponents: [
   ],
   providers: [
-    ProductsService,
+    ProductsService
   ],
   bootstrap: [AppComponent]
 })

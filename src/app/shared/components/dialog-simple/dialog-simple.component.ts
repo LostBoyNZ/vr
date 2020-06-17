@@ -3,6 +3,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import * as moment from 'moment';
 
+export interface DialogSimpleData {
+  title: string;
+  address: string;
+}
+
 @Component({
   selector: 'app-dialog-simple',
   templateUrl: './dialog-simple.component.html',
@@ -11,22 +16,25 @@ import * as moment from 'moment';
 
 export class DialogSimpleComponent implements OnInit {
   public form: FormGroup;
-  public description: string;
+  public address: string;
+
+  // constructor(
+  //   public dialogRef: MatDialogRef<DialogSimpleComponent>,
+  //   @Inject(MAT_DIALOG_DATA) public data: DialogSimpleData) {}
+
+  // onNoClick(): void {
+  //   this.dialogRef.close();
+  // }
 
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<DialogSimpleComponent>,
-    @Inject(MAT_DIALOG_DATA) {description,longDescription,
-      category}:Course ) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogSimpleData ) {
 
-    this.description = description;
-
+    this.address = data.address;
 
     this.form = fb.group({
-      description: [description, Validators.required],
-      category: [category, Validators.required],
-      releasedAt: [moment(), Validators.required],
-      longDescription: [longDescription,Validators.required]
+      address: [data.address, Validators.required],
     });
 
   }
@@ -45,7 +53,6 @@ export class DialogSimpleComponent implements OnInit {
   }
 
 }
-
 
 export interface Course {
   id:number;
