@@ -4,7 +4,7 @@ import { RentalTypes, ShippingAddressTypes } from '../checkout.component';
 import { CustomFormValidators } from '../../shared/forms/custom-form.validators';
 import {AddressSuggestionTools, AddressTypes} from '../../shared/tools/addressSuggestionTools';
 import {DynamicFormConfig} from '../../shared/forms/dynamic-form.component';
-import {FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {DialogSimpleComponent} from '../../shared/components/dialog-simple/dialog-simple.component';
 
@@ -69,7 +69,7 @@ export class CheckoutAddressComponent {
           type: 'submit',
           callbackFn: this.next,
           closeAfterCallback: false,
-          isButtonHidden: this.isFormInvalid,
+          // isButtonHidden: this.isFormInvalid,
           isRefreshing: () => this.isSubmitting,
         },
       ],
@@ -85,7 +85,7 @@ export class CheckoutAddressComponent {
   };
 
   // constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private fb: FormBuilder) {}
 
   ngOnInit() { }
 
@@ -98,9 +98,13 @@ export class CheckoutAddressComponent {
   }
 
   public openDialog(): void {
+    let form: FormGroup = this.fb.group({
+      address: ['99 Something Road', Validators.required],
+    });
+
     const dialogRef = this.dialog.open(DialogSimpleComponent, {
       width: '250px',
-      data: {title: 'Yo yo', address: '60 Topito Road'}
+      data: {title: 'Yo yo', form: form, config: this.addressFormConfig}
     });
 
     dialogRef.disableClose = true;

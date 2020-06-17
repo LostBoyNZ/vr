@@ -2,6 +2,11 @@
 
 <mat-dialog-content [formGroup]="form">
 
+  <app-dynamic-form [config]="dynamicFormConfig"
+                    [title]="'NTP.ADD'"
+                    (submitted)="submitted($event)">
+  </app-dynamic-form>
+
   <mat-form-field>
     <input matInput
            placeholder="Address"

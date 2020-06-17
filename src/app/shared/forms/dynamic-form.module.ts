@@ -21,6 +21,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormButtonComponent} from './form-components/form-button.component';
 import {FormFooterButtonsComponent} from './form-components/form-footer-buttons.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import {FormFooterButtonsComponent} from './form-components/form-footer-buttons.
     MatMomentDateModule,
     MatFormFieldModule,
     MatAutocompleteModule,
+    MatDialogModule,
   ],
     declarations: [
         DynamicFieldDirective,

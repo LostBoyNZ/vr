@@ -1,11 +1,12 @@
-import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import {FormBuilder, Validators, FormGroup} from "@angular/forms";
-import * as moment from 'moment';
+import { FormGroup } from "@angular/forms";
+import { DynamicFormConfig } from '../../forms/dynamic-form.component';
 
 export interface DialogSimpleData {
   title: string;
-  address: string;
+  form: FormGroup;
+  config: DynamicFormConfig;
 }
 
 @Component({
@@ -14,52 +15,27 @@ export interface DialogSimpleData {
   styleUrls: ['./dialog-simple.component.scss']
 })
 
-export class DialogSimpleComponent implements OnInit {
+export class DialogSimpleComponent {
   public form: FormGroup;
-  public address: string;
-
-  // constructor(
-  //   public dialogRef: MatDialogRef<DialogSimpleComponent>,
-  //   @Inject(MAT_DIALOG_DATA) public data: DialogSimpleData) {}
-
-  // onNoClick(): void {
-  //   this.dialogRef.close();
-  // }
+  public dynamicFormConfig: DynamicFormConfig;
 
   constructor(
-    private fb: FormBuilder,
     private dialogRef: MatDialogRef<DialogSimpleComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogSimpleData ) {
-
-    this.address = data.address;
-
-    this.form = fb.group({
-      address: [data.address, Validators.required],
-    });
-
+    @Inject(MAT_DIALOG_DATA) public data: DialogSimpleData) {
+    this.form = data.form;
+    this.dynamicFormConfig = data.config;
   }
-
-  ngOnInit() {
-
-  }
-
 
   save() {
     this.dialogRef.close(this.form.value);
+  }
+
+  submitted(event) {
+    console.log('submitted with: ', event);
   }
 
   close() {
     this.dialogRef.close();
   }
 
-}
-
-export interface Course {
-  id:number;
-  description:string;
-  iconUrl: string;
-  courseListIcon: string;
-  longDescription: string;
-  category:string;
-  lessonsCount:number;
 }
