@@ -4,9 +4,10 @@ import { RentalTypes, ShippingAddressTypes } from '../checkout.component';
 import { CustomFormValidators } from '../../shared/forms/custom-form.validators';
 import {AddressSuggestionTools, AddressTypes} from '../../shared/tools/addressSuggestionTools';
 import {DynamicFormConfig} from '../../shared/forms/dynamic-form.component';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {DialogSimpleComponent} from '../../shared/components/dialog-simple/dialog-simple.component';
+import {ConfirmDialogService} from '../../shared/components/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-checkout-address',
@@ -14,6 +15,7 @@ import {DialogSimpleComponent} from '../../shared/components/dialog-simple/dialo
   styleUrls: ['./checkout-address.component.scss'],
 })
 export class CheckoutAddressComponent {
+  public formGroup: FormGroup;
   public customErrorMessage = 'Custom error message';
   public isSubmitting = false;
   public formQuestions = [
@@ -85,9 +87,23 @@ export class CheckoutAddressComponent {
   };
 
   // constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
-  constructor(public dialog: MatDialog, private fb: FormBuilder) {}
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private dialogService: ConfirmDialogService) {}
 
-  ngOnInit() { }
+  ngOnInit() {
+    const options = {
+      title: 'Title',
+      message: 'Message',
+      cancelText: 'Cancel',
+      confirmText: 'Confirm'
+    };
+    this.dialogService.open(options);
+    this.dialogService.confirmed().subscribe(confirmed => {
+      if (confirmed) {
+        console.log('CONFIRMED YO: ', confirmed);
+        //do something if confirmed is true
+      }
+    });
+  }
 
   submitted(event) {
     console.log('event: ', event);
@@ -98,13 +114,14 @@ export class CheckoutAddressComponent {
   }
 
   public openDialog(): void {
-    let form: FormGroup = this.fb.group({
+    this.formGroup = this.fb.group({
       address: ['99 Something Road', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
     });
 
     const dialogRef = this.dialog.open(DialogSimpleComponent, {
       width: '250px',
-      data: {title: 'Yo yo', form: form, config: this.addressFormConfig}
+      data: {title: 'Yo yo', form: this.formGroup, config: this.addressFormConfig}
     });
 
     dialogRef.disableClose = true;

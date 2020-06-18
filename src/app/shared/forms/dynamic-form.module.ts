@@ -22,6 +22,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormButtonComponent} from './form-components/form-button.component';
 import {FormFooterButtonsComponent} from './form-components/form-footer-buttons.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {ChildInputComponent} from './form-components/child-input.component';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   imports: [
@@ -32,6 +34,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     SatNativeDateModule,
     MatMomentDateModule,
     MatFormFieldModule,
+    MatInputModule,
     MatAutocompleteModule,
     MatDialogModule,
   ],
@@ -50,20 +53,22 @@ import {MatDialogModule} from '@angular/material/dialog';
         FormAddressAutoCompleteComponent,
         FormButtonComponent,
         FormFooterButtonsComponent,
+        ChildInputComponent,
     ],
-    exports: [
-        DynamicFormComponent,
-        FormDateRangeComponent,
-        FormInputComponent,
-        FormInputNumberComponent,
-        FormErrorMessageComponent,
-        FormSelectComponent,
-        FormRadioButtonsComponent,
-        FormWarningMessageComponent,
-        FormMultiSelectComponent,
-        FormRadioToggleComponent,
-        FormAddressAutoCompleteComponent,
-    ],
+  exports: [
+    DynamicFormComponent,
+    FormDateRangeComponent,
+    FormInputComponent,
+    FormInputNumberComponent,
+    FormErrorMessageComponent,
+    FormSelectComponent,
+    FormRadioButtonsComponent,
+    FormWarningMessageComponent,
+    FormMultiSelectComponent,
+    FormRadioToggleComponent,
+    FormAddressAutoCompleteComponent,
+    ChildInputComponent,
+  ],
     entryComponents: [
         FormDateRangeComponent,
         FormInputComponent,
@@ -77,6 +82,7 @@ import {MatDialogModule} from '@angular/material/dialog';
         FormAddressAutoCompleteComponent,
         FormButtonComponent,
         FormFooterButtonsComponent,
+        ChildInputComponent,
     ],
     providers: [CustomFormValidators, CreateDynamicForm, {provide: MAT_DATE_LOCALE, useValue: 'en-NZ' }],
 })

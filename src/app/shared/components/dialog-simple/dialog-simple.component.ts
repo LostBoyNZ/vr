@@ -27,6 +27,8 @@ export class DialogSimpleComponent {
   }
 
   save() {
+    console.log('form: ', this.form);
+    console.log('dynamicFormConfig: ', this.dynamicFormConfig);
     this.dialogRef.close(this.form.value);
   }
 

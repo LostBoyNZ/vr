@@ -12,6 +12,8 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     @Input()
     config: DynamicFormConfig;
     @Input()
+    parentForm: FormGroup;
+    @Input()
     title: string;
     @Input()
     close: (text: string) => void;
@@ -32,10 +34,14 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     constructor(private fb: FormBuilder) {}
 
     ngOnInit() {
+      if (this.parentForm) {
+        this.form = this.parentForm;
+      } else {
         this.form = this.createGroup();
-        this.subscription = this.form.valueChanges.subscribe(() =>
-          this.currentValue.emit(this.form)
-        );
+      }
+      this.subscription = this.form.valueChanges.subscribe(() =>
+        this.currentValue.emit(this.form)
+      );
     }
 
     ngOnDestroy() {

@@ -24,6 +24,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {CheckoutAddressComponent} from './checkout/checkout-address/checkout-address.component';
 import {DialogSimpleComponent} from './shared/components/dialog-simple/dialog-simple.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
+import {ConfirmDialogService} from './shared/components/confirm-dialog/confirm-dialog.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dia
   entryComponents: [
   ],
   providers: [
-    ProductsService
+    ProductsService,
+    ConfirmDialogService
   ],
   bootstrap: [AppComponent]
 })

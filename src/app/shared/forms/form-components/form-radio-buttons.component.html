@@ -9,6 +9,7 @@
          name="radioBasic">
         <label ngbButtonLabel
                class="btn-default"
+               [formGroup]="group"
                [attr.data-name]="radio.value"
                *ngFor="let radio of config?.radioButtons"
                [attr.target-id]="false">
