@@ -114,14 +114,22 @@ export class CheckoutAddressComponent {
   }
 
   public openDialog(): void {
+    // this.formGroup = this.fb.group({
+    //   address: ['99 Something Road', Validators.required],
+    //   email: ['', [Validators.required, Validators.email]],
+    // });
+
     this.formGroup = this.fb.group({
-      address: ['99 Something Road', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
     });
+
+    const myFormControls = [{
+      formControl: new FormControl('Default', [Validators.required, Validators.email]),
+      label: 'email',
+    }];
 
     const dialogRef = this.dialog.open(DialogSimpleComponent, {
       width: '250px',
-      data: {title: 'Yo yo', form: this.formGroup, config: this.addressFormConfig}
+      data: {title: 'Yo yo', myForm: myFormControls, form: this.formGroup}
     });
 
     dialogRef.disableClose = true;

@@ -1,13 +1,7 @@
 <h1 mat-dialog-title>{{data.title}}</h1>
 
 <mat-dialog-content [formGroup]="form">
-  <app-child-input [parentForm]="form"></app-child-input>
-
-  <mat-form-field>
-    <input matInput
-           placeholder="Address"
-           formControlName="address">
-  </mat-form-field>
+  <app-child-input [parentForm]="form" [label]="this.data.myForm[0].label"></app-child-input>
 
 </mat-dialog-content>
 

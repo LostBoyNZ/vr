@@ -11,6 +11,9 @@ import {DialogSimpleData} from '../../components/dialog-simple/dialog-simple.com
 
 export class ChildInputComponent {
   @Input()
+  label: string;
+
+  @Input()
   parentForm: FormGroup;
 
   constructor(
