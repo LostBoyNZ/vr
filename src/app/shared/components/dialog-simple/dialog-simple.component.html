@@ -1,8 +1,8 @@
 <h1 mat-dialog-title>{{data.title}}</h1>
 
 <mat-dialog-content [formGroup]="form">
-  <app-child-input [parentForm]="form" [label]="this.data.myForm[0].label"></app-child-input>
-
+  <app-input-email [parentForm]="form" [myControl]="form.controls['email']" [heading]="'Your Email'"></app-input-email>
+  <app-input-email [parentForm]="form" [myControl]="form.controls['email2']" [heading]="'Your Email'"></app-input-email>
 </mat-dialog-content>
 
 <mat-dialog-actions>

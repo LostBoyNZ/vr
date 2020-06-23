@@ -1,0 +1,46 @@
+<!--<div class="form-field">-->
+<!--  <div class="form-field__control">-->
+<!--    <label [for]="label" class="form-field__label">{{label}}</label>-->
+<!--    <div [formGroup]="parentForm">-->
+<!--      <input [id]="label" [name]="label" [formControlName]="label" class="form-field__input" />-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div [formGroup]="parentForm">-->
+<!--<label>-->
+<!--  Name:-->
+<!--  <input type="text" [formControlName]="'email'">-->
+<!--</label>-->
+<!--</div>-->
+
+
+<div [formGroup]="parentForm">
+<mat-form-field>
+  <input type="text" [formControl]="myControl" matInput
+         [placeholder]="heading"
+         autocomplete="off" />
+  <mat-error *ngIf="myControl.invalid">Not a valid email</mat-error>
+</mat-form-field>
+</div>
+
+
+<!--<input type="text" [formControlName]="'email'" matInput-->
+<!--       [placeholder]="'Default'"-->
+<!--       autocomplete="off" />-->
+
+
+
+
+<!--<mat-form-field>-->
+<!--  <input type="text" [formControlName]="keyArray.key" matInput-->
+<!--         [placeholder]="keyArray.name"-->
+<!--         [ngClass]="{ 'is-invalid': parentForm.get(keyArray.key).errors }"-->
+<!--         autocomplete="off" />-->
+<!--  <mat-error *ngIf="parentForm.get(keyArray.key).hasError('required')">-->
+<!--    {{keyArray.name}} is <strong>required</strong>-->
+<!--  </mat-error>-->
+<!--  <mat-error *ngIf="parentForm.get(keyArray.key).hasError('email')">-->
+<!--    {{keyArray.name}} must be an <strong>email</strong>-->
+<!--  </mat-error>-->
+<!--</mat-form-field>-->

@@ -9,7 +9,7 @@ import { ConfirmDialogComponent } from './confirm.dialog.component';
   imports: [
     CommonModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   declarations: [
     ConfirmDialogComponent

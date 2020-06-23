@@ -25,6 +25,7 @@ import {CheckoutAddressComponent} from './checkout/checkout-address/checkout-add
 import {DialogSimpleComponent} from './shared/components/dialog-simple/dialog-simple.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
 import {ConfirmDialogService} from './shared/components/confirm-dialog/confirm-dialog.service';
+import {DialogVerifyAddressComponent} from './checkout/checkout-address/dialog-verify-address/dialog-verify-address.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {ConfirmDialogService} from './shared/components/confirm-dialog/confirm-d
     CheckoutCarouselComponent,
     CollapseComponent,
     DialogSimpleComponent,
+    DialogVerifyAddressComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Pipe, PipeTransform } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import {FormControl, FormGroup} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicFormConfig } from '../../forms/dynamic-form.component';
 
 export interface DialogSimpleData {
@@ -19,22 +19,32 @@ export interface DialogSimpleData {
 export class DialogSimpleComponent {
   public form: FormGroup;
 
+  public formArray = [
+    {
+      "key" : "email2",
+      "default" : "",
+      validators: [Validators.required, Validators.email],
+    },
+    {
+      "key": "email",
+      "default": "",
+      validators: [Validators.required, Validators.email],
+    }
+    ];
+
   constructor(
     private dialogRef: MatDialogRef<DialogSimpleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogSimpleData
   ) {
-    //this.form = data.form;
+    this.form = new FormGroup({});
   }
 
   ngOnInit() {
-    console.log(this.data.myForm[0]);
-    // TODO: This works but otherwise the formGroup is undefined when I try to addControl. But I can't set the form control name dynamically?
-    // Check here for suggestions: https://stackoverflow.com/questions/55027047/angular-dynamic-formcontrolname-generate-with-fromgroup
-    const controlName = this.data.myForm[0].label;
-    this.form = new FormGroup({
-      controlName: this.data.myForm[0].formControl
-    });
-    //this.form.addControl(this.data.myForm[0].label, new FormControl(this.data.myForm[0].formControl));
+    for(let formModule of this.formArray){
+      this.form.addControl(formModule.key,
+        new FormControl(formModule.default, formModule.validators))
+    }
+    console.log('!!!!!!!!!!!!! this.form: ', this.form);
   }
 
   save() {

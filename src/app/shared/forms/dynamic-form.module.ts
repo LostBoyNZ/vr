@@ -22,8 +22,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormButtonComponent} from './form-components/form-button.component';
 import {FormFooterButtonsComponent} from './form-components/form-footer-buttons.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import {ChildInputComponent} from './form-components/child-input.component';
 import {MatInputModule} from '@angular/material/input';
+import {InputEmailComponent} from './form-components/input-email.component';
 
 @NgModule({
   imports: [
@@ -53,7 +53,7 @@ import {MatInputModule} from '@angular/material/input';
         FormAddressAutoCompleteComponent,
         FormButtonComponent,
         FormFooterButtonsComponent,
-        ChildInputComponent,
+        InputEmailComponent,
     ],
   exports: [
     DynamicFormComponent,
@@ -67,7 +67,7 @@ import {MatInputModule} from '@angular/material/input';
     FormMultiSelectComponent,
     FormRadioToggleComponent,
     FormAddressAutoCompleteComponent,
-    ChildInputComponent,
+    InputEmailComponent,
   ],
     entryComponents: [
         FormDateRangeComponent,
@@ -82,7 +82,7 @@ import {MatInputModule} from '@angular/material/input';
         FormAddressAutoCompleteComponent,
         FormButtonComponent,
         FormFooterButtonsComponent,
-        ChildInputComponent,
+        InputEmailComponent,
     ],
     providers: [CustomFormValidators, CreateDynamicForm, {provide: MAT_DATE_LOCALE, useValue: 'en-NZ' }],
 })
