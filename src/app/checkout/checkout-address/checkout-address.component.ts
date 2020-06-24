@@ -6,8 +6,8 @@ import {AddressSuggestionTools, AddressTypes} from '../../shared/tools/addressSu
 import {DynamicFormConfig} from '../../shared/forms/dynamic-form.component';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {DialogSimpleComponent} from '../../shared/components/dialog-simple/dialog-simple.component';
 import {ConfirmDialogService} from '../../shared/components/confirm-dialog/confirm-dialog.service';
+import {DialogVerifyAddressComponent} from './dialog-verify-address/dialog-verify-address.component';
 
 @Component({
   selector: 'app-checkout-address',
@@ -127,9 +127,9 @@ export class CheckoutAddressComponent {
       label: 'email',
     }];
 
-    const dialogRef = this.dialog.open(DialogSimpleComponent, {
+    const dialogRef = this.dialog.open(DialogVerifyAddressComponent, {
       width: '250px',
-      data: {title: 'Yo yo', myForm: myFormControls, form: this.formGroup}
+      data: {title: 'Verify Address', myForm: myFormControls, form: this.formGroup}
     });
 
     dialogRef.disableClose = true;

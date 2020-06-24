@@ -22,7 +22,6 @@ import {DynamicFormModule} from './shared/forms/dynamic-form.module';
 import { NgxPageScrollCoreModule } from 'ngx-page-scroll-core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {CheckoutAddressComponent} from './checkout/checkout-address/checkout-address.component';
-import {DialogSimpleComponent} from './shared/components/dialog-simple/dialog-simple.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
 import {ConfirmDialogService} from './shared/components/confirm-dialog/confirm-dialog.service';
 import {DialogVerifyAddressComponent} from './checkout/checkout-address/dialog-verify-address/dialog-verify-address.component';
@@ -41,7 +40,6 @@ import {DialogVerifyAddressComponent} from './checkout/checkout-address/dialog-v
     SingleDateFormComponent,
     CheckoutCarouselComponent,
     CollapseComponent,
-    DialogSimpleComponent,
     DialogVerifyAddressComponent,
   ],
   imports: [
