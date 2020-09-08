@@ -16,6 +16,30 @@ import {DialogVerifyAddressComponent} from './dialog-verify-address/dialog-verif
 })
 export class CheckoutAddressComponent {
   public formGroup: FormGroup;
+  public formArray = [
+    {
+      "key" : "rentalType",
+      "default" : "",
+      validators: [Validators.required],
+    },
+    {
+      "key": "shippingAddressType",
+      "default": "",
+      validators: [Validators.required],
+    },
+    {
+      "key": "companyName",
+      "default": "",
+      validators: [],
+    },
+    {
+      "key": "shippingAddress",
+      "default": "",
+      validators: [Validators.required],
+    }
+  ];
+
+  // TODO: Can delete this below???
   public customErrorMessage = 'Custom error message';
   public isSubmitting = false;
   public formQuestions = [
@@ -87,9 +111,18 @@ export class CheckoutAddressComponent {
   };
 
   // constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private dialogService: ConfirmDialogService) {}
+  constructor(
+    public dialog: MatDialog,
+    private fb: FormBuilder,
+    private dialogService: ConfirmDialogService
+  ) {}
 
   ngOnInit() {
+    for(let formModule of this.formArray){
+      this.formGroup.addControl(formModule.key,
+        new FormControl(formModule.default, formModule.validators))
+    }
+
     const options = {
       title: 'Title',
       message: 'Message',
